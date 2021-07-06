@@ -17,8 +17,8 @@ const Register = () => {
   const [formWasValidated, setFormWasValidated] = useState(false);
 
   const messageTypes = {
-    success: `Registration has been successful. You're free to login now`,
-    fail: `Registration has failed due to following error: `,
+    success: `A regisztráció sikeres. A login oldalon lehet bejelentkezni`,
+    fail: `A regisztráció sikeretelen volt az alább hiba miatt: `,
   };
 
   const references = {
@@ -29,9 +29,9 @@ const Register = () => {
   };
 
   const formErrorTypes = {
-    required: `This field is required`,
-    passwordLength: `Password needs to be at least 6 characters long`,
-    validEmail: `Email format is incorrect`,
+    required: `A mező kitöltése kötelező`,
+    passwordLength: `A jelszó minimum 6 karakter hosszú`,
+    validEmail: `Az email formátuma nem megfelelő`,
   };
 
   const [formErrors, setFormErrors] = useState({
