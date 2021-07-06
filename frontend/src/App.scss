@@ -1,7 +1,13 @@
 @use 'src/styles/variables';
+@import '~bootstrap/scss/bootstrap';
+
+* {
+  box-sizing: border-box;
+}
 
 .App {
   height: 100vh;
+  padding-top: 100px;
   text-align: center;
   background: variables.$background-color-main;
 }
