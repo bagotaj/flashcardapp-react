@@ -28,7 +28,8 @@
       "jest/no-identical-title": "error",
       "jest/prefer-to-have-length": "warn",
       "jest/valid-expect": "error",
-      "no-underscore-dangle": "off"
+      "no-underscore-dangle": "off",
+      "react/prop-types": "off"
     },
   
     "parserOptions": {
