@@ -7,6 +7,7 @@ import Navbar from './components/common/Navbar/Navbar';
 import Login from './components/pages/Login/Login';
 import Register from './components/pages/Register/Register';
 import Main from './components/pages/Main/Main';
+import Dashboard from './components/pages/Dashboard/Dashboard';
 
 const App = () => {
   const history = useHistory();
@@ -44,6 +45,7 @@ const App = () => {
             )}
           />
           <Route exact path="/register" component={Register} />
+          <Route exact path="/dashboard" component={Dashboard} />
         </Switch>
       </div>
     </div>
