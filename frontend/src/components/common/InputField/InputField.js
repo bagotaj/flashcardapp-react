@@ -6,11 +6,11 @@ const InputField = props => {
     props;
   return (
     <div className={`${error && 'was-validated'}`}>
-      <label className="form-label m-2" htmlFor={name}>
+      <label className="form-label mt-3" htmlFor={name}>
         {labelText}
       </label>
       <input
-        className="form-control m-2"
+        className="form-control"
         id={name}
         type={type}
         name={name}
