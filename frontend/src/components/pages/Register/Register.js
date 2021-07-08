@@ -2,6 +2,8 @@ import { useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import validator from 'validator';
 import InputField from '../../common/InputField/InputField';
+import Button from '../../common/Button/Button';
+import './Register.scss';
 
 const Register = () => {
   const history = useHistory();
@@ -165,7 +167,7 @@ const Register = () => {
 
   return (
     <>
-      <div className="container-sm">
+      <div className="row mt-5">
         <h2>Regisztráció</h2>
         <div>
           {alert && (
@@ -178,7 +180,7 @@ const Register = () => {
           onSubmit={handleRegister}
           className={`needs-validation ${formWasValidated && 'was-validated'}`}
         >
-          <div className="col-md-6">
+          <div className="md-3">
             <InputField
               name="lastName"
               type="text"
@@ -189,6 +191,8 @@ const Register = () => {
               reference={references.lastName}
               error={formErrors.lastName}
             />
+          </div>
+          <div className="md-3">
             <InputField
               name="firstName"
               type="text"
@@ -199,6 +203,8 @@ const Register = () => {
               reference={references.firstName}
               error={formErrors.firstName}
             />
+          </div>
+          <div className="md-3">
             <InputField
               name="email"
               type="email"
@@ -209,6 +215,8 @@ const Register = () => {
               reference={references.email}
               error={formErrors.email}
             />
+          </div>
+          <div className="md-3">
             <InputField
               name="password"
               type="password"
@@ -220,9 +228,11 @@ const Register = () => {
               error={formErrors.password}
             />
           </div>
-          <button type="submit" className="btn btn-primary m-2">
-            Register
-          </button>
+          <Button
+            buttonType="submit"
+            classes="btn btn-primary mt-3"
+            title="Elküldés"
+          />
         </form>
       </div>
     </>

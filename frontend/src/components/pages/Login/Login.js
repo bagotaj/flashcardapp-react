@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import validator from 'validator';
 import InputField from '../../common/InputField/InputField';
+import Button from '../../common/Button/Button';
 
 export default function Login(props) {
   const history = useHistory();
@@ -155,7 +156,7 @@ export default function Login(props) {
   };
 
   return (
-    <div className="container-sm">
+    <div className="row mt-5">
       <h1>Bejelentkezés</h1>
 
       <div>
@@ -169,31 +170,37 @@ export default function Login(props) {
         onSubmit={handleLogin}
         className={`needs-validation ${formWasValidated && 'was-validated'}`}
       >
-        <InputField
-          name="email"
-          id="email"
-          type="email"
-          value={formData.email}
-          labelText="Email cím"
-          onChange={handleInputChange}
-          onBlur={handleInputBlur}
-          reference={references.email}
-          error={formErrors.email}
+        <div className="md-3">
+          <InputField
+            name="email"
+            id="email"
+            type="email"
+            value={formData.email}
+            labelText="Email cím"
+            onChange={handleInputChange}
+            onBlur={handleInputBlur}
+            reference={references.email}
+            error={formErrors.email}
+          />
+        </div>
+        <div className="md-3">
+          <InputField
+            name="password"
+            id="password"
+            type="password"
+            value={formData.password}
+            labelText="Jelszó"
+            onChange={handleInputChange}
+            onBlur={handleInputBlur}
+            reference={references.password}
+            error={formErrors.password}
+          />
+        </div>
+        <Button
+          buttonType="submit"
+          classes="btn btn-primary mt-3"
+          title="Belépés"
         />
-        <InputField
-          name="password"
-          id="password"
-          type="password"
-          value={formData.password}
-          labelText="Jelszó"
-          onChange={handleInputChange}
-          onBlur={handleInputBlur}
-          reference={references.password}
-          error={formErrors.password}
-        />
-        <button type="submit" className="btn btn-primary m-2">
-          Belépés
-        </button>
       </form>
     </div>
   );
