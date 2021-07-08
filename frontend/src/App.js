@@ -29,7 +29,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <div className="cotainer">
+      <div className="container">
         <Navbar user={loggedInUser} handleLogout={handleLogout} />
         <Switch>
           <Route exact path="/" component={Main} />
