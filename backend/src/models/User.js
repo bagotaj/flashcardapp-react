@@ -1,4 +1,4 @@
-import {model, Schema} from 'mongoose';
+import { model, Schema } from 'mongoose';
 
 const userSchema = new Schema({
   firstName: {
@@ -24,6 +24,12 @@ const userSchema = new Schema({
     required: true,
     max: 255,
     min: 8,
+  },
+  role: {
+    type: String,
+    required: true,
+    max: 255,
+    min: 1,
   },
 });
 
