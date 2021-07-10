@@ -11,3 +11,15 @@
   text-align: center;
   background: variables.$background-color-main;
 }
+
+.app-main {
+  max-width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media screen and (max-width: 767.98px) {
+  .app-main {
+    max-width: 100%;
+  }
+}
