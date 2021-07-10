@@ -27,6 +27,7 @@ export const registrationService = {
       lastName: userData.lastName,
       email: userData.email,
       password: hashedPassword,
+      role: userData.role,
     });
 
     try {
