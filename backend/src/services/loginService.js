@@ -32,7 +32,7 @@ export const loginService = {
 
     const authToken = jwt.sign(
       { firstName: user.firstName, role: user.role },
-      process.env.TOKEN_SECRET
+      process.env.ACCESS_TOKEN_SECRET
     );
     return {
       status: 200,
