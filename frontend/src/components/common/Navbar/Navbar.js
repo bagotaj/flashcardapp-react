@@ -46,7 +46,7 @@ const Navbar = props => {
                   </li>
                   <li className="p-2 w-100">
                     <NavLink to="/" className="nav-link" onClick={handleLogout}>
-                      Logout
+                      Kilépés
                     </NavLink>
                   </li>
                 </div>
@@ -65,12 +65,12 @@ const Navbar = props => {
                 <div className="nav-item-flex me-lg-2">
                   <li className="p-2 w-100">
                     <NavLink to="/register" className="nav-link">
-                      Register
+                      Regisztráció
                     </NavLink>
                   </li>
                   <li className="p-2 w-100">
                     <NavLink exact to="/login" className="nav-link">
-                      Login
+                      Bejelentkezés
                     </NavLink>
                   </li>
                 </div>
