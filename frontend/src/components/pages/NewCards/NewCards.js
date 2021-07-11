@@ -5,6 +5,7 @@ import Button from '../../common/Button/Button';
 const NewCards = () => {
   const [formData, setFormData] = useState({
     cardTitle: '',
+    description: '',
     side1: '',
     side2: '',
   });
@@ -19,6 +20,7 @@ const NewCards = () => {
 
   const references = {
     cardTitle: useRef(),
+    description: useRef(),
     side1: useRef(),
     side2: useRef(),
   };
@@ -29,6 +31,7 @@ const NewCards = () => {
 
   const [formErrors, setFormErrors] = useState({
     cardTitle: '',
+    description: '',
     side1: '',
     side2: '',
   });
@@ -106,8 +109,9 @@ const NewCards = () => {
     e.preventDefault();
     setAlert(null);
     setFormErrors({
-      side1: '',
       cardTitle: '',
+      description: '',
+      side1: '',
       side2: '',
     });
 
@@ -121,14 +125,16 @@ const NewCards = () => {
         },
         body: JSON.stringify({
           cardTitle: formData.cardTitle,
+          description: formData.description,
           cards: [{ side1: formData.side1, side2: formData.side2 }],
         }),
       })
         .then(res => {
-          if (res.status === 201) {
+          if (res.status >= 200 || res.status < 300) {
             setAlert({ alertType: 'success', message: messageTypes.success });
             setFormData({
               cardTitle: '',
+              description: '',
               side1: '',
               side2: '',
             });
@@ -166,6 +172,20 @@ const NewCards = () => {
               onBlur={handleInputBlur}
               reference={references.cardTitle}
               error={formErrors.cardTitle}
+              required="true"
+            />
+          </div>
+          <div className="md-3">
+            <InputField
+              name="description"
+              type="textarea"
+              value={formData.description}
+              labelText="Leírás"
+              onChange={handleInputChange}
+              onBlur={handleInputBlur}
+              reference={references.description}
+              error={formErrors.description}
+              required="false"
             />
           </div>
           <div className="md-3">
@@ -178,6 +198,7 @@ const NewCards = () => {
               onBlur={handleInputBlur}
               reference={references.side1}
               error={formErrors.side1}
+              required="true"
             />
           </div>
           <div className="md-3">
@@ -190,6 +211,7 @@ const NewCards = () => {
               onBlur={handleInputBlur}
               reference={references.side2}
               error={formErrors.side2}
+              required="true"
             />
           </div>
           <Button
