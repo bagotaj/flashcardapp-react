@@ -7,6 +7,12 @@ const languageCardSchema = new Schema({
     max: 255,
     min: 1,
   },
+  description: {
+    type: String,
+    required: true,
+    max: 255,
+    min: 1,
+  },
   cards: [
     {
       side1: String,

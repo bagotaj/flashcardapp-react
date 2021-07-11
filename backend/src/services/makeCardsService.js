@@ -14,6 +14,7 @@ export const makeCardsService = {
 
     const card = new LanguageCard({
       cardTitle: cardData.cardTitle,
+      description: cardData.description,
       cards: cardData.cards,
     });
 
