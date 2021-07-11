@@ -146,7 +146,7 @@ const Register = () => {
         body: JSON.stringify(formData),
       })
         .then(res => {
-          if (res.status === 201) {
+          if (res.status >= 200 || res.status < 300) {
             setAlert({ alertType: 'success', message: messageTypes.success });
             setFormData({
               firstName: '',
