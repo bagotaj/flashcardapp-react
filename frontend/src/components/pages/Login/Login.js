@@ -157,7 +157,7 @@ export default function Login(props) {
 
   return (
     <div className="row mt-5">
-      <h1>Bejelentkezés</h1>
+      <h2>Bejelentkezés</h2>
 
       <div>
         {alert && (
