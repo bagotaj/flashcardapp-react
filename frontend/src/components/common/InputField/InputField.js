@@ -14,7 +14,7 @@ const InputField = props => {
     required,
   } = props;
   return (
-    <div className={`${error && 'was-validated'}`}>
+    <div className={`${error && 'was-validated'} text-start`}>
       <label className="form-label mt-3" htmlFor={name}>
         {labelText}
       </label>
