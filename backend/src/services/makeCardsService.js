@@ -1,5 +1,5 @@
 import logger from 'logger';
-import LanguageCard from '../models/LanguageCard';
+import LanguageCard from '../models/Cards';
 import cardValidation from '../cardValidation';
 
 export const makeCardsService = {
