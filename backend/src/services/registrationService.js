@@ -1,5 +1,5 @@
-import logger from 'logger';
 import bcrypt from 'bcryptjs';
+import logger from '../logger';
 import User from '../models/User';
 import { registerValidation } from '../registerValidation';
 
