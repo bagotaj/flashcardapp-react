@@ -44,6 +44,13 @@ const Navbar = props => {
                       {user.firstName}
                     </NavLink>
                   </li>
+                  {user.role === 'admin' && (
+                    <li className="p-2 w-100">
+                      <NavLink to="/admin" className="nav-link">
+                        Adminisztrátor
+                      </NavLink>
+                    </li>
+                  )}
                   <li className="p-2 w-100">
                     <NavLink to="/" className="nav-link" onClick={handleLogout}>
                       Kilépés
