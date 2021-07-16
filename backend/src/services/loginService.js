@@ -30,14 +30,15 @@ export const loginService = {
       };
     }
 
-    const authToken = jwt.sign(
-      { firstName: user.firstName, role: user.role },
+    const accessToken = jwt.sign(
+      { userId: user.id, firstName: user.firstName, role: user.role },
       process.env.ACCESS_TOKEN_SECRET
     );
     return {
       status: 200,
       message: 'Logged in!',
-      token: authToken,
+      token: accessToken,
+      userId: user.id,
       firstName: user.firstName,
       role: user.role,
     };

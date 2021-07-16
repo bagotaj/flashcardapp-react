@@ -131,6 +131,7 @@ export default function Login(props) {
           if (data.status >= 200 || data.status < 300) {
             const user = {
               email: formData.email,
+              userId: data.userId,
               firstName: data.firstName,
               token: data.token,
             };
