@@ -1,8 +1,12 @@
 import React from 'react';
 
-const Button = ({ buttonType, classes, title }) => {
+const Button = ({ buttonType, classes, title, handleAddingOneCard }) => {
   return (
-    <button type={buttonType ? 'submit' : 'button'} className={classes}>
+    <button
+      type={buttonType ? 'submit' : 'button'}
+      className={classes}
+      onClick={handleAddingOneCard}
+    >
       {title}
     </button>
   );
