@@ -2,7 +2,7 @@ import logger from 'logger';
 import LanguageCard from '../models/Cards';
 import cardValidation from '../cardValidation';
 
-export const makeCardsService = {
+export const languageCardsService = {
   async saveCards(cardData) {
     const { error } = cardValidation(cardData);
     if (error) {
