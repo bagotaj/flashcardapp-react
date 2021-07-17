@@ -4,10 +4,32 @@ import Button from '../../common/Button/Button';
 
 const NewCards = () => {
   const [formData, setFormData] = useState({
+    cardType: '',
     cardTitle: '',
     description: '',
     side1: '',
     side2: '',
+  });
+  // const [flashcards, setFlashCards] = useState([
+  //   {
+  //     side1: formData.side1,
+  //     side2: formData.side2,
+  //   },
+  // ]);
+
+  const [cardTypeOptions] = useState([
+    { value: '', text: 'Válassz!' },
+    {
+      text: 'Nyelv kártya',
+    },
+    {
+      text: 'Egyéb kártya',
+    },
+  ]);
+
+  const [endpoints] = useState({
+    languageCards: '/languagecards/new',
+    otherCards: '/othercards/new',
   });
 
   const [alert, setAlert] = useState(null);
@@ -19,6 +41,7 @@ const NewCards = () => {
   };
 
   const references = {
+    cardType: useRef(),
     cardTitle: useRef(),
     description: useRef(),
     side1: useRef(),
@@ -30,6 +53,7 @@ const NewCards = () => {
   };
 
   const [formErrors, setFormErrors] = useState({
+    cardType: '',
     cardTitle: '',
     description: '',
     side1: '',
@@ -41,6 +65,9 @@ const NewCards = () => {
   };
 
   const validators = {
+    cardType: {
+      required: isFieldEmpty,
+    },
     cardTitle: {
       required: isFieldEmpty,
     },
@@ -59,7 +86,7 @@ const NewCards = () => {
       ...prev,
       [fieldName]: '',
     }));
-    references[fieldName].current.setCustomValidity('');
+    // references[fieldName]?.current.setCustomValidity('');
 
     if (validators[fieldName] !== undefined) {
       for (const [validationType, validatorFn] of Object.entries(
@@ -118,7 +145,15 @@ const NewCards = () => {
     setFormWasValidated(false);
     const isValid = isFormValid();
     if (isValid) {
-      await fetch('http://localhost:5000/api/cards', {
+      const backend = 'http://localhost:5000/api';
+      let url;
+
+      if (formData.cardType === 'Nyelv kártya') {
+        url = `${backend}${endpoints.languageCards}`;
+      } else {
+        url = `${backend}${endpoints.otherCards}`;
+      }
+      await fetch(url, {
         method: 'post',
         headers: {
           'Content-Type': 'application/json',
@@ -133,6 +168,7 @@ const NewCards = () => {
           if (res.status >= 200 || res.status < 300) {
             setAlert({ alertType: 'success', message: messageTypes.success });
             setFormData({
+              cardType: '',
               cardTitle: '',
               description: '',
               side1: '',
@@ -147,6 +183,78 @@ const NewCards = () => {
       setFormWasValidated(true);
     }
   };
+
+  // const handleInputChange = e => {
+  //   const { name, value } = e.target;
+  //   setFormData({
+  //     ...formData,
+  //     [name]: value,
+  //   });
+  //   setFormErrors(previousErrors => ({
+  //     ...previousErrors,
+  //     [name]: '',
+  //   }));
+  // };
+
+  // const handleInputBlur = e => {
+  //   const { name } = e.target;
+  //   validateField(name);
+  // };
+
+  // const handleAddingCards = async e => {
+  //   e.preventDefault();
+  //   setAlert(null);
+  //   setFormErrors({
+  //     cardType: '',
+  //     cardTitle: '',
+  //     description: '',
+  //     side1: '',
+  //     side2: '',
+  //   });
+
+  //   setFormWasValidated(false);
+  //   const isValid = isFormValid();
+  //   if (isValid) {
+  //     // const backend = 'http://localhost:5000/api';
+  //     // let url;
+
+  //     // if (formData.cardType === 'Nyelv kártya') {
+  //     //   url = `${backend}${endpoints.languageCards}`;
+  //     // } else {
+  //     //   url = endpoints.otherCards;
+  //     // }
+
+  //     await fetch('http://localhost:5000/api/languagecards/new', {
+  //       method: 'post',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({
+  //         cardTitle: formData.cardTitle,
+  //         description: formData.description,
+  //         cards: [{ side1: formData.side1, side2: formData.side2 }],
+  //       }),
+  //     })
+  //       .then(res => {
+  //         if (res.status >= 200 || res.status < 300) {
+  //           setAlert({ alertType: 'success', message: messageTypes.success });
+  //           setFormData({
+  //             cardType: '',
+  //             cardTitle: '',
+  //             description: '',
+  //             side1: '',
+  //             side2: '',
+  //           });
+  //           // setFlashCards([{ side1: '', side2: '' }]);
+  //         }
+  //       })
+  //       .catch(error => {
+  //         setAlert({ alertType: 'danger', message: messageTypes.fail + error });
+  //       });
+  //   } else {
+  //     setFormWasValidated(true);
+  //   }
+  // };
 
   return (
     <>
@@ -164,15 +272,29 @@ const NewCards = () => {
         >
           <div className="md-3">
             <InputField
+              name="cardType"
+              type="select"
+              value={formData.cardType}
+              labelText="Kártyacsomag típusa"
+              options={cardTypeOptions}
+              handleInputChange={handleInputChange}
+              handleInputBlur={handleInputBlur}
+              reference={references.cardTitle}
+              error={formErrors.cardTitle}
+              required
+            />
+          </div>
+          <div className="md-3">
+            <InputField
               name="cardTitle"
               type="text"
               value={formData.cardTitle}
               labelText="Kártyacsomag neve"
-              onChange={handleInputChange}
-              onBlur={handleInputBlur}
+              handleInputChange={handleInputChange}
+              handleInputBlur={handleInputBlur}
               reference={references.cardTitle}
               error={formErrors.cardTitle}
-              required="true"
+              required
             />
           </div>
           <div className="md-3">
@@ -181,11 +303,10 @@ const NewCards = () => {
               type="textarea"
               value={formData.description}
               labelText="Leírás"
-              onChange={handleInputChange}
-              onBlur={handleInputBlur}
+              handleInputChange={handleInputChange}
+              handleInputBlur={handleInputBlur}
               reference={references.description}
               error={formErrors.description}
-              required="false"
             />
           </div>
           <div className="md-3">
@@ -194,11 +315,11 @@ const NewCards = () => {
               type="text"
               value={formData.side1}
               labelText="Első oldal"
-              onChange={handleInputChange}
-              onBlur={handleInputBlur}
+              handleInputChange={handleInputChange}
+              handleInputBlur={handleInputBlur}
               reference={references.side1}
               error={formErrors.side1}
-              required="true"
+              required
             />
           </div>
           <div className="md-3">
@@ -207,11 +328,11 @@ const NewCards = () => {
               type="text"
               value={formData.side2}
               labelText="Második oldal"
-              onChange={handleInputChange}
-              onBlur={handleInputBlur}
+              handleInputChange={handleInputChange}
+              handleInputBlur={handleInputBlur}
               reference={references.side2}
               error={formErrors.side2}
-              required="true"
+              required
             />
           </div>
           <Button
