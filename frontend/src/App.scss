@@ -6,7 +6,7 @@
 }
 
 .App {
-  height: 100vh;
+  height: 100%;
   padding-top: 100px;
   text-align: center;
   background: variables.$background-color-main;
@@ -20,6 +20,10 @@
 
 h2 {
   margin-bottom: 15px;
+}
+
+h3 {
+  margin: 30px 0 15px 0;
 }
 
 @media screen and (max-width: 767.98px) {
