@@ -6,6 +6,7 @@ const userSchema = new Schema({
     required: true,
     max: 255,
     min: 1,
+    default: 'Én',
   },
   firstName: {
     type: String,
@@ -36,10 +37,12 @@ const userSchema = new Schema({
     required: true,
     max: 255,
     min: 1,
+    default: 'user',
   },
   ownCards: {
     type: Array,
     min: 1,
+    default: ['Nincs még mentett kártyád'],
   },
 });
 

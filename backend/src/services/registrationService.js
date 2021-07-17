@@ -23,6 +23,7 @@ export const registrationService = {
     const hashedPassword = await bcrypt.hash(userData.password, salt);
 
     const user = new User({
+      userName: userData.firstName,
       firstName: userData.firstName,
       lastName: userData.lastName,
       email: userData.email,
