@@ -197,7 +197,7 @@ const Register = () => {
               name="firstName"
               type="text"
               value={formData.firstName}
-              labelText="Kersztnév"
+              labelText="Keresztnév"
               onChange={handleInputChange}
               onBlur={handleInputBlur}
               reference={references.firstName}
