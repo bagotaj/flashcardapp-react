@@ -134,6 +134,7 @@ export default function Login(props) {
               userId: data.userId,
               firstName: data.firstName,
               token: data.token,
+              role: data.role,
             };
             handleLocalStorage(user);
             handleLoggedInUser(user);
