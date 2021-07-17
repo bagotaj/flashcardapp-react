@@ -10,12 +10,12 @@ const NewCards = () => {
     side1: '',
     side2: '',
   });
-  // const [flashcards, setFlashCards] = useState([
-  //   {
-  //     side1: formData.side1,
-  //     side2: formData.side2,
-  //   },
-  // ]);
+  const [flashcards, setFlashCards] = useState([
+    {
+      side1: '',
+      side2: '',
+    },
+  ]);
 
   const [cardTypeOptions] = useState([
     { value: '', text: 'Válassz!' },
@@ -136,6 +136,7 @@ const NewCards = () => {
     e.preventDefault();
     setAlert(null);
     setFormErrors({
+      cardType: '',
       cardTitle: '',
       description: '',
       side1: '',
@@ -184,82 +185,22 @@ const NewCards = () => {
     }
   };
 
-  // const handleInputChange = e => {
-  //   const { name, value } = e.target;
-  //   setFormData({
-  //     ...formData,
-  //     [name]: value,
-  //   });
-  //   setFormErrors(previousErrors => ({
-  //     ...previousErrors,
-  //     [name]: '',
-  //   }));
-  // };
+  const handleAddingOneCard = e => {
+    e.preventDefault();
 
-  // const handleInputBlur = e => {
-  //   const { name } = e.target;
-  //   validateField(name);
-  // };
-
-  // const handleAddingCards = async e => {
-  //   e.preventDefault();
-  //   setAlert(null);
-  //   setFormErrors({
-  //     cardType: '',
-  //     cardTitle: '',
-  //     description: '',
-  //     side1: '',
-  //     side2: '',
-  //   });
-
-  //   setFormWasValidated(false);
-  //   const isValid = isFormValid();
-  //   if (isValid) {
-  //     // const backend = 'http://localhost:5000/api';
-  //     // let url;
-
-  //     // if (formData.cardType === 'Nyelv kártya') {
-  //     //   url = `${backend}${endpoints.languageCards}`;
-  //     // } else {
-  //     //   url = endpoints.otherCards;
-  //     // }
-
-  //     await fetch('http://localhost:5000/api/languagecards/new', {
-  //       method: 'post',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({
-  //         cardTitle: formData.cardTitle,
-  //         description: formData.description,
-  //         cards: [{ side1: formData.side1, side2: formData.side2 }],
-  //       }),
-  //     })
-  //       .then(res => {
-  //         if (res.status >= 200 || res.status < 300) {
-  //           setAlert({ alertType: 'success', message: messageTypes.success });
-  //           setFormData({
-  //             cardType: '',
-  //             cardTitle: '',
-  //             description: '',
-  //             side1: '',
-  //             side2: '',
-  //           });
-  //           // setFlashCards([{ side1: '', side2: '' }]);
-  //         }
-  //       })
-  //       .catch(error => {
-  //         setAlert({ alertType: 'danger', message: messageTypes.fail + error });
-  //       });
-  //   } else {
-  //     setFormWasValidated(true);
-  //   }
-  // };
+    setFlashCards([
+      ...flashcards,
+      {
+        side1: formData.side1,
+        side2: formData.side2,
+      },
+    ]);
+  };
 
   return (
     <>
       <div className="row mt-5">
-        <h2>Szókártya hozzáadása</h2>
+        <h2>Szókártyacsomag létrehozás</h2>
         {alert && (
           <div>
             <p className={`alert alert-${alert.alertType}`}>{alert.message}</p>
@@ -309,37 +250,58 @@ const NewCards = () => {
               error={formErrors.description}
             />
           </div>
-          <div className="md-3">
-            <InputField
-              name="side1"
-              type="text"
-              value={formData.side1}
-              labelText="Első oldal"
-              handleInputChange={handleInputChange}
-              handleInputBlur={handleInputBlur}
-              reference={references.side1}
-              error={formErrors.side1}
-              required
+
+          <h3>Szókártya létrehozás</h3>
+          <div>
+            {flashcards.map(flashcard => (
+              <div className="row" key={flashcard.side1}>
+                <div className="col md-3">{flashcard.side1}</div>
+                <div className="col md-3">{flashcard.side2}</div>
+              </div>
+            ))}
+          </div>
+          <div className="row">
+            <div className="col md-3">
+              <InputField
+                name="side1"
+                type="text"
+                value={formData.side1}
+                labelText="Első oldal"
+                handleInputChange={handleInputChange}
+                handleInputBlur={handleInputBlur}
+                reference={references.side1}
+                error={formErrors.side1}
+                required
+              />
+            </div>
+            <div className="col md-3">
+              <InputField
+                name="side2"
+                type="text"
+                value={formData.side2}
+                labelText="Második oldal"
+                handleInputChange={handleInputChange}
+                handleInputBlur={handleInputBlur}
+                reference={references.side2}
+                error={formErrors.side2}
+                required
+              />
+            </div>
+          </div>
+          <div className="d-grid gap-2 d-md-block mt-3 mb-5">
+            <Button
+              buttonType="submit"
+              classes="btn btn-primary m-3"
+              title="Mentés"
+            />
+
+            <Button
+              buttonType="click"
+              handleAddingOneCard={handleAddingOneCard}
+              classes="btn btn-primary m-3"
+              title="Szókártya hozzáadása"
             />
           </div>
-          <div className="md-3">
-            <InputField
-              name="side2"
-              type="text"
-              value={formData.side2}
-              labelText="Második oldal"
-              handleInputChange={handleInputChange}
-              handleInputBlur={handleInputBlur}
-              reference={references.side2}
-              error={formErrors.side2}
-              required
-            />
-          </div>
-          <Button
-            buttonType="submit"
-            classes="btn btn-primary mt-3"
-            title="Mentés"
-          />
         </form>
       </div>
     </>
