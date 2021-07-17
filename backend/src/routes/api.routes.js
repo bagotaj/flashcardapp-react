@@ -3,8 +3,8 @@ import cors from 'cors';
 
 import { registrationController } from '../controllers/registrationController';
 import { loginController } from '../controllers/loginController';
-import { getUsersController } from '../controllers/getUsersController';
-import { makeCardsController } from '../controllers/makeCardsController';
+import { usersController } from '../controllers/usersController';
+import { languageCardsController } from '../controllers/languageCardsController';
 import authenticateToken from '../middlewares/authenticateToken';
 
 const router = express.Router();
@@ -14,7 +14,9 @@ router.use(express.json());
 
 router.post('/register', registrationController.post);
 router.post('/login', loginController.post);
-router.get('/users', authenticateToken, getUsersController.get);
-router.post('/cards', makeCardsController.post);
+router.get('/users', authenticateToken, usersController.get);
+router.get('/languagecards', languageCardsController.get);
+router.post('/languagecards/new', languageCardsController.post);
+// router.get('/othercards', otherCardsController.get);
 
 export default router;
