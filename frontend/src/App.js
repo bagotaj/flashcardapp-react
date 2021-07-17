@@ -10,10 +10,14 @@ import Main from './components/pages/Main/Main';
 import Dashboard from './components/pages/Dashboard/Dashboard';
 import NewCards from './components/pages/NewCards/NewCards';
 
+const userFromLocalStorage = localStorage.getItem('loggedInUser')
+  ? JSON.parse(localStorage.getItem('loggedInUser'))
+  : null;
+
 const App = () => {
   const history = useHistory();
 
-  const [loggedInUser, setLoggedInUser] = useState(null);
+  const [loggedInUser, setLoggedInUser] = useState(userFromLocalStorage);
 
   function handleLocalStorage(user) {
     return localStorage.setItem('loggedInUser', JSON.stringify(user));
