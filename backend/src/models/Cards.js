@@ -1,6 +1,6 @@
 import { model, Schema } from 'mongoose';
 
-const languageCardSchema = new Schema({
+const cardSchema = new Schema({
   cardTitle: {
     type: String,
     required: true,
@@ -21,4 +21,5 @@ const languageCardSchema = new Schema({
   ],
 });
 
-export default model('languageCard', languageCardSchema);
+export const LanguageCard = model('languageCard', cardSchema);
+export const OtherCard = model('otherCard', cardSchema);
