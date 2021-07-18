@@ -1,5 +1,5 @@
-import logger from 'logger';
-import LanguageCard from '../models/Cards';
+import logger from '../logger';
+import { LanguageCard } from '../models/Cards';
 import cardValidation from '../cardValidation';
 
 export const languageCardsService = {
@@ -16,6 +16,7 @@ export const languageCardsService = {
       cardTitle: cardData.cardTitle,
       description: cardData.description,
       cards: cardData.cards,
+      userId: cardData.userId,
     });
 
     try {
