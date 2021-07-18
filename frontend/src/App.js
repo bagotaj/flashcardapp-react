@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Switch, Route, useHistory } from 'react-router-dom';
 
 import './App.scss';
@@ -10,14 +10,17 @@ import Main from './components/pages/Main/Main';
 import Dashboard from './components/pages/Dashboard/Dashboard';
 import NewCards from './components/pages/NewCards/NewCards';
 
-const userFromLocalStorage = localStorage.getItem('loggedInUser')
-  ? JSON.parse(localStorage.getItem('loggedInUser'))
-  : null;
-
 const App = () => {
   const history = useHistory();
 
-  const [loggedInUser, setLoggedInUser] = useState(userFromLocalStorage);
+  const [loggedInUser, setLoggedInUser] = useState({});
+
+  useEffect(() => {
+    const userFromLocalStorage = localStorage.getItem('loggedInUser')
+      ? JSON.parse(localStorage.getItem('loggedInUser'))
+      : null;
+    setLoggedInUser(userFromLocalStorage);
+  }, []);
 
   function handleLocalStorage(user) {
     return localStorage.setItem('loggedInUser', JSON.stringify(user));
@@ -46,7 +49,6 @@ const App = () => {
                 <Login
                   handleLoggedInUser={setLoggedInUser}
                   handleLocalStorage={handleLocalStorage}
-                  loggedInUser={loggedInUser}
                 />
               )}
             />
