@@ -10,12 +10,7 @@ const NewCards = () => {
     side1: '',
     side2: '',
   });
-  const [flashcards, setFlashCards] = useState([
-    {
-      side1: '',
-      side2: '',
-    },
-  ]);
+  const [flashcards, setFlashCards] = useState([]);
 
   const [cardTypeOptions] = useState([
     { value: '', text: 'Válassz!' },
@@ -69,12 +64,6 @@ const NewCards = () => {
       required: isFieldEmpty,
     },
     cardTitle: {
-      required: isFieldEmpty,
-    },
-    side1: {
-      required: isFieldEmpty,
-    },
-    side2: {
       required: isFieldEmpty,
     },
   };
@@ -162,7 +151,7 @@ const NewCards = () => {
         body: JSON.stringify({
           cardTitle: formData.cardTitle,
           description: formData.description,
-          cards: [{ side1: formData.side1, side2: formData.side2 }],
+          cards: flashcards,
         }),
       })
         .then(res => {
@@ -195,6 +184,12 @@ const NewCards = () => {
         side2: formData.side2,
       },
     ]);
+
+    setFormData({
+      ...formData,
+      side1: '',
+      side2: '',
+    });
   };
 
   return (
@@ -271,7 +266,6 @@ const NewCards = () => {
                 handleInputBlur={handleInputBlur}
                 reference={references.side1}
                 error={formErrors.side1}
-                required
               />
             </div>
             <div className="col md-3">
@@ -284,7 +278,6 @@ const NewCards = () => {
                 handleInputBlur={handleInputBlur}
                 reference={references.side2}
                 error={formErrors.side2}
-                required
               />
             </div>
           </div>
