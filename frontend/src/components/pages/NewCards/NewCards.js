@@ -1,8 +1,17 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import InputField from '../../common/InputField/InputField';
 import Button from '../../common/Button/Button';
 
 const NewCards = () => {
+  const [loggedInUser, setLoggedInUser] = useState({});
+
+  useEffect(() => {
+    const userFromLocalStorage = localStorage.getItem('loggedInUser')
+      ? JSON.parse(localStorage.getItem('loggedInUser'))
+      : null;
+    setLoggedInUser(userFromLocalStorage);
+  }, []);
+
   const [formData, setFormData] = useState({
     cardType: '',
     cardTitle: '',
@@ -10,7 +19,7 @@ const NewCards = () => {
     side1: '',
     side2: '',
   });
-  const [flashcards, setFlashCards] = useState([]);
+  const [flashcards, setFlashards] = useState([]);
 
   const [cardTypeOptions] = useState([
     { value: '', text: 'Válassz!' },
@@ -152,6 +161,7 @@ const NewCards = () => {
           cardTitle: formData.cardTitle,
           description: formData.description,
           cards: flashcards,
+          userId: loggedInUser.userId,
         }),
       })
         .then(res => {
@@ -164,6 +174,7 @@ const NewCards = () => {
               side1: '',
               side2: '',
             });
+            setFlashards([]);
           }
         })
         .catch(error => {
@@ -177,7 +188,7 @@ const NewCards = () => {
   const handleAddingOneCard = e => {
     e.preventDefault();
 
-    setFlashCards([
+    setFlashards([
       ...flashcards,
       {
         side1: formData.side1,
@@ -190,6 +201,26 @@ const NewCards = () => {
       side1: '',
       side2: '',
     });
+  };
+
+  const handleEditFlashcard = e => {
+    e.preventDefault();
+    const { id } = e.target.dataset;
+
+    setFormData({
+      ...formData,
+      side1: flashcards[id].side1,
+      side2: flashcards[id].side2,
+    });
+
+    flashcards.splice(id, 1);
+  };
+
+  const handleDeleteFlashcard = e => {
+    e.preventDefault();
+    const { id } = e.target.dataset;
+
+    flashcards.splice(id, 1);
   };
 
   return (
@@ -248,12 +279,31 @@ const NewCards = () => {
 
           <h3>Szókártya létrehozás</h3>
           <div>
-            {flashcards.map(flashcard => (
-              <div className="row" key={flashcard.side1}>
-                <div className="col md-3">{flashcard.side1}</div>
-                <div className="col md-3">{flashcard.side2}</div>
-              </div>
-            ))}
+            {flashcards.length !== 0 &&
+              flashcards.map((flashcard, index) => (
+                <div className="row mb-3" key={flashcard.side1}>
+                  <div className="col-6 col-lg-5">{flashcard.side1}</div>
+                  <div className="col-6 col-lg-5">{flashcard.side2}</div>
+                  <div className="col-6 col-lg-1">
+                    <Button
+                      buttonType="button"
+                      onClick={handleEditFlashcard}
+                      classes="btn btn-primary"
+                      title="+"
+                      dataid={index}
+                    />
+                  </div>
+                  <div className="col-6 col-lg-1">
+                    <Button
+                      buttonType="button"
+                      onClick={handleDeleteFlashcard}
+                      classes="btn btn-warning"
+                      title="-"
+                      dataid={index}
+                    />
+                  </div>
+                </div>
+              ))}
           </div>
           <div className="row">
             <div className="col md-3">
@@ -289,8 +339,8 @@ const NewCards = () => {
             />
 
             <Button
-              buttonType="click"
-              handleAddingOneCard={handleAddingOneCard}
+              buttonType="button"
+              onClick={handleAddingOneCard}
               classes="btn btn-primary m-3"
               title="Szókártya hozzáadása"
             />
