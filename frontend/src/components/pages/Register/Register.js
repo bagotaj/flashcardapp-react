@@ -186,8 +186,8 @@ const Register = () => {
               type="text"
               value={formData.lastName}
               labelText="Vezetéknév"
-              onChange={handleInputChange}
-              onBlur={handleInputBlur}
+              handleInputChange={handleInputChange}
+              handleInputBlur={handleInputBlur}
               reference={references.lastName}
               error={formErrors.lastName}
             />
@@ -198,8 +198,8 @@ const Register = () => {
               type="text"
               value={formData.firstName}
               labelText="Keresztnév"
-              onChange={handleInputChange}
-              onBlur={handleInputBlur}
+              handleInputChange={handleInputChange}
+              handleInputBlur={handleInputBlur}
               reference={references.firstName}
               error={formErrors.firstName}
             />
@@ -210,8 +210,8 @@ const Register = () => {
               type="email"
               value={formData.email}
               labelText="Email cím"
-              onChange={handleInputChange}
-              onBlur={handleInputBlur}
+              handleInputChange={handleInputChange}
+              handleInputBlur={handleInputBlur}
               reference={references.email}
               error={formErrors.email}
             />
@@ -222,8 +222,8 @@ const Register = () => {
               type="password"
               value={formData.password}
               labelText="Jelszó"
-              onChange={handleInputChange}
-              onBlur={handleInputBlur}
+              handleInputChange={handleInputChange}
+              handleInputBlur={handleInputBlur}
               reference={references.password}
               error={formErrors.password}
             />

@@ -4,7 +4,7 @@ import validator from 'validator';
 import InputField from '../../common/InputField/InputField';
 import Button from '../../common/Button/Button';
 
-export default function Login(props) {
+const Login = props => {
   const history = useHistory();
 
   const { handleLoggedInUser, handleLocalStorage } = props;
@@ -128,7 +128,7 @@ export default function Login(props) {
       })
         .then(res => res.json())
         .then(data => {
-          if (data.status >= 200 || data.status < 300) {
+          if (data.status >= 200 && data.status < 300) {
             const user = {
               email: formData.email,
               userId: data.userId,
@@ -179,8 +179,8 @@ export default function Login(props) {
             type="email"
             value={formData.email}
             labelText="Email cím"
-            onChange={handleInputChange}
-            onBlur={handleInputBlur}
+            handleInputChange={handleInputChange}
+            handleInputBlur={handleInputBlur}
             reference={references.email}
             error={formErrors.email}
           />
@@ -192,8 +192,8 @@ export default function Login(props) {
             type="password"
             value={formData.password}
             labelText="Jelszó"
-            onChange={handleInputChange}
-            onBlur={handleInputBlur}
+            handleInputChange={handleInputChange}
+            handleInputBlur={handleInputBlur}
             reference={references.password}
             error={formErrors.password}
           />
@@ -206,4 +206,6 @@ export default function Login(props) {
       </form>
     </div>
   );
-}
+};
+
+export default Login;
