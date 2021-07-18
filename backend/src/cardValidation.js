@@ -10,6 +10,7 @@ const cardValidation = data => {
     cardTitle: Joi.string().min(1).required(),
     description: Joi.string().min(1),
     cards: Joi.array().items(card),
+    userId: Joi.string().min(1),
   });
   return schema.validate(data);
 };
