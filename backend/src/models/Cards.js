@@ -19,6 +19,12 @@ const cardSchema = new Schema({
       side2: String,
     },
   ],
+  userId: {
+    type: String,
+    required: true,
+    max: 255,
+    min: 1,
+  },
 });
 
 export const LanguageCard = model('languageCard', cardSchema);
