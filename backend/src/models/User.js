@@ -39,11 +39,6 @@ const userSchema = new Schema({
     min: 1,
     default: 'user',
   },
-  ownCards: {
-    type: Array,
-    min: 1,
-    default: ['Nincs még mentett kártyád'],
-  },
 });
 
 export default model('User', userSchema);
