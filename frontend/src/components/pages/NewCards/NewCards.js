@@ -145,17 +145,22 @@ const NewCards = props => {
       } else {
         url = `${backend}${endpoints.otherCards}`;
       }
+
+      const collectedData = {
+        cardTitle: formData.cardTitle,
+        description: formData.description,
+        cards: flashcards,
+        userId: loggedInUser.userId,
+      };
+
+      console.log(collectedData);
+
       await fetch(url, {
         method: 'post',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          cardTitle: formData.cardTitle,
-          description: formData.description,
-          cards: flashcards,
-          userId: loggedInUser.userId,
-        }),
+        body: JSON.stringify(collectedData),
       })
         .then(res => {
           if (res.status >= 200 || res.status < 300) {
