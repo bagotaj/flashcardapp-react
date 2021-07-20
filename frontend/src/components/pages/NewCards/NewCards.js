@@ -1,16 +1,9 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import InputField from '../../common/InputField/InputField';
 import Button from '../../common/Button/Button';
 
-const NewCards = () => {
-  const [loggedInUser, setLoggedInUser] = useState({});
-
-  useEffect(() => {
-    const userFromLocalStorage = localStorage.getItem('loggedInUser')
-      ? JSON.parse(localStorage.getItem('loggedInUser'))
-      : null;
-    setLoggedInUser(userFromLocalStorage);
-  }, []);
+const NewCards = props => {
+  const { loggedInUser } = props;
 
   const [formData, setFormData] = useState({
     cardType: '',
@@ -19,7 +12,7 @@ const NewCards = () => {
     side1: '',
     side2: '',
   });
-  const [flashcards, setFlashards] = useState([]);
+  const [flashcards, setFlashcards] = useState([]);
 
   const [cardTypeOptions] = useState([
     { value: '', text: 'Válassz!' },
@@ -174,7 +167,7 @@ const NewCards = () => {
               side1: '',
               side2: '',
             });
-            setFlashards([]);
+            setFlashcards([]);
           }
         })
         .catch(error => {
@@ -188,7 +181,7 @@ const NewCards = () => {
   const handleAddingOneCard = e => {
     e.preventDefault();
 
-    setFlashards([
+    setFlashcards([
       ...flashcards,
       {
         side1: formData.side1,
@@ -213,14 +206,22 @@ const NewCards = () => {
       side2: flashcards[id].side2,
     });
 
-    flashcards.splice(id, 1);
+    const cards = flashcards.filter((elem, index) => {
+      return index !== Number(id);
+    });
+
+    setFlashcards(cards);
   };
 
   const handleDeleteFlashcard = e => {
     e.preventDefault();
     const { id } = e.target.dataset;
 
-    flashcards.splice(id, 1);
+    const cards = flashcards.filter((elem, index) => {
+      return index !== Number(id);
+    });
+
+    setFlashcards(cards);
   };
 
   return (
