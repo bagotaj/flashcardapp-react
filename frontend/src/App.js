@@ -54,7 +54,11 @@ const App = () => {
             />
             <Route exact path="/register" component={Register} />
             <Route exact path="/dashboard" component={Dashboard} />
-            <Route exact path="/cards/new" component={NewCards} />
+            <Route
+              exact
+              path="/cards/new"
+              component={() => <NewCards loggedInUser={loggedInUser} />}
+            />
           </Switch>
         </div>
       </div>
