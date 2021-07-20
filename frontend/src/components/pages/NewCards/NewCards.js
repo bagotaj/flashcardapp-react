@@ -153,8 +153,6 @@ const NewCards = props => {
         userId: loggedInUser.userId,
       };
 
-      console.log(collectedData);
-
       await fetch(url, {
         method: 'post',
         headers: {
