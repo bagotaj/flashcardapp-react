@@ -7,6 +7,8 @@ import Button from '../../common/Button/Button';
 const Login = props => {
   const history = useHistory();
 
+  const server = process.env.REACT_APP_SERVER_URL;
+
   const { handleLoggedInUser, handleLocalStorage } = props;
   const [formData, setFormData] = useState({
     email: '',
@@ -118,7 +120,7 @@ const Login = props => {
     setFormWasValidated(false);
     const isValid = isFormValid();
     if (isValid) {
-      fetch('http://localhost:5000/api/login', {
+      fetch(`${server}/api/login`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
