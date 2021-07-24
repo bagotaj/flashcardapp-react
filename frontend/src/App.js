@@ -9,6 +9,8 @@ import Register from './components/pages/Register/Register';
 import Main from './components/pages/Main/Main';
 import Dashboard from './components/pages/Dashboard/Dashboard';
 import NewCards from './components/pages/NewCards/NewCards';
+import LanguageCards from './components/pages/LanguageCards/LanguageCards';
+import OtherCards from './components/pages/OtherCards/OtherCards';
 
 const App = () => {
   const history = useHistory();
@@ -53,7 +55,21 @@ const App = () => {
               )}
             />
             <Route exact path="/register" component={Register} />
-            <Route exact path="/dashboard" component={Dashboard} />
+            <Route
+              exact
+              path="/languagecards"
+              component={() => <LanguageCards token={loggedInUser.token} />}
+            />
+            <Route
+              exact
+              path="/othercards"
+              component={() => <OtherCards token={loggedInUser.token} />}
+            />
+            <Route
+              exact
+              path="/dashboard"
+              component={() => <Dashboard loggedInUser={loggedInUser} />}
+            />
             <Route
               exact
               path="/cards/new"
