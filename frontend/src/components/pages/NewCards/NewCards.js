@@ -157,6 +157,7 @@ const NewCards = props => {
         method: 'post',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${loggedInUser.token}`,
         },
         body: JSON.stringify(collectedData),
       })
