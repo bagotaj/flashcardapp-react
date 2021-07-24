@@ -8,6 +8,8 @@ import './Register.scss';
 const Register = () => {
   const history = useHistory();
 
+  const server = process.env.REACT_APP_SERVER_URL;
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -138,7 +140,7 @@ const Register = () => {
     setFormWasValidated(false);
     const isValid = isFormValid();
     if (isValid) {
-      await fetch('http://localhost:5000/api/register', {
+      await fetch(`${server}/api/register`, {
         method: 'post',
         headers: {
           'Content-Type': 'application/json',
