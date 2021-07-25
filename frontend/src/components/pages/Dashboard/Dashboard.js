@@ -9,15 +9,17 @@ const Dashboard = () => {
   // const [userCards, setUserCards] = useState([]);
 
   return (
-    <div className="container center-content">
-      <div className="row mt-3">
-        <div className="col-md-auto d-flex">
-          <div className="box center-content">
-            <Link to="/languagecards">Szókártyák</Link>
-          </div>
-          <div className="box center-content">
-            <Link to="/othercards">Egyéb kártyák</Link>
-          </div>
+    <div className="container mt-3">
+      <div className="row">
+        <div className="col-md-6">
+          <Link to="/languagecards" className="box center-content">
+            Szókártyák
+          </Link>
+        </div>
+        <div className="col-md-6">
+          <Link to="/othercards" className="box center-content">
+            Egyéb kártyák
+          </Link>
         </div>
       </div>
     </div>
