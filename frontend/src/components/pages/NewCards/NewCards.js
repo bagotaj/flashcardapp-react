@@ -2,6 +2,8 @@ import { useState, useRef } from 'react';
 import InputField from '../../common/InputField/InputField';
 import Button from '../../common/Button/Button';
 
+import './NewCards.scss';
+
 const NewCards = props => {
   const { loggedInUser } = props;
 
@@ -137,7 +139,7 @@ const NewCards = props => {
     setFormWasValidated(false);
     const isValid = isFormValid();
     if (isValid) {
-      const backend = 'http://localhost:5000/api';
+      const backend = process.env.REACT_APP_SERVER_URL;
       let url;
 
       if (formData.cardType === 'Nyelv kártya') {
@@ -231,12 +233,13 @@ const NewCards = props => {
   return (
     <>
       <div className="row mt-5">
-        <h2>Szókártyacsomag létrehozás</h2>
+        <h2>Kártyacsomag létrehozása</h2>
         {alert && (
           <div>
             <p className={`alert alert-${alert.alertType}`}>{alert.message}</p>
           </div>
         )}
+        <hr className="mt-3" />
         <form
           noValidate
           onSubmit={handleAddingCards}
@@ -282,34 +285,7 @@ const NewCards = props => {
             />
           </div>
 
-          <h3>Szókártya létrehozás</h3>
-          <div>
-            {flashcards.length !== 0 &&
-              flashcards.map((flashcard, index) => (
-                <div className="row mb-3" key={flashcard.side1}>
-                  <div className="col-6 col-lg-5">{flashcard.side1}</div>
-                  <div className="col-6 col-lg-5">{flashcard.side2}</div>
-                  <div className="col-6 col-lg-1">
-                    <Button
-                      buttonType="button"
-                      onClick={handleEditFlashcard}
-                      classes="btn btn-primary"
-                      title="+"
-                      dataid={index}
-                    />
-                  </div>
-                  <div className="col-6 col-lg-1">
-                    <Button
-                      buttonType="button"
-                      onClick={handleDeleteFlashcard}
-                      classes="btn btn-warning"
-                      title="-"
-                      dataid={index}
-                    />
-                  </div>
-                </div>
-              ))}
-          </div>
+          <h3>Kártya létrehozása</h3>
           <div className="row">
             <div className="col md-3">
               <InputField
@@ -336,7 +312,7 @@ const NewCards = props => {
               />
             </div>
           </div>
-          <div className="d-grid gap-2 d-md-block mt-3 mb-5">
+          <div className="d-grid gap-2 d-md-block mt-3 mb-3">
             <Button
               buttonType="submit"
               classes="btn btn-primary m-3"
@@ -349,6 +325,35 @@ const NewCards = props => {
               classes="btn btn-primary m-3"
               title="Szókártya hozzáadása"
             />
+          </div>
+          <div>
+            {flashcards.length !== 0 &&
+              flashcards.map((flashcard, index) => (
+                <div className="row mb-3" key={flashcard.side1}>
+                  <div className="col-6 col-lg-5">
+                    <div className="box center-content">{flashcard.side1}</div>
+                  </div>
+                  <div className="col-6 col-lg-5">
+                    <div className="box center-content">{flashcard.side2}</div>
+                  </div>
+                  <div className="col-6 col-lg-2 new-card-buttons">
+                    <Button
+                      buttonType="button"
+                      onClick={handleEditFlashcard}
+                      classes="btn btn-primary new-card-one-button"
+                      title="+"
+                      dataid={index}
+                    />
+                    <Button
+                      buttonType="button"
+                      onClick={handleDeleteFlashcard}
+                      classes="btn btn-warning new-card-one-button"
+                      title="-"
+                      dataid={index}
+                    />
+                  </div>
+                </div>
+              ))}
           </div>
         </form>
       </div>
