@@ -16,9 +16,13 @@ router.use(express.json());
 router.post('/register', registrationController.post);
 router.post('/login', loginController.post);
 router.get('/users', authenticateToken, usersController.get);
-// router.get('/languagecards', languageCardsController.get);
-router.post('/languagecards/new', languageCardsController.post);
-// router.get('/othercards', otherCardsController.get);
-router.post('/othercards/new', otherCardsController.post);
+router.get('/languagecards', authenticateToken, languageCardsController.get);
+router.post(
+  '/languagecards/new',
+  authenticateToken,
+  languageCardsController.post
+);
+router.get('/othercards', authenticateToken, otherCardsController.get);
+router.post('/othercards/new', authenticateToken, otherCardsController.post);
 
 export default router;
