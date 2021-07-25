@@ -65,7 +65,7 @@ const Users = props => {
               <td>{user.firstName}</td>
               <td>
                 <Button
-                  buttonType="button"
+                  linkRouterPath={`/profile/${user._id}`}
                   classes="btn btn-primary user-one-button"
                   title="+"
                   dataid={index}
