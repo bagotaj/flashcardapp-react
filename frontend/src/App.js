@@ -11,6 +11,8 @@ import Dashboard from './components/pages/Dashboard/Dashboard';
 import NewCards from './components/pages/NewCards/NewCards';
 import LanguageCards from './components/pages/LanguageCards/LanguageCards';
 import OtherCards from './components/pages/OtherCards/OtherCards';
+import Users from './components/pages/Users/Users';
+import EditUser from './components/pages/EditUser/EditUser';
 
 const App = () => {
   const history = useHistory();
@@ -57,6 +59,11 @@ const App = () => {
             <Route exact path="/register" component={Register} />
             <Route
               exact
+              path="/dashboard"
+              component={() => <Dashboard loggedInUser={loggedInUser} />}
+            />
+            <Route
+              exact
               path="/languagecards"
               component={() => <LanguageCards token={loggedInUser.token} />}
             />
@@ -67,8 +74,13 @@ const App = () => {
             />
             <Route
               exact
-              path="/dashboard"
-              component={() => <Dashboard loggedInUser={loggedInUser} />}
+              path="/users"
+              component={() => <Users token={loggedInUser.token} />}
+            />
+            <Route
+              exact
+              path="/profile/:userId"
+              component={() => <EditUser token={loggedInUser.token} />}
             />
             <Route
               exact
