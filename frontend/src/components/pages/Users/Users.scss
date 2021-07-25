@@ -1,0 +1,35 @@
+@use 'src/styles/variables';
+
+th,
+td {
+  vertical-align: middle;
+}
+
+.user-one-button {
+  max-width: 40px;
+  margin: 0 15px;
+}
+
+@media screen and (max-width: 767.98px) {
+  .user-one-button {
+    max-width: 40px;
+    margin: 5px;
+  }
+
+  tr td:last-child {
+    display: flex;
+  }
+
+  .cell-hyphens {
+    word-wrap: break-word;
+    max-width: 1px;
+    -webkit-hyphens: auto; /* iOS 4.2+ */
+    -moz-hyphens: auto; /* Firefox 5+ */
+    -ms-hyphens: auto; /* IE 10+ */
+    hyphens: auto;
+  }
+
+  .mobile-none {
+    display: none;
+  }
+}
