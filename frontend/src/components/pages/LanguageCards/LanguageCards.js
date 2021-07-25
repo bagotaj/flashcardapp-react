@@ -31,7 +31,7 @@ const LanguageCards = props => {
   }, []);
 
   return (
-    <main className="userList container">
+    <main className="container">
       <h2>Szókártyák</h2>
 
       <div>{error && <div className="error">{error}</div>}</div>
