@@ -1,7 +1,4 @@
-import dotenv from 'dotenv';
 import React, { useEffect, useState } from 'react';
-
-dotenv.config();
 
 const LanguageCards = props => {
   const { token } = props;
@@ -20,7 +17,7 @@ const LanguageCards = props => {
     })
       .then(res => {
         if (res.status !== 200) {
-          throw Error(`Nem sikerült lekérni az adotokat. ${res.status}`);
+          throw Error(`Nem sikerült lekérni az adatokat. ${res.status}`);
         }
         return res.json();
       })
