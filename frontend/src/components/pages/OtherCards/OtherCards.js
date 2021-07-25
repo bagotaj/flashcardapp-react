@@ -32,7 +32,7 @@ const OtherCards = props => {
   }, []);
 
   return (
-    <main className="userList container">
+    <main className="container">
       <h2>Egyéb kártyák</h2>
 
       <div>{error && <div className="error">{error}</div>}</div>
