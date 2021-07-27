@@ -8,6 +8,7 @@ import Login from './components/pages/Login/Login';
 import Register from './components/pages/Register/Register';
 import Main from './components/pages/Main/Main';
 import Dashboard from './components/pages/Dashboard/Dashboard';
+import Admin from './components/pages/Admin/Admin';
 import NewCards from './components/pages/NewCards/NewCards';
 import LanguageCards from './components/pages/LanguageCards/LanguageCards';
 import OtherCards from './components/pages/OtherCards/OtherCards';
@@ -61,6 +62,11 @@ const App = () => {
               exact
               path="/dashboard"
               component={() => <Dashboard loggedInUser={loggedInUser} />}
+            />
+            <Route
+              exact
+              path="/admin"
+              component={() => <Admin loggedInUser={loggedInUser} />}
             />
             <Route
               exact
