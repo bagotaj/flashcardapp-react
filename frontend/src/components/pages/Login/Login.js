@@ -140,7 +140,7 @@ const Login = props => {
             };
             handleLocalStorage(user);
             handleLoggedInUser(user);
-            setAlert({ alertType: 'success', message: messageTypes.success });
+            setAlert({ alertType: 'primary', message: messageTypes.success });
             setFormData({
               email: '',
               password: '',

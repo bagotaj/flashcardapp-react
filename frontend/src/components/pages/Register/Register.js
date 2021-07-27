@@ -149,7 +149,7 @@ const Register = () => {
       })
         .then(res => {
           if (res.status >= 200 || res.status < 300) {
-            setAlert({ alertType: 'success', message: messageTypes.success });
+            setAlert({ alertType: 'primary', message: messageTypes.success });
             setFormData({
               firstName: '',
               lastName: '',
