@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import logger from '../logger';
 import User from '../models/User';
-import { registerValidation } from '../registerValidation';
+import { registerValidation } from '../validators/registerValidation';
 
 export const registrationService = {
   async saveUser(userData) {
@@ -16,7 +16,7 @@ export const registrationService = {
     if (emailExist)
       return {
         status: 400,
-        message: 'Email already exist!',
+        message: 'Az email cím már regisztrálva van',
       };
 
     const salt = await bcrypt.genSalt(10);
@@ -35,13 +35,13 @@ export const registrationService = {
       await user.save();
       return {
         status: 200,
-        message: 'User saved',
+        message: 'A felhasználó mentése sikerült',
       };
     } catch (err) {
       logger.error(err);
       return {
         status: 500,
-        message: 'Something went wrong',
+        message: 'Valami hiba történt',
       };
     }
   },
