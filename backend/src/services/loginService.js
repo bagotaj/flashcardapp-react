@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-import { loginValidation } from '../loginValidation';
+import { loginValidation } from '../validators/loginValidation';
 import User from '../models/User';
 
 export const loginService = {
