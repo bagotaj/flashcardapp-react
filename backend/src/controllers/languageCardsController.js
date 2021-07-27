@@ -6,9 +6,15 @@ export const languageCardsController = {
     try {
       await LanguageCard.find()
         .then(foundCards => {
+          if (foundCards.length === 0)
+            return res
+              .status(204)
+              .json({ message: 'Nincs még kártya mentve!' });
+
           if (req.user.role === 'admin') {
             return foundCards;
           }
+
           return foundCards.filter(card => card.userId === req.user.userId);
         })
         .then(foundCards => res.status(200).json(foundCards));
@@ -17,8 +23,17 @@ export const languageCardsController = {
     }
   },
 
+  async getId(req, res) {
+    try {
+      const card = await LanguageCard.findById(req.params.id);
+      res.status(200).json(card);
+    } catch (err) {
+      res.status(404).json(err);
+    }
+  },
+
   async post(req, res) {
     const data = await languageCardsService.saveCards(req.body);
-    res.status(data.status).json(data);
+    return res.status(data.status).json(data);
   },
 };
