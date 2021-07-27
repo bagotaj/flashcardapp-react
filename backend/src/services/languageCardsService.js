@@ -1,6 +1,6 @@
 import logger from '../logger';
 import { LanguageCard } from '../models/Cards';
-import cardValidation from '../cardValidation';
+import cardValidation from '../validators/cardValidation';
 
 export const languageCardsService = {
   async saveCards(cardData) {
