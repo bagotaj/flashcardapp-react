@@ -1,13 +1,7 @@
 @use 'src/styles/variables';
 
 .navbar {
-  background: variables.$color-darkblue;
-  background: linear-gradient(
-    45deg,
-    variables.$color-darkblue 0%,
-    variables.$color-blue 35%,
-    variables.$color-lightblue 100%
-  );
+  background: variables.$color-lightblue;
   text-transform: uppercase;
   font-size: 1rem;
   font-weight: 500;
@@ -35,7 +29,7 @@
   bottom: 0;
   content: '';
   display: block;
-  height: 4px;
+  height: 3px;
   left: 50%;
   position: absolute;
   background: variables.$color-lightgrey;
@@ -88,9 +82,39 @@ li p {
   position: relative;
 }
 
-@media screen and (max-width: 767.98px) {
+@media screen and (max-width: 768px) {
   .navbar {
-    font-size: 4vh;
+    font-size: 2vh;
+  }
+
+  .navbar-nav div {
+    width: 100%;
+    display: block;
+    justify-content: center;
+  }
+
+  .navbar-nav div li {
+    justify-content: center;
+  }
+
+  .nav-role {
+    font-size: 2vh;
+    display: block;
+  }
+
+  .nav-link {
+    text-align: center !important;
+    display: block;
+  }
+  .nav-link:hover:after {
+    width: 20%;
+    left: 40%;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .navbar {
+    font-size: 3vh;
   }
 
   .navbar-nav div {
