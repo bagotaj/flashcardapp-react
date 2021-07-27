@@ -8,14 +8,23 @@ const LanguageCards = props => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(`${server}/api/languagecards`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        Authorization: `Bearer ${token}`,
+    const abortController = new AbortController();
+
+    fetch(
+      `${server}/api/languagecards`,
+      {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
       },
-    })
+      { signal: abortController.signal }
+    )
       .then(res => {
+        if (res.status === 204) {
+          throw Error(res.body.message);
+        }
         if (res.status !== 200) {
           throw Error(`Nem sikerült lekérni az adatokat. ${res.status}`);
         }
@@ -26,21 +35,31 @@ const LanguageCards = props => {
         setError(null);
       })
       .catch(err => {
-        setError(err.message);
+        if (err.name === 'AbortError') {
+          throw Error(`Letöltés megszakítva`);
+        } else {
+          setError(err.message);
+        }
       });
+
+    return () => abortController.abort();
   }, []);
 
   return (
-    <main className="container">
+    <div className="mt-5">
       <h2>Szókártyák</h2>
 
       <div>{error && <div className="error">{error}</div>}</div>
       {cards.map(card => (
-        <div className="box center-content" key={card._id}>
-          {card.cardTitle}
+        <div className="box box-content-column" key={card._id}>
+          <div className="box-content-row-up">
+            <span className="box-element-edit">+</span>{' '}
+            <span className="box-element-delete">-</span>
+          </div>
+          <div className="box-content-row-down">{card.cardTitle}</div>
         </div>
       ))}
-    </main>
+    </div>
   );
 };
 
