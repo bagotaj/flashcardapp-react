@@ -35,7 +35,7 @@ const Users = props => {
   }, []);
 
   return (
-    <>
+    <div className="mt-5">
       <h2>Felhasználók</h2>
 
       <div>{error && <div className="error">{error}</div>}</div>
@@ -81,7 +81,7 @@ const Users = props => {
           ))}
         </tbody>
       </table>
-    </>
+    </div>
   );
 };
 
