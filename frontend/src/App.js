@@ -9,8 +9,10 @@ import Register from './components/pages/Register/Register';
 import Main from './components/pages/Main/Main';
 import Dashboard from './components/pages/Dashboard/Dashboard';
 import Admin from './components/pages/Admin/Admin';
+import Cards from './components/pages/Cards/Cards';
 import NewCards from './components/pages/NewCards/NewCards';
 import LanguageCards from './components/pages/LanguageCards/LanguageCards';
+import EditCards from './components/pages/EditCards/EditCards';
 import OtherCards from './components/pages/OtherCards/OtherCards';
 import Users from './components/pages/Users/Users';
 import EditUser from './components/pages/EditUser/EditUser';
@@ -75,6 +77,11 @@ const App = () => {
             />
             <Route
               exact
+              path="/languagecards/:cardId"
+              component={() => <EditCards loggedInUser={loggedInUser} />}
+            />
+            <Route
+              exact
               path="/othercards"
               component={() => <OtherCards token={loggedInUser.token} />}
             />
@@ -87,6 +94,11 @@ const App = () => {
               exact
               path="/profile/:userId"
               component={() => <EditUser token={loggedInUser.token} />}
+            />
+            <Route
+              exact
+              path="/cards/"
+              component={() => <Cards loggedInUser={loggedInUser} />}
             />
             <Route
               exact
