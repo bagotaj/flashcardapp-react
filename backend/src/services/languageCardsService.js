@@ -13,6 +13,7 @@ export const languageCardsService = {
     }
 
     const card = new LanguageCard({
+      cardType: cardData.cardType,
       cardTitle: cardData.cardTitle,
       description: cardData.description,
       cards: cardData.cards,
