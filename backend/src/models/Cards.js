@@ -1,6 +1,12 @@
 import { model, Schema } from 'mongoose';
 
 const cardSchema = new Schema({
+  cardType: {
+    type: String,
+    required: true,
+    max: 255,
+    min: 1,
+  },
   cardTitle: {
     type: String,
     required: true,
