@@ -26,9 +26,9 @@ export const languageCardsController = {
   async getId(req, res) {
     try {
       const card = await LanguageCard.findById(req.params.id);
-      res.status(200).json(card);
+      return res.status(200).json(card);
     } catch (err) {
-      res.status(404).json(err);
+      return res.status(404).json(err);
     }
   },
 
