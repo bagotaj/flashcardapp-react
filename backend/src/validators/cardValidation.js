@@ -7,6 +7,7 @@ const cardValidation = data => {
   });
 
   const schema = Joi.object({
+    cardType: Joi.string().min(1).required(),
     cardTitle: Joi.string().min(1).required(),
     description: Joi.string().min(1),
     cards: Joi.array().items(card),
