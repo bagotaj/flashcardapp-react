@@ -13,6 +13,7 @@ export const otherCardsService = {
     }
 
     const card = new OtherCard({
+      cardType: cardData.cardType,
       cardTitle: cardData.cardTitle,
       description: cardData.description,
       cards: cardData.cards,
