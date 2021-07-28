@@ -41,7 +41,7 @@ const OtherCards = props => {
         <div className="box box-content-column" key={card._id}>
           <div className="box-content-row-up">
             <span className="box-element-edit">
-              <Link to={`/languagecards/${card._id}`}>+</Link>
+              <Link to={`/othercards/${card._id}`}>+</Link>
             </span>{' '}
             <span className="box-element-delete">-</span>
           </div>
