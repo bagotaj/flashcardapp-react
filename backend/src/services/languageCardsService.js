@@ -34,4 +34,34 @@ export const languageCardsService = {
       };
     }
   },
+
+  async updateCards(id, reqData) {
+    const { _id, __v, updatedAt, ...others } = reqData;
+    const { error } = cardValidation(others);
+    console.log('id backend', id);
+    console.log('others backend', others);
+
+    if (error) {
+      return {
+        status: 400,
+        message: error.details[0].message,
+      };
+    }
+
+    try {
+      await LanguageCard.findByIdAndUpdate(id, reqData, {
+        useFindAndModify: false,
+      });
+      return {
+        status: 200,
+        message: 'Felhasználói adatok frissítve!',
+      };
+    } catch (err) {
+      logger.error(err);
+      return {
+        status: 500,
+        message: 'Valami nem működik',
+      };
+    }
+  },
 };
