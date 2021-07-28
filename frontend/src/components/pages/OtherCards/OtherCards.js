@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const OtherCards = props => {
   const { token } = props;
@@ -32,16 +33,26 @@ const OtherCards = props => {
   }, []);
 
   return (
-    <main className="container">
+    <div className="mt-5">
       <h2>Egyéb kártyák</h2>
 
       <div>{error && <div className="error">{error}</div>}</div>
       {cards.map(card => (
-        <div className="box center-content" key={card._id}>
-          {card.cardTitle}
+        <div className="box box-content-column" key={card._id}>
+          <div className="box-content-row-up">
+            <span className="box-element-edit">
+              <Link to={`/languagecards/${card._id}`}>+</Link>
+            </span>{' '}
+            <span className="box-element-delete">-</span>
+          </div>
+          <div className="box-content-row-down">
+            <Link to="/cards" cards={card.cards}>
+              {card.cardTitle}
+            </Link>
+          </div>
         </div>
       ))}
-    </main>
+    </div>
   );
 };
 
