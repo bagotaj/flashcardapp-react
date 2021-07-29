@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const OtherCards = props => {
-  const { token } = props;
+  const { loggedInUser } = props;
 
   const server = process.env.REACT_APP_SERVER_URL;
 
@@ -14,7 +14,7 @@ const OtherCards = props => {
       method: 'GET',
       headers: {
         Accept: 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${loggedInUser.token}`,
       },
     })
       .then(res => {
@@ -37,11 +37,22 @@ const OtherCards = props => {
       <h2>Egyéb kártyák</h2>
 
       <div>{error && <div className="error">{error}</div>}</div>
-      {cards.map(card => (
+      {cards.map((card, index) => (
         <div className="box box-content-column" key={card._id}>
           <div className="box-content-row-up">
             <span className="box-element-edit">
-              <Link to={`/othercards/${card._id}`}>+</Link>
+              <Link
+                to={{
+                  pathname: `/languagecards/${card._id}`,
+                  state: {
+                    card: cards[index],
+                    loggedInUser,
+                  },
+                }}
+              >
+                +
+              </Link>
+              {/* <Link to={`/othercards/${card._id}`}>+</Link> */}
             </span>{' '}
             <span className="box-element-delete">-</span>
           </div>
