@@ -48,10 +48,21 @@ const Cards = () => {
           {'<'}
         </button>
         {flashcards && (
-          <div className="box center-content">
-            {counter >= flashcards.length || counter < 0
-              ? 'Nincs több kártya'
-              : flashcards[counter].side1}
+          <div className="box">
+            <div className="flip-card">
+              <div className="flip-card-inner">
+                <div className="flip-card-front center-content">
+                  {counter >= flashcards.length || counter < 0
+                    ? 'Nincs több kártya'
+                    : flashcards[counter].side1}
+                </div>
+                <div className="flip-card-back center-content">
+                  {counter >= flashcards.length || counter < 0
+                    ? 'Nincs több kártya'
+                    : flashcards[counter].side2}
+                </div>
+              </div>
+            </div>
           </div>
         )}
         <button
