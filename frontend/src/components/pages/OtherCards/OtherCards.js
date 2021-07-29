@@ -74,7 +74,7 @@ const OtherCards = props => {
             <span className="box-element-edit">
               <Link
                 to={{
-                  pathname: `/languagecards/${card._id}`,
+                  pathname: `/othercards/${card._id}`,
                   state: {
                     card: cards[index],
                     loggedInUser,
@@ -85,18 +85,23 @@ const OtherCards = props => {
               </Link>
               {/* <Link to={`/othercards/${card._id}`}>+</Link> */}
             </span>{' '}
-            <span className="box-element-delete">
-              <Button
-                onClick={handleOnClickDelete}
-                buttonType="button"
-                classes="no-button"
-                title="-"
-                dataid={card._id}
-              />
-            </span>
+            <Button
+              onClick={handleOnClickDelete}
+              buttonType="button"
+              classes="no-button box-element-delete"
+              title="-"
+              dataid={card._id}
+            />
           </div>
           <div className="box-content-row-down">
-            <Link to="/cards" cards={card.cards}>
+            <Link
+              to={{
+                pathname: '/cards',
+                state: {
+                  card: cards[index],
+                },
+              }}
+            >
               {card.cardTitle}
             </Link>
           </div>
