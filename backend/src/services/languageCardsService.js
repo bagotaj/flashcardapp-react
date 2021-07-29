@@ -38,8 +38,6 @@ export const languageCardsService = {
   async updateCards(id, reqData) {
     const { _id, __v, updatedAt, ...others } = reqData;
     const { error } = cardValidation(others);
-    console.log('id backend', id);
-    console.log('others backend', others);
 
     if (error) {
       return {
