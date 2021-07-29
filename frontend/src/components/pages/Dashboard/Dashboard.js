@@ -9,7 +9,7 @@ const Dashboard = () => {
   // const [userCards, setUserCards] = useState([]);
 
   return (
-    <div className="container mt-3">
+    <div className="container mt-5">
       <div className="row">
         <div className="col-md-6">
           <Link to="/languagecards" className="box center-content">
