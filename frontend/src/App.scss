@@ -3,6 +3,7 @@
 
 * {
   box-sizing: border-box;
+  color: variables.$color-darkblue;
 }
 
 .App {
@@ -24,7 +25,7 @@
 }
 
 h2 {
-  margin-bottom: 25px;
+  margin-bottom: 30px;
 }
 
 h3 {
@@ -63,9 +64,23 @@ h3 {
   padding-top: 7px;
 }
 
+.box-content-row-down a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+.box-content-row-down a:hover {
+  color: variables.$color-lightblue;
+  text-decoration: inherit;
+}
+
 .box-element-edit {
   color: variables.$color-lightblue;
   padding: 0 5px;
+}
+
+.box-element-edit a {
+  text-decoration: inherit;
 }
 
 .box-element-delete {
@@ -77,6 +92,15 @@ h3 {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.no-button {
+  border: none;
+  background: none;
+}
+
+.delete-text {
+  color: variables.$color-yellow;
 }
 
 @media screen and (max-width: 768px) {
