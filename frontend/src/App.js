@@ -83,14 +83,14 @@ const App = () => {
             <Route
               exact
               path="/othercards"
-              component={() => <OtherCards token={loggedInUser.token} />}
+              component={() => <OtherCards loggedInUser={loggedInUser} />}
             />
             <Route
               exact
               path="/othercards/:cardId"
               component={() => <EditCards loggedInUser={loggedInUser} />}
             />
-            <Route exact path="/cards/:cardId" component={() => <Cards />} />
+            <Route exact path="/cards/" component={() => <Cards />} />
             <Route
               exact
               path="/cards/new"
