@@ -26,4 +26,16 @@ export const usersController = {
     const data = await userService.updateUser(id, reqData);
     res.status(data.status).json(data);
   },
+
+  async delete(req, res) {
+    const deleteId = req.params.id;
+
+    try {
+      const userData = await User.findByIdAndDelete(deleteId);
+      if (!userData) return res.sendStatus(404);
+      return res.status(200).send({ message: 'A felhasználó törölve lett' });
+    } catch (err) {
+      return res.status(400).send(err);
+    }
+  },
 };
