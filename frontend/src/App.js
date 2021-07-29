@@ -73,7 +73,7 @@ const App = () => {
             <Route
               exact
               path="/languagecards"
-              component={() => <LanguageCards token={loggedInUser.token} />}
+              component={() => <LanguageCards loggedInUser={loggedInUser} />}
             />
             <Route
               exact
@@ -87,6 +87,17 @@ const App = () => {
             />
             <Route
               exact
+              path="/othercards/:cardId"
+              component={() => <EditCards loggedInUser={loggedInUser} />}
+            />
+            <Route exact path="/cards/:cardId" component={() => <Cards />} />
+            <Route
+              exact
+              path="/cards/new"
+              component={() => <NewCards loggedInUser={loggedInUser} />}
+            />
+            <Route
+              exact
               path="/users"
               component={() => <Users token={loggedInUser.token} />}
             />
@@ -94,16 +105,6 @@ const App = () => {
               exact
               path="/profile/:userId"
               component={() => <EditUser token={loggedInUser.token} />}
-            />
-            <Route
-              exact
-              path="/cards/"
-              component={() => <Cards loggedInUser={loggedInUser} />}
-            />
-            <Route
-              exact
-              path="/cards/new"
-              component={() => <NewCards loggedInUser={loggedInUser} />}
             />
           </Switch>
         </div>
