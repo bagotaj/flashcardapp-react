@@ -36,4 +36,12 @@ export const languageCardsController = {
     const data = await languageCardsService.saveCards(req.body);
     return res.status(data.status).json(data);
   },
+
+  async put(req, res) {
+    const { id } = req.params;
+    const reqData = req.body;
+
+    const data = await languageCardsService.updateCards(id, reqData);
+    res.status(data.status).json(data);
+  },
 };
