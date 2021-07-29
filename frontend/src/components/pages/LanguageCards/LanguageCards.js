@@ -107,15 +107,13 @@ const LanguageCards = props => {
                 +
               </Link> */}
             </span>{' '}
-            <span className="box-element-delete">
-              <Button
-                onClick={handleOnClickDelete}
-                buttonType="button"
-                classes="no-button"
-                title="-"
-                dataid={card._id}
-              />
-            </span>
+            <Button
+              onClick={handleOnClickDelete}
+              buttonType="button"
+              classes="no-button box-element-delete"
+              title="-"
+              dataid={card._id}
+            />
           </div>
           <div className="box-content-row-down">
             <Link
