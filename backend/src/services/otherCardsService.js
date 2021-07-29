@@ -34,4 +34,32 @@ export const otherCardsService = {
       };
     }
   },
+
+  async updateCards(id, reqData) {
+    const { _id, __v, updatedAt, ...others } = reqData;
+    const { error } = cardValidation(others);
+
+    if (error) {
+      return {
+        status: 400,
+        message: error.details[0].message,
+      };
+    }
+
+    try {
+      await OtherCard.findByIdAndUpdate(id, reqData, {
+        useFindAndModify: false,
+      });
+      return {
+        status: 200,
+        message: 'Felhasználói adatok frissítve!',
+      };
+    } catch (err) {
+      logger.error(err);
+      return {
+        status: 500,
+        message: 'Valami nem működik',
+      };
+    }
+  },
 };
