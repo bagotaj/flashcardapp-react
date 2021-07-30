@@ -83,7 +83,6 @@ const OtherCards = props => {
               >
                 +
               </Link>
-              {/* <Link to={`/othercards/${card._id}`}>+</Link> */}
             </span>{' '}
             <Button
               onClick={handleOnClickDelete}
@@ -99,6 +98,7 @@ const OtherCards = props => {
                 pathname: '/cards',
                 state: {
                   card: cards[index],
+                  loggedInUser,
                 },
               }}
             >
