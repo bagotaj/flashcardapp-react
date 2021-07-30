@@ -16,6 +16,7 @@ import EditCards from './components/pages/EditCards/EditCards';
 import OtherCards from './components/pages/OtherCards/OtherCards';
 import Users from './components/pages/Users/Users';
 import EditUser from './components/pages/EditUser/EditUser';
+import Ranks from './components/pages/Ranks/Ranks';
 
 const App = () => {
   const history = useHistory();
@@ -105,6 +106,11 @@ const App = () => {
               exact
               path="/profile/:userId"
               component={() => <EditUser token={loggedInUser.token} />}
+            />
+            <Route
+              exact
+              path="/ranks"
+              component={() => <Ranks loggedInUser={loggedInUser} />}
             />
           </Switch>
         </div>
