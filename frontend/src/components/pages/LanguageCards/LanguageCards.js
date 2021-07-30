@@ -113,6 +113,7 @@ const LanguageCards = props => {
                 pathname: '/cards',
                 state: {
                   card: cards[index],
+                  loggedInUser,
                 },
               }}
             >
