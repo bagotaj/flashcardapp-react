@@ -6,6 +6,7 @@ import { loginController } from '../controllers/loginController';
 import { usersController } from '../controllers/usersController';
 import { languageCardsController } from '../controllers/languageCardsController';
 import { otherCardsController } from '../controllers/otherCardsController';
+import { rankController } from '../controllers/rankController';
 import authenticateToken from '../middlewares/authenticateToken';
 
 const router = express.Router();
@@ -49,5 +50,7 @@ router.delete(
   authenticateToken,
   otherCardsController.delete
 );
+router.get('/ranks', authenticateToken, rankController.get);
+router.put('/ranks/:id', authenticateToken, rankController.put);
 
 export default router;
