@@ -18,6 +18,7 @@ router.post('/login', loginController.post);
 router.get('/users', authenticateToken, usersController.get);
 router.get('/users/:id', authenticateToken, usersController.getId);
 router.put('/users/:id', authenticateToken, usersController.put);
+router.delete('/users/:id', authenticateToken, usersController.delete);
 router.get('/languagecards', authenticateToken, languageCardsController.get);
 router.post(
   '/languagecards/new',
@@ -34,9 +35,19 @@ router.put(
   authenticateToken,
   languageCardsController.put
 );
+router.delete(
+  '/languagecards/:id',
+  authenticateToken,
+  languageCardsController.delete
+);
 router.get('/othercards', authenticateToken, otherCardsController.get);
 router.post('/othercards/new', authenticateToken, otherCardsController.post);
 router.get('/othercards/:id', authenticateToken, otherCardsController.getId);
 router.put('/othercards/:id', authenticateToken, otherCardsController.put);
+router.delete(
+  '/othercards/:id',
+  authenticateToken,
+  otherCardsController.delete
+);
 
 export default router;
