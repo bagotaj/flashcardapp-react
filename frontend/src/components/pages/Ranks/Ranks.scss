@@ -1,0 +1,16 @@
+@use 'src/styles/variables';
+
+.rank-index {
+  font-weight: bold;
+  margin-right: 15px;
+}
+
+.rank-name {
+  font-size: 20px;
+  margin-right: 15px;
+}
+
+.rank-points {
+  font-weight: bold;
+  color: variables.$color-lightblue;
+}
