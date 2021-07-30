@@ -98,14 +98,6 @@ const LanguageCards = props => {
               >
                 +
               </Link>
-              {/* <Link
-                to={{
-                  pathname: `/languagecards/${card._id}`,
-                  state: { loggedInUser },
-                }}
-              >
-                +
-              </Link> */}
             </span>{' '}
             <Button
               onClick={handleOnClickDelete}
