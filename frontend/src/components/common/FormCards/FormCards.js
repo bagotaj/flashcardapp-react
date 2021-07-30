@@ -1,25 +1,34 @@
 import { useState, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
+
 import InputField from '../InputField/InputField';
 import Button from '../Button/Button';
 
 import './FormCards.scss';
 
 const FormCards = props => {
-  const { type, loggedInUser } = props;
+  const { type, loggedInUser, cardPack, flashcardPack } = props;
+
+  const location = useLocation();
+  console.log('location', location.pathname);
 
   const [formData, setFormData] = useState(
-    type === 'new'
-      ? {
+    type === 'edit'
+      ? cardPack
+      : {
           cardType: '',
           cardTitle: '',
           description: '',
           side1: '',
           side2: '',
         }
-      : {}
   );
+  console.log('formData', formData);
 
-  const [flashcards, setFlashcards] = useState([]);
+  const [flashcards, setFlashcards] = useState(
+    type === 'edit' ? flashcardPack : []
+  );
+  console.log('flashcards', flashcards);
 
   const [cardTypeOptions] = useState([
     { value: '', text: 'Válassz!' },
@@ -31,10 +40,10 @@ const FormCards = props => {
     },
   ]);
 
-  const [endpoints] = useState({
-    languageCards: '/languagecards/new',
-    otherCards: '/othercards/new',
-  });
+  const endpointsNew = {
+    languageCardsNew: '/languagecards/new',
+    otherCardsNew: '/othercards/new',
+  };
 
   const [alert, setAlert] = useState(null);
   const [formWasValidated, setFormWasValidated] = useState(false);
@@ -78,7 +87,7 @@ const FormCards = props => {
   };
 
   const validateField = fieldName => {
-    if (fieldName === 'userId') return true;
+    if (fieldName === 'cardId') return true;
 
     const value = formData[fieldName];
     let isValid = true;
@@ -132,6 +141,41 @@ const FormCards = props => {
     validateField(name);
   };
 
+  const setSendingData = () => {
+    let collectedData = {
+      cardType: formData.cardType,
+      cardTitle: formData.cardTitle,
+      description: formData.description,
+      cards: '',
+      userId: loggedInUser.userId,
+    };
+
+    if (type === 'edit') {
+      const setUpFlashcards = [];
+
+      flashcards.forEach(onecard => {
+        const sides = {
+          side1: onecard.side1,
+          side2: onecard.side2,
+        };
+
+        setUpFlashcards.push(sides);
+      });
+
+      collectedData = {
+        ...collectedData,
+        cards: setUpFlashcards,
+      };
+    } else {
+      collectedData = {
+        ...collectedData,
+        cards: flashcards,
+      };
+    }
+
+    return collectedData;
+  };
+
   const handleAddingCards = async e => {
     e.preventDefault();
     setAlert(null);
@@ -149,28 +193,35 @@ const FormCards = props => {
       const backend = process.env.REACT_APP_SERVER_URL;
       let url;
 
-      if (formData.cardType === 'Nyelv kártya') {
-        url = `${backend}/api${endpoints.languageCards}`;
-      } else {
-        url = `${backend}/api${endpoints.otherCards}`;
+      if (type === 'new' && formData.cardType === 'Nyelv kártya') {
+        url = `${backend}/api${endpointsNew.languageCardsNew}`;
+      } else if (type === 'new' && formData.cardType === 'Egyéb kártya') {
+        url = `${backend}/api${endpointsNew.otherCardsNew}`;
       }
 
-      const collectedData = {
-        cardTitle: formData.cardTitle,
-        description: formData.description,
-        cards: flashcards,
-        userId: loggedInUser.userId,
-      };
+      if (type === 'edit') {
+        url = `${backend}/api${location.pathname}`;
+      }
 
       try {
-        const response = await fetch(url, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${loggedInUser.token}`,
-          },
-          body: JSON.stringify(collectedData),
-        });
+        const response =
+          type === 'new'
+            ? await fetch(url, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: `Bearer ${loggedInUser.token}`,
+                },
+                body: JSON.stringify(setSendingData()),
+              })
+            : await fetch(url, {
+                method: 'PUT',
+                headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: `Bearer ${loggedInUser.token}`,
+                },
+                body: JSON.stringify(setSendingData()),
+              });
 
         if (response.status === 200) {
           setAlert({ alertType: 'primary', message: messageTypes.success });
@@ -239,130 +290,127 @@ const FormCards = props => {
 
   return (
     <>
-      <div className="row mt-5">
-        <h2>Kártyacsomag létrehozása</h2>
-        {alert && (
-          <div>
-            <p className={`alert alert-${alert.alertType}`}>{alert.message}</p>
-          </div>
-        )}
-        <form
-          noValidate
-          onSubmit={handleAddingCards}
-          className={`needs-validation ${formWasValidated && 'was-validated'}`}
-        >
-          <div className="md-3">
+      {alert && (
+        <div>
+          <p className={`alert alert-${alert.alertType}`}>{alert.message}</p>
+        </div>
+      )}
+      <form
+        noValidate
+        onSubmit={handleAddingCards}
+        className={`needs-validation ${formWasValidated && 'was-validated'}`}
+      >
+        <div className="md-3">
+          <InputField
+            name="cardType"
+            type="select"
+            value={formData.cardType}
+            labelText="Kártyacsomag típusa"
+            options={cardTypeOptions}
+            handleInputChange={handleInputChange}
+            handleInputBlur={handleInputBlur}
+            reference={references.cardTitle}
+            error={formErrors.cardTitle}
+            required
+          />
+        </div>
+        <div className="md-3">
+          <InputField
+            name="cardTitle"
+            type="text"
+            value={formData.cardTitle}
+            labelText="Kártyacsomag neve"
+            handleInputChange={handleInputChange}
+            handleInputBlur={handleInputBlur}
+            reference={references.cardTitle}
+            error={formErrors.cardTitle}
+            required
+          />
+        </div>
+        <div className="md-3">
+          <InputField
+            name="description"
+            type="textarea"
+            value={formData.description}
+            labelText="Leírás"
+            handleInputChange={handleInputChange}
+            handleInputBlur={handleInputBlur}
+            reference={references.description}
+            error={formErrors.description}
+          />
+        </div>
+
+        <h3>Kártya létrehozása</h3>
+        <div className="row">
+          <div className="col md-3">
             <InputField
-              name="cardType"
-              type="select"
-              value={formData.cardType}
-              labelText="Kártyacsomag típusa"
-              options={cardTypeOptions}
-              handleInputChange={handleInputChange}
-              handleInputBlur={handleInputBlur}
-              reference={references.cardTitle}
-              error={formErrors.cardTitle}
-              required
-            />
-          </div>
-          <div className="md-3">
-            <InputField
-              name="cardTitle"
+              name="side1"
               type="text"
-              value={formData.cardTitle}
-              labelText="Kártyacsomag neve"
+              value={formData.side1}
+              labelText="Első oldal"
               handleInputChange={handleInputChange}
               handleInputBlur={handleInputBlur}
-              reference={references.cardTitle}
-              error={formErrors.cardTitle}
-              required
+              reference={references.side1}
+              error={formErrors.side1}
             />
           </div>
-          <div className="md-3">
+          <div className="col md-3">
             <InputField
-              name="description"
-              type="textarea"
-              value={formData.description}
-              labelText="Leírás"
+              name="side2"
+              type="text"
+              value={formData.side2}
+              labelText="Második oldal"
               handleInputChange={handleInputChange}
               handleInputBlur={handleInputBlur}
-              reference={references.description}
-              error={formErrors.description}
+              reference={references.side2}
+              error={formErrors.side2}
             />
           </div>
+        </div>
+        <div className="d-grid gap-2 d-md-block mt-3 mb-3">
+          <Button
+            buttonType="submit"
+            classes="btn btn-primary m-3"
+            title="Mentés"
+          />
 
-          <h3>Kártya létrehozása</h3>
-          <div className="row">
-            <div className="col md-3">
-              <InputField
-                name="side1"
-                type="text"
-                value={formData.side1}
-                labelText="Első oldal"
-                handleInputChange={handleInputChange}
-                handleInputBlur={handleInputBlur}
-                reference={references.side1}
-                error={formErrors.side1}
-              />
-            </div>
-            <div className="col md-3">
-              <InputField
-                name="side2"
-                type="text"
-                value={formData.side2}
-                labelText="Második oldal"
-                handleInputChange={handleInputChange}
-                handleInputBlur={handleInputBlur}
-                reference={references.side2}
-                error={formErrors.side2}
-              />
-            </div>
-          </div>
-          <div className="d-grid gap-2 d-md-block mt-3 mb-3">
-            <Button
-              buttonType="submit"
-              classes="btn btn-primary m-3"
-              title="Mentés"
-            />
-
-            <Button
-              buttonType="button"
-              onClick={handleAddingOneCard}
-              classes="btn btn-primary m-3"
-              title="Szókártya hozzáadása"
-            />
-          </div>
-          <div>
-            {flashcards.length !== 0 &&
-              flashcards.map((flashcard, index) => (
-                <div className="row mb-3" key={flashcard.side1}>
-                  <div className="col-6 col-lg-5">
-                    <div className="box center-content">{flashcard.side1}</div>
-                  </div>
-                  <div className="col-6 col-lg-5">
-                    <div className="box center-content">{flashcard.side2}</div>
-                  </div>
-                  <div className="col-6 col-lg-2 new-card-buttons">
-                    <Button
-                      buttonType="button"
-                      onClick={handleEditFlashcard}
-                      classes="btn btn-primary new-card-one-button"
-                      title="+"
-                      dataid={index}
-                    />
-                    <Button
-                      buttonType="button"
-                      onClick={handleDeleteFlashcard}
-                      classes="btn btn-warning new-card-one-button"
-                      title="-"
-                      dataid={index}
-                    />
-                  </div>
+          <Button
+            buttonType="button"
+            onClick={handleAddingOneCard}
+            classes="btn btn-primary m-3"
+            title="Szókártya hozzáadása"
+          />
+        </div>
+        <div>
+          {flashcards.length !== 0 &&
+            flashcards.map((flashcard, index) => (
+              <div className="row mb-3" key={flashcard.side1}>
+                <div className="col-6 col-lg-5">
+                  <div className="box center-content">{flashcard.side1}</div>
                 </div>
-              ))}
-          </div>
-        </form>
-      </div>
+                <div className="col-6 col-lg-5">
+                  <div className="box center-content">{flashcard.side2}</div>
+                </div>
+                <div className="col-6 col-lg-2 new-card-buttons">
+                  <Button
+                    buttonType="button"
+                    onClick={handleEditFlashcard}
+                    classes="btn btn-primary new-card-one-button"
+                    title="+"
+                    dataid={index}
+                  />
+                  <Button
+                    buttonType="button"
+                    onClick={handleDeleteFlashcard}
+                    classes="btn btn-warning new-card-one-button"
+                    title="-"
+                    dataid={index}
+                  />
+                </div>
+              </div>
+            ))}
+        </div>
+      </form>
     </>
   );
 };
