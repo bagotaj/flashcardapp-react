@@ -3,6 +3,9 @@ import { Switch, Route, useHistory } from 'react-router-dom';
 
 import './App.scss';
 
+import PrivateRoute from './hoc/PrivateRoute/PrivateRoute';
+import NotFound from './components/pages/NotFound/NotFound';
+
 import Navbar from './components/common/Navbar/Navbar';
 import Login from './components/pages/Login/Login';
 import Register from './components/pages/Register/Register';
@@ -61,57 +64,30 @@ const App = () => {
               )}
             />
             <Route exact path="/register" component={Register} />
-            <Route
-              exact
-              path="/dashboard"
-              component={() => <Dashboard loggedInUser={loggedInUser} />}
-            />
-            <Route
-              exact
-              path="/admin"
-              component={() => <Admin loggedInUser={loggedInUser} />}
-            />
-            <Route
+            <PrivateRoute exact path="/dashboard" component={Dashboard} />
+            <PrivateRoute exact path="/admin" component={Admin} />
+            <PrivateRoute
               exact
               path="/languagecards"
-              component={() => <LanguageCards loggedInUser={loggedInUser} />}
+              component={LanguageCards}
             />
-            <Route
+            <PrivateRoute
               exact
               path="/languagecards/:cardId"
-              component={() => <EditCards loggedInUser={loggedInUser} />}
+              component={EditCards}
             />
-            <Route
-              exact
-              path="/othercards"
-              component={() => <OtherCards loggedInUser={loggedInUser} />}
-            />
-            <Route
+            <PrivateRoute exact path="/othercards" component={OtherCards} />
+            <PrivateRoute
               exact
               path="/othercards/:cardId"
-              component={() => <EditCards loggedInUser={loggedInUser} />}
+              component={EditCards}
             />
-            <Route exact path="/cards/" component={() => <Cards />} />
-            <Route
-              exact
-              path="/cards/new"
-              component={() => <NewCards loggedInUser={loggedInUser} />}
-            />
-            <Route
-              exact
-              path="/users"
-              component={() => <Users token={loggedInUser.token} />}
-            />
-            <Route
-              exact
-              path="/profile/:userId"
-              component={() => <EditUser token={loggedInUser.token} />}
-            />
-            <Route
-              exact
-              path="/ranks"
-              component={() => <Ranks loggedInUser={loggedInUser} />}
-            />
+            <PrivateRoute exact path="/cards/" component={Cards} />
+            <PrivateRoute exact path="/cards/new" component={NewCards} />
+            <PrivateRoute exact path="/users" component={Users} />
+            <PrivateRoute exact path="/profile/:userId" component={EditUser} />
+            <PrivateRoute exact path="/ranks" component={Ranks} />
+            <Route component={NotFound} />
           </Switch>
         </div>
       </div>
