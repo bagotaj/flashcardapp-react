@@ -51,6 +51,7 @@ router.delete(
   otherCardsController.delete
 );
 router.get('/ranks', authenticateToken, rankController.get);
+router.get('/ranks/main', rankController.getTopFive);
 router.put('/ranks/:id', authenticateToken, rankController.put);
 
 export default router;
