@@ -4,7 +4,7 @@ const rankValidation = data => {
   const schema = Joi.object({
     userId: Joi.string().min(1).required(),
     userName: Joi.string().min(1).required(),
-    points: Joi.number().min(1),
+    points: Joi.number().min(0),
   });
   return schema.validate(data);
 };
