@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, Prompt } from 'react-router-dom';
 
+import Button from '../../common/Button/Button';
+
 import './Cards.scss';
 
 const Cards = () => {
   const location = useLocation();
   const { card, loggedInUser } = location.state;
-  const rankId = '61041245e1afc9df8aab4171';
 
   const [cardPack, setCardPack] = useState({});
   const [flashcards, setFlashcards] = useState([]);
@@ -14,18 +15,24 @@ const Cards = () => {
   const [rankPoints, setRankPoints] = useState(0);
   const [shouldBlockNavigation] = useState(true);
   const [alert, setAlert] = useState(null);
-  console.log(rankPoints);
-  console.log(loggedInUser);
 
   useEffect(() => {
-    const setUpFormData = {
-      cardType: card.cardType,
-      cardTitle: card.cardTitle,
-      description: card.description,
-    };
+    let didCancel = false;
 
-    setCardPack(setUpFormData);
-    setFlashcards(card.cards);
+    if (!didCancel) {
+      const setUpFormData = {
+        cardType: card.cardType,
+        cardTitle: card.cardTitle,
+        description: card.description,
+      };
+
+      setCardPack(setUpFormData);
+      setFlashcards(card.cards);
+    }
+
+    return () => {
+      didCancel = true;
+    };
   }, [card]);
 
   const handlerOnClickIncreaseCounter = () => {
@@ -62,8 +69,7 @@ const Cards = () => {
   };
 
   const uploadRankData = () => {
-    console.log(setSentData());
-    fetch(`${server}/api/ranks/${rankId}`, {
+    fetch(`${server}/api/ranks/${card.userId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -98,7 +104,24 @@ const Cards = () => {
         }}
       />
       <div className="mt-5">
-        <h2>{cardPack.cardTitle}</h2>
+        <div className="cards-title">
+          <h2 className="cards-h2">{cardPack.cardTitle}</h2>
+          <Button
+            linkRouterPath={{
+              pathname: `/${
+                card.cardType === 'Nyelv kártya'
+                  ? 'languagecards'
+                  : 'othercards'
+              }/${card._id}`,
+              state: {
+                card,
+                loggedInUser,
+              },
+            }}
+            classes="btn btn-primary new-card-one-button"
+            title="+"
+          />
+        </div>
         <button
           type="button"
           className="no-button"
