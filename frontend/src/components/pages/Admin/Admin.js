@@ -7,6 +7,9 @@ const Admin = () => {
       <Link to="/users" className="box center-content">
         Felhasználók listája
       </Link>
+      <Link to="/ranks" className="box center-content">
+        Felhasználók ranglistája
+      </Link>
       <Link to="/languagecards" className="box center-content">
         Szókártya lista
       </Link>
