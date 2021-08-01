@@ -16,7 +16,6 @@ const rankSchema = new Schema({
   points: {
     type: Number,
     required: true,
-    min: 1,
   },
 });
 
