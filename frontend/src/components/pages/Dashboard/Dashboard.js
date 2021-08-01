@@ -1,13 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import './Dashboard.scss';
-
 const Dashboard = () => {
-  // const { loggedInUser } = props;
-
-  // const [userCards, setUserCards] = useState([]);
-
   return (
     <div className="container mt-5">
       <div className="row">
