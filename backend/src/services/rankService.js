@@ -6,7 +6,6 @@ export const rankService = {
   async updateRanks(id, reqData) {
     const { _id, __v, updatedAt, ...others } = reqData;
     const { error } = rankValidation(others);
-    console.log(id);
 
     if (error) {
       return {
@@ -16,9 +15,15 @@ export const rankService = {
     }
 
     try {
-      await Ranks.findByIdAndUpdate(id, reqData, {
-        useFindAndModify: false,
-      });
+      const userId = { userId: id };
+
+      await Ranks.findOneAndUpdate(
+        userId,
+        { $inc: { points: reqData.points } },
+        {
+          useFindAndModify: false,
+        }
+      );
       return {
         status: 200,
         message: 'Felhasználói pontszámok frissítve!',
