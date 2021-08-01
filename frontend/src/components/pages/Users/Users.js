@@ -4,7 +4,7 @@ import Button from '../../common/Button/Button';
 import './Users.scss';
 
 const Users = props => {
-  const { token } = props;
+  const { loggedInUser } = props;
 
   const server = process.env.REACT_APP_SERVER_URL;
 
@@ -18,7 +18,7 @@ const Users = props => {
       method: 'GET',
       headers: {
         Accept: 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${loggedInUser.token}`,
       },
     })
       .then(res => {
@@ -51,7 +51,7 @@ const Users = props => {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${loggedInUser.token}`,
       },
     })
       .then(res => {
