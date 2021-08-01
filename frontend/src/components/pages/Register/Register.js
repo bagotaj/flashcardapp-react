@@ -169,7 +169,7 @@ const Register = () => {
 
   return (
     <>
-      <div className="row mt-5">
+      <div className="mt-5">
         <h2>Regisztráció</h2>
         <div>
           {alert && (
@@ -180,7 +180,9 @@ const Register = () => {
         <form
           noValidate
           onSubmit={handleRegister}
-          className={`needs-validation ${formWasValidated && 'was-validated'}`}
+          className={`form-max-width needs-validation ${
+            formWasValidated && 'was-validated'
+          }`}
         >
           <div className="md-3">
             <InputField
@@ -232,7 +234,7 @@ const Register = () => {
           </div>
           <Button
             buttonType="submit"
-            classes="btn btn-primary mt-3"
+            classes="btn btn-primary my-4"
             title="Elküldés"
           />
         </form>

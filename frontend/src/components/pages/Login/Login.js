@@ -160,7 +160,7 @@ const Login = props => {
   };
 
   return (
-    <div className="row mt-5">
+    <div className="mt-5">
       <h2>Bejelentkezés</h2>
 
       <div>
@@ -172,7 +172,9 @@ const Login = props => {
       <form
         noValidate
         onSubmit={handleLogin}
-        className={`needs-validation ${formWasValidated && 'was-validated'}`}
+        className={`form-max-width needs-validation ${
+          formWasValidated && 'was-validated'
+        }`}
       >
         <div className="md-3">
           <InputField
@@ -202,7 +204,7 @@ const Login = props => {
         </div>
         <Button
           buttonType="submit"
-          classes="btn btn-primary mt-3"
+          classes="btn btn-primary my-4"
           title="Belépés"
         />
       </form>
