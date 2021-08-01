@@ -77,51 +77,69 @@ const LanguageCards = props => {
 
   return (
     <div className="mt-5">
-      <h2>Szókártyák</h2>
+      <div className="cards-title">
+        <h2 className="cards-h2">Szókártyák</h2>
+        <Button
+          linkRouterPath="/cards/new"
+          classes="btn btn-primary new-card-one-button"
+          title="+"
+        />
+      </div>
       {alert && (
         <div>
           <p className={`alert alert-${alert.alertType}`}>{alert.message}</p>
         </div>
       )}
-      {cards.map((card, index) => (
-        <div className="box box-content-column" key={card._id}>
-          <div className="box-content-row-up">
-            <span className="box-element-edit">
+      {cards.length !== 0 ? (
+        cards.map((card, index) => (
+          <div className="box box-content-column" key={card._id}>
+            <div className="box-content-row-up">
+              <span className="box-element-edit">
+                <Link
+                  to={{
+                    pathname: `/languagecards/${card._id}`,
+                    state: {
+                      card: cards[index],
+                      loggedInUser,
+                    },
+                  }}
+                >
+                  +
+                </Link>
+              </span>{' '}
+              <Button
+                onClick={handleOnClickDelete}
+                buttonType="button"
+                classes="no-button box-element-delete"
+                title="-"
+                dataid={card._id}
+              />
+            </div>
+            <div className="box-content-row-down">
               <Link
                 to={{
-                  pathname: `/languagecards/${card._id}`,
+                  pathname: '/cards',
                   state: {
                     card: cards[index],
                     loggedInUser,
                   },
                 }}
               >
-                +
+                {card.cardTitle}
               </Link>
-            </span>{' '}
-            <Button
-              onClick={handleOnClickDelete}
-              buttonType="button"
-              classes="no-button box-element-delete"
-              title="-"
-              dataid={card._id}
-            />
+            </div>
           </div>
-          <div className="box-content-row-down">
-            <Link
-              to={{
-                pathname: '/cards',
-                state: {
-                  card: cards[index],
-                  loggedInUser,
-                },
-              }}
-            >
-              {card.cardTitle}
-            </Link>
-          </div>
+        ))
+      ) : (
+        <div>
+          <p>Nincs még szókártyád?</p>
+          <Button
+            linkRouterPath="/cards/new"
+            classes="text-link"
+            title="Készíts egyet!"
+          />
         </div>
-      ))}
+      )}
     </div>
   );
 };
