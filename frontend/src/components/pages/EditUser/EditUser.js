@@ -9,7 +9,7 @@ const EditUser = props => {
   const history = useHistory();
 
   const { userId } = useParams();
-  const { token } = props;
+  const { loggedInUser } = props;
 
   const server = process.env.REACT_APP_SERVER_URL;
 
@@ -29,7 +29,7 @@ const EditUser = props => {
       method: 'GET',
       headers: {
         Accept: 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${loggedInUser.token}`,
       },
     })
       .then(res => {
@@ -179,7 +179,7 @@ const EditUser = props => {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${loggedInUser.token}`,
         },
         body: JSON.stringify(formData),
       })
