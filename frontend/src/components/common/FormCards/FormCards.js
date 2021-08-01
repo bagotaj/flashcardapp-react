@@ -10,7 +10,6 @@ const FormCards = props => {
   const { type, loggedInUser, cardPack, flashcardPack } = props;
 
   const location = useLocation();
-  console.log('location', location.pathname);
 
   const [formData, setFormData] = useState(
     type === 'edit'
@@ -23,12 +22,10 @@ const FormCards = props => {
           side2: '',
         }
   );
-  console.log('formData', formData);
 
   const [flashcards, setFlashcards] = useState(
     type === 'edit' ? flashcardPack : []
   );
-  console.log('flashcards', flashcards);
 
   const [cardTypeOptions] = useState([
     { value: '', text: 'Válassz!' },
