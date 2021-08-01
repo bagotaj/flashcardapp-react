@@ -4,7 +4,9 @@ import { Ranks } from '../models/Ranks';
 export const rankController = {
   get(req, res) {
     try {
-      Ranks.find().then(foundRanks => res.status(200).json(foundRanks));
+      Ranks.find()
+        .sort({ points: -1 })
+        .then(foundRanks => res.status(200).json(foundRanks));
     } catch (err) {
       res.status(400).send(err);
     }
