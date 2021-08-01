@@ -12,6 +12,17 @@ export const rankController = {
     }
   },
 
+  getTopFive(req, res) {
+    try {
+      Ranks.aggregate()
+        .sort({ points: -1 })
+        .limit(5)
+        .then(foundRanks => res.status(200).json(foundRanks));
+    } catch (err) {
+      res.status(400).send(err);
+    }
+  },
+
   async put(req, res) {
     const { id } = req.params;
     const reqData = req.body;
