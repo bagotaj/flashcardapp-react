@@ -12,6 +12,8 @@ const Users = props => {
   const [alert, setAlert] = useState(null);
 
   useEffect(() => {
+    let didCancel = false;
+
     fetch(`${server}/api/users`, {
       method: 'GET',
       headers: {
@@ -27,12 +29,18 @@ const Users = props => {
         return res.json();
       })
       .then(jsonRes => {
-        setUsers(jsonRes);
-        setAlert(null);
+        if (!didCancel) {
+          setUsers(jsonRes);
+          setAlert(null);
+        }
       })
       .catch(err => {
         setAlert({ alertType: 'danger', message: err.message });
       });
+
+    return () => {
+      didCancel = true;
+    };
   }, []);
 
   const handleOnClickDelete = e => {
