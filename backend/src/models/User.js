@@ -41,4 +41,5 @@ const userSchema = new Schema({
   },
 });
 
-export default model('User', userSchema);
+export const User = model('user', userSchema);
+export const Admin = model('admin', userSchema);
