@@ -63,6 +63,16 @@ const App = () => {
                 />
               )}
             />
+            <Route
+              exact
+              path="/admin/login"
+              component={() => (
+                <Login
+                  handleLoggedInUser={setLoggedInUser}
+                  handleLocalStorage={handleLocalStorage}
+                />
+              )}
+            />
             <Route exact path="/register" component={Register} />
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
             <PrivateRoute exact path="/admin" component={Admin} />
