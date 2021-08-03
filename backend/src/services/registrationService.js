@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import logger from '../logger';
-import User from '../models/User';
+import { User } from '../models/User';
 import { registerValidation } from '../validators/registerValidation';
 
 export const registrationService = {
@@ -8,7 +8,7 @@ export const registrationService = {
     const { error } = registerValidation(userData);
     if (error) {
       return {
-        status: 400,
+        status: 401,
         message: error.details[0].message,
       };
     }
