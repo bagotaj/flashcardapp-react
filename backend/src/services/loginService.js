@@ -3,20 +3,29 @@ import jwt from 'jsonwebtoken';
 import logger from '../logger';
 
 import { loginValidation } from '../validators/loginValidation';
-import User from '../models/User';
+import { User, Admin } from '../models/User';
 import { Ranks } from '../models/Ranks';
 
 export const loginService = {
   async loginUser(loginData) {
-    const { error } = loginValidation(loginData);
+    const { location, ...others } = loginData;
+
+    const { error } = loginValidation(others);
     if (error) {
       return {
-        status: 400,
+        status: 401,
         message: error.details[0].message,
       };
     }
 
-    const user = await User.findOne({ email: loginData.email });
+    let user;
+
+    if (location === '/login') {
+      user = await User.findOne({ email: loginData.email });
+    } else {
+      user = await Admin.findOne({ email: loginData.email });
+    }
+
     if (!user) {
       return {
         status: 400,
@@ -27,7 +36,7 @@ export const loginService = {
     const validPass = await bcrypt.compare(loginData.password, user.password);
     if (!validPass) {
       return {
-        status: 400,
+        status: 403,
         message: 'Az email cím vagy a jelszó nem megfelelő',
       };
     }
