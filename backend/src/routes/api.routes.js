@@ -16,6 +16,7 @@ router.use(express.json());
 
 router.post('/register', registrationController.post);
 router.post('/login', loginController.post);
+router.post('/admin/login', loginController.post);
 router.get('/users', authenticateToken, usersController.get);
 router.get('/users/:id', authenticateToken, usersController.getId);
 router.put('/users/:id', authenticateToken, usersController.put);
