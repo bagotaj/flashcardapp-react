@@ -3,7 +3,6 @@ import { useParams, useHistory } from 'react-router-dom';
 import validator from 'validator';
 import InputField from '../../common/InputField/InputField';
 import Button from '../../common/Button/Button';
-// import './EditUser.scss';
 
 const EditUser = props => {
   const history = useHistory();
@@ -44,7 +43,7 @@ const EditUser = props => {
         setAlert(null);
       })
       .catch(err => {
-        setAlert(err.message);
+        setAlert({ alertType: 'danger', message: err.message });
       });
   }, [userId]);
 
@@ -206,18 +205,19 @@ const EditUser = props => {
 
   return (
     <>
-      <div className="row mt-5">
+      <div className="mt-5">
         <h2>Felhasználói profil</h2>
-        <div>
-          {alert && (
+        {alert && (
+          <div>
             <p className={`alert alert-${alert.alertType}`}>{alert.message}</p>
-          )}
-        </div>
-
+          </div>
+        )}
         <form
           noValidate
           onSubmit={handleUpdate}
-          className={`needs-validation ${formWasValidated && 'was-validated'}`}
+          className={`form-max-width needs-validation ${
+            formWasValidated && 'was-validated'
+          }`}
         >
           <div className="md-3">
             <InputField
@@ -281,7 +281,7 @@ const EditUser = props => {
           </div>
           <Button
             buttonType="submit"
-            classes="btn btn-primary mt-3"
+            classes="btn btn-primary my-4"
             title="Mentés"
           />
         </form>
