@@ -3,14 +3,14 @@
 .rank-index {
   font-weight: bold;
   margin-right: 15px;
+  color: variables.$color-darkblue;
 }
 
 .rank-name {
-  font-size: 20px;
   margin-right: 15px;
+  color: variables.$color-darkblue;
 }
 
 .rank-points {
   font-weight: bold;
-  color: variables.$color-lightblue;
 }
