@@ -34,6 +34,7 @@ const Main = () => {
 
     return () => abortController.abort();
   }, []);
+
   return (
     <>
       <div className="mt-5">
