@@ -57,7 +57,7 @@ const Ranks = props => {
         </div>
       )}
       {ranks.map((rank, index) => (
-        <div className="box center-content" key={rank._id}>
+        <div className="box-mini center-content" key={rank._id}>
           <span className="rank-index">{index + 1}.</span>
           <span className="rank-name">{rank.userName}</span>
           <span className="rank-points">{rank.points} pont</span>
