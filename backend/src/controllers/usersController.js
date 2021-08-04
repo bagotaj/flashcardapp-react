@@ -1,4 +1,4 @@
-import User from '../models/User';
+import { User } from '../models/User';
 import { userService } from '../services/userService';
 
 export const usersController = {
