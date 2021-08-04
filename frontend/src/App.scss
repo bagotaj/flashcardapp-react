@@ -54,11 +54,17 @@ h3 {
   min-width: 200px;
   margin: 15px;
   background: white;
-  border: solid 1px rgb(240, 240, 240);
+  border: solid 1px variables.$color-lightgrey-box-border;
   border-radius: 15px;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.5s ease-in-out;
   color: variables.$color-darkblue;
   text-decoration: none;
+}
+
+.box:hover {
+  font-size: 1.1rem;
+  border: solid 1px variables.$color-bluegrey;
+  box-shadow: 0 0 1em variables.$color-lightgrey-box-shadow;
 }
 
 .box-mini {
@@ -66,16 +72,18 @@ h3 {
   min-width: 200px;
   margin: 15px;
   background: white;
-  border: solid 1px rgb(240, 240, 240);
+  border: solid 1px variables.$color-lightgrey-box-border;
   border-radius: 15px;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.5s ease-in-out;
   color: variables.$color-darkblue;
   text-decoration: none;
 }
 
-.box:hover,
 .box-mini:hover {
-  box-shadow: 0 0 1em rgb(225, 225, 225);
+  color: variables.$color-lightblue;
+  font-size: 1.2rem;
+  border: solid 1px variables.$color-bluegrey;
+  box-shadow: 0 0 1em variables.$color-lightgrey-box-shadow;
 }
 
 .box-content-column {
