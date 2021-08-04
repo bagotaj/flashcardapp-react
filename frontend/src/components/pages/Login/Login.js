@@ -1,11 +1,12 @@
 import React, { useState, useRef } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import validator from 'validator';
 import InputField from '../../common/InputField/InputField';
 import Button from '../../common/Button/Button';
 
 const Login = props => {
   const history = useHistory();
+  const location = useLocation();
 
   const server = process.env.REACT_APP_SERVER_URL;
 
@@ -120,13 +121,13 @@ const Login = props => {
     setFormWasValidated(false);
     const isValid = isFormValid();
     if (isValid) {
-      fetch(`${server}/api/login`, {
+      fetch(`${server}/api${location.pathname}`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, location: location.pathname }),
       })
         .then(res => res.json())
         .then(data => {
