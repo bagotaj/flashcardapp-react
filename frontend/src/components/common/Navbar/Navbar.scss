@@ -46,26 +46,6 @@
   display: flex;
 }
 
-.nav-link-clicked {
-  display: block;
-  padding: 0.5rem 1rem;
-  text-decoration: none;
-  color: variables.$color-lightgrey !important;
-  position: relative;
-}
-
-.nav-link-clicked:after {
-  background: none repeat scroll 0 0 transparent;
-  bottom: 0;
-  content: '';
-  display: block;
-  height: 4px;
-  position: absolute;
-  background: variables.$color-lightgrey;
-  width: 100%;
-  left: 0;
-}
-
 li {
   display: flex;
   align-items: center;
