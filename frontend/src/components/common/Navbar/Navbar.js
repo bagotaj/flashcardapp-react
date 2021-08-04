@@ -26,14 +26,28 @@ const Navbar = props => {
             <>
               <ul className="navbar-nav nav-item-flex mb-lg-0">
                 <div className="ms-lg-2">
-                  <li className="nav-item p-2">
+                  <li className="nav-item p-3">
                     <NavLink to="/dashboard" className="nav-link">
-                      Home
+                      Flashcards
                     </NavLink>
                   </li>
                 </div>
                 <div className="nav-item-flex me-lg-2">
-                  <li className="nav-item p-2 w-100">
+                  <li className="nav-item p-3">
+                    <NavLink to="/dashboard" className="nav-link">
+                      Home
+                    </NavLink>
+                  </li>
+                  {user.role === 'user' && (
+                    <>
+                      <li className="nav-item p-3 w-100">
+                        <NavLink to="/dashboard" className="nav-link">
+                          Kártyáim
+                        </NavLink>
+                      </li>
+                    </>
+                  )}
+                  <li className="nav-item p-3 w-100">
                     <NavLink
                       to={`/profile/${user.userId}`}
                       className="nav-link"
@@ -41,14 +55,24 @@ const Navbar = props => {
                       {user.firstName}
                     </NavLink>
                   </li>
-                  {user.role === 'admin' && (
-                    <li className="nav-item p-2 w-100">
-                      <NavLink to="/admin" className="nav-link">
-                        Adminisztrátor
-                      </NavLink>
-                    </li>
+                  {user.role === 'admin' ? (
+                    <>
+                      <li className="nav-item p-3 w-100">
+                        <NavLink to="/admin" className="nav-link">
+                          Adminisztrátor
+                        </NavLink>
+                      </li>
+                    </>
+                  ) : (
+                    <>
+                      <li className="nav-item p-3 w-100">
+                        <NavLink to="/ranks" className="nav-link">
+                          Ranglista
+                        </NavLink>
+                      </li>
+                    </>
                   )}
-                  <li className="nav-item p-2 w-100">
+                  <li className="nav-item p-3 w-100">
                     <NavLink to="/" className="nav-link" onClick={handleLogout}>
                       Kilépés
                     </NavLink>
@@ -60,19 +84,19 @@ const Navbar = props => {
             <>
               <ul className="navbar-nav nav-item-flex mb-lg-0">
                 <div className="ms-lg-2">
-                  <li className="nav-item p-2">
+                  <li className="nav-item p-3">
                     <NavLink to="/" exact className="nav-link">
-                      Home
+                      Flashcards
                     </NavLink>
                   </li>
                 </div>
                 <div className="nav-item-flex me-lg-2">
-                  <li className="nav-item p-2 w-100">
+                  <li className="nav-item p-3 w-100">
                     <NavLink to="/register" className="nav-link">
                       Regisztráció
                     </NavLink>
                   </li>
-                  <li className="nav-item p-2 w-100">
+                  <li className="nav-item p-3 w-100">
                     <NavLink exact to="/login" className="nav-link">
                       Bejelentkezés
                     </NavLink>
