@@ -4,7 +4,6 @@ import NotFound from '../../components/pages/NotFound/NotFound';
 
 const PrivateRoute = ({ component: Component, path }) => {
   const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
-  console.log(loggedInUser);
 
   if (!loggedInUser) {
     return <Redirect to="/login" />;
