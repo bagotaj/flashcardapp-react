@@ -17,10 +17,12 @@ router.use(express.json());
 router.post('/register', registrationController.post);
 router.post('/login', loginController.post);
 router.post('/admin/login', loginController.post);
+
 router.get('/users', authenticateToken, usersController.get);
 router.get('/users/:id', authenticateToken, usersController.getId);
 router.put('/users/:id', authenticateToken, usersController.put);
 router.delete('/users/:id', authenticateToken, usersController.delete);
+
 router.get('/languagecards', authenticateToken, languageCardsController.get);
 router.post(
   '/languagecards/new',
@@ -42,6 +44,7 @@ router.delete(
   authenticateToken,
   languageCardsController.delete
 );
+
 router.get('/othercards', authenticateToken, otherCardsController.get);
 router.post('/othercards/new', authenticateToken, otherCardsController.post);
 router.get('/othercards/:id', authenticateToken, otherCardsController.getId);
@@ -51,6 +54,7 @@ router.delete(
   authenticateToken,
   otherCardsController.delete
 );
+
 router.get('/ranks', authenticateToken, rankController.get);
 router.get('/ranks/main', rankController.getTopFive);
 router.put('/ranks/:id', authenticateToken, rankController.put);
