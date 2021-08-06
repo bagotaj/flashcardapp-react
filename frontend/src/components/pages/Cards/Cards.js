@@ -124,7 +124,7 @@ const Cards = () => {
         </div>
         <button
           type="button"
-          className="no-button"
+          className="no-button-cards"
           onClick={handlerOnClickDecreaseCounter}
         >
           {'<'}
@@ -148,7 +148,7 @@ const Cards = () => {
           ))}
         <button
           type="button"
-          className="no-button"
+          className="no-button-cards"
           onClick={handlerOnClickIncreaseCounter}
         >
           {'>'}
