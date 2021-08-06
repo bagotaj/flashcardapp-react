@@ -38,7 +38,7 @@ const Main = () => {
   return (
     <>
       <div className="mt-5">
-        <h2>Te hanyadik vagy?</h2>
+        <h2>Mennyit tanultál ma?</h2>
         {alert && (
           <div>
             <p className={`alert alert-${alert.alertType}`}>{alert.message}</p>
