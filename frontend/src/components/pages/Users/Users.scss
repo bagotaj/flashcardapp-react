@@ -23,9 +23,9 @@ td {
   .cell-hyphens {
     word-wrap: break-word;
     max-width: 1px;
-    -webkit-hyphens: auto; /* iOS 4.2+ */
-    -moz-hyphens: auto; /* Firefox 5+ */
-    -ms-hyphens: auto; /* IE 10+ */
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
     hyphens: auto;
   }
 
