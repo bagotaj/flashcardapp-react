@@ -1,5 +1,6 @@
+import bcrypt from 'bcryptjs';
 import logger from '../logger';
-import User from '../models/User';
+import { User } from '../models/User';
 import { userValidation } from '../validators/userValidation';
 
 export const userService = {
@@ -14,8 +15,15 @@ export const userService = {
       };
     }
 
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(reqData.password, salt);
+
+    const data = { ...reqData, password: hashedPassword };
+
     try {
-      await User.findByIdAndUpdate(id, reqData, { useFindAndModify: false });
+      await User.findByIdAndUpdate(id, data, {
+        useFindAndModify: false,
+      });
       return {
         status: 200,
         message: 'Felhasználói adatok frissítve!',
