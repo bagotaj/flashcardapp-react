@@ -35,7 +35,7 @@ const Users = props => {
         }
       })
       .catch(err => {
-        setAlert({ alertType: 'danger', message: err.message });
+        setAlert({ alertType: 'warning', message: err.message });
       });
 
     return () => {
@@ -61,7 +61,7 @@ const Users = props => {
         setAlert(null);
       })
       .catch(err => {
-        setAlert({ alertType: 'danger', message: err.message });
+        setAlert({ alertType: 'warning', message: err.message });
       });
 
     const newUserList = users.filter(user => user.userId !== userId);

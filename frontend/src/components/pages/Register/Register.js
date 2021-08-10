@@ -160,7 +160,10 @@ const Register = () => {
           }
         })
         .catch(error => {
-          setAlert({ alertType: 'danger', message: messageTypes.fail + error });
+          setAlert({
+            alertType: 'warning',
+            message: messageTypes.fail + error,
+          });
         });
     } else {
       setFormWasValidated(true);

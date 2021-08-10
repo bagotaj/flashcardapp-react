@@ -84,7 +84,7 @@ const Cards = () => {
         setAlert(null);
       })
       .catch(err => {
-        setAlert({ alertType: 'danger', message: err.message });
+        setAlert({ alertType: 'warning', message: err.message });
       });
   };
 

@@ -28,7 +28,7 @@ const Main = () => {
         if (err.name === 'AbortError') {
           throw Error(`Letöltés megszakítva`);
         } else {
-          setAlert({ alertType: 'danger', message: err.message });
+          setAlert({ alertType: 'warning', message: err.message });
         }
       });
 

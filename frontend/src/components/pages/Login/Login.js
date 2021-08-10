@@ -148,7 +148,7 @@ const Login = props => {
             });
             history.push('/dashboard');
           } else {
-            setAlert({ alertType: 'danger', message: data.message });
+            setAlert({ alertType: 'warning', message: data.message });
           }
         })
         .catch(error => {
