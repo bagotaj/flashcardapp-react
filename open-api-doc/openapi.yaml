@@ -1,0 +1,826 @@
+openapi: 3.0.1
+info:
+  title: Flashcards App
+  description: by József Bagota
+  version: '1.0.0'
+servers:
+  - url: 'http://localhost:5000'
+components:
+  schemas:
+    Ranks:
+      type: "object"
+      required:
+        - userId
+        - userName
+        - points
+      properties:
+        userId:
+          type: "string"
+        userName:
+          type: "string"
+        points:
+          type: "integer"
+      example:
+        _id: 61044ec4f4ea5c3c6c9ae56e
+        userId: 60c77f12835fce44a438d19b
+        userName: József
+        points: 7
+    User:
+      type: object
+      required:
+         - userName
+         - firstName
+         - lastName
+         - email
+         - password
+         - role
+      properties:
+        userName:
+          type: string
+          description: Username of the user
+        lastName:
+          type: string
+          description: Last name of the user
+        firstName:
+          type: string
+          description: First name of the user
+        email:
+          type: string
+          description: Email address of the user
+        password:
+          type: string
+          description: Password of the user
+        role:
+          type: string
+          description: role of the user
+      example:
+        lastName: Varga
+        firstName: Mária
+        email: vargamaria@voltam.hu
+        password: vargamaria12
+    Cards:
+      type: object
+      required:
+         - cardType
+         - cardTitle
+         - cards
+         - userId
+      properties:
+        cardType:
+          type: string
+          description: type of a card pack
+        cardTitle:
+          type: string
+          description: title of a card pack
+        description:
+          type: string
+          description: description of a card pack
+        cards:
+          type: array
+          description: cards
+          items:
+            type: object
+          properties:
+            side1:
+              type: string
+            side2:
+              type: string
+        userId:
+          type: string
+          description: id of the user who own the cards
+      example:
+        lastName: Varga
+        firstName: Mária
+        email: vargamaria@voltam.hu
+        password: vargamaria12
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      
+paths:
+  /api/register:
+    post:
+      summary: Register a new user
+      tags: [Register]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: The user was successfully created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '200'
+                  message:
+                    type: string
+                    description: A felhasználó mentése sikerült
+                required:
+                  - status
+                  - message
+              example:
+                status: 200
+                message: A felhasználó mentése sikerült
+
+        '400':
+          description: The email already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '400'
+                  message:
+                    type: string
+                    description: Az email cím már regisztrálva van
+                required:
+                  - status
+                  - message
+              example:
+                status: 400
+                message: Az email cím már regisztrálva van
+
+        '401':
+          description: The user details are invalid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '401'
+                  message:
+                    type: string
+                    description: error.details[0].message
+                required:
+                  - status
+                  - message
+              example:
+                status: 401
+                message: error.details[0].message
+
+        '500':
+          description: Something went wrong
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '500'
+                  message:
+                    type: string
+                    description: Valami hiba történt
+                required:
+                  - status
+                  - message
+              example:
+                status: 500
+                message: Valami hiba történt
+                
+  /api/login:
+    post:
+      summary: Login registered user
+      tags: [Login]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: user email
+                password:
+                  type: string
+                  description: user password
+                location:
+                  type: string
+                  description: location from where the request arrived
+              required:
+                - email
+                - password
+                - location
+            example:
+              email: tothbela@voltam.hu
+              password: tothvolt12
+              location: /login
+      responses:
+        '200':
+          description: The user successfully logged in
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '200'
+                  message:
+                    type: string
+                    description: Bejelentkezve!
+                  token:
+                    type: string
+                    description: user token
+                  userId:
+                    type: string
+                    description: id of user
+                  firstName:
+                    type: string
+                    description: first name of user
+                  role:
+                    type: string
+                    description: role of user
+                required:
+                  - status
+                  - message
+                  - token
+                  - userId
+                  - firstName
+                  - role
+              example:
+                status: 200
+                message: Bejelentkezve!
+                token: jidsf878hd6jf66gjszeMSH_KDUE55FE
+                userId: 759ngy98fhhq429gagh
+                firstName: József
+                role: user
+
+        '400':
+          description: Email is not registered
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '400'
+                  message:
+                    type: string
+                    description: Az email cím még nincs regisztrálva
+                required:
+                  - status
+                  - message
+              example:
+                status: 400
+                message: Az email cím még nincs regisztrálva
+
+        '401':
+          description: The user login details are invalid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '401'
+                  message:
+                    type: string
+                    description: error.details[0].message
+                required:
+                  - status
+                  - message
+              example:
+                status: 401
+                message: error.details[0].message
+
+        '403':
+          description: The user email or password is incorrect
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '403'
+                  message:
+                    type: string
+                    description: Az email cím vagy a jelszó nem megfelelő
+                required:
+                  - status
+                  - message
+              example:
+                status: 403
+                message: Az email cím vagy a jelszó nem megfelelő
+
+        '500':
+          description: Something went wrong
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '500'
+                  message:
+                    type: string
+                    description: Valami hiba történt
+                required:
+                  - status
+                  - message
+              example:
+                status: 500
+                message: Valami hiba történt
+                
+  /api/admin/login:
+    post:
+      summary: Login admin
+      tags: [Login]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                location:
+                  type: string
+                email:
+                  type: string
+              required:
+                  - email
+                  - password
+                  - location
+            examples:
+              '0':
+                value: |-
+                  {
+                      "email": "kisspeti@mail.com",
+                      "password": "petivagyok12",
+                      "location": "/admin/login"
+                  }
+      responses:
+        '200':
+          description: The admin successfully logged in
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '200'
+                  message:
+                    type: string
+                    description: Bejelentkezve!
+                  token:
+                    type: string
+                    description: admin token
+                  userId:
+                    type: string
+                    description: id of admin
+                  firstName:
+                    type: string
+                    description: first name of admin
+                  role:
+                    type: string
+                    description: role of admin
+                required:
+                  - status
+                  - message
+                  - token
+                  - userId
+                  - firstName
+                  - role
+              example:
+                status: 200
+                message: Bejelentkezve!
+                token: jidsf878hd6jf66gjszeMSH_KDUE55FE
+                userId: 759ngy98fhhq429gagh
+                firstName: Peti
+                role: admin
+
+        '400':
+          description: Email is not registered
+          content:
+            application/json:
+             schema:
+               type: object
+               properties:
+                 status:
+                   type: string
+                   description: '400'
+                 message:
+                   type: string
+                   description: Az email cím még nincs regisztrálva
+               required:
+                 - status
+                 - message
+             example:
+               status: 400
+               message: Az email cím még nincs regisztrálva
+
+        '401':
+          description: The admin login details are invalid
+          content:
+           application/json:
+             schema:
+               type: object
+               properties:
+                 status:
+                   type: string
+                   description: '401'
+                 message:
+                   type: string
+                   description: error.details[0].message
+               required:
+                 - status
+                 - message
+             example:
+               status: 401
+               message: error.details[0].message
+
+        '403':
+          description: The admin email or password is incorrect
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '403'
+                  message:
+                    type: string
+                    description: Az email cím vagy a jelszó nem megfelelő
+                required:
+                  - status
+                  - message
+              example:
+                status: 403
+                message: Az email cím vagy a jelszó nem megfelelő
+
+        '500':
+          description: Something went wrong
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '500'
+                  message:
+                    type: string
+                    description: Valami hiba történt
+                required:
+                  - status
+                  - message
+              example:
+                status: 500
+                message: Valami hiba történt
+      
+  /api/ranks/main:
+    get:
+      summary: Getting the first five users from ranking list
+      tags: [Main]
+      responses:
+        '200':
+          description: Rank object that needs to be listed to the main page
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Ranks'
+              example:
+                _id: 61044ec4f4ea5c3c6c9ae56e
+                userId: 60c77f12835fce44a438d19b
+                userName: József
+                points: 7
+        '400':
+           description: General error
+           content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '400'
+                  message:
+                    type: string
+                    description: Nem sikerült lekérni az adatokat
+                required:
+                  - status
+                  - message
+              example:
+                status: 400
+                message: Nem sikerült lekérni az adatokat
+                
+  /api/users/:
+    get:
+      description: Admin can get the user list
+      security:
+        - bearerAuth: []
+      summary: Get
+      tags: [Admin]
+      responses:
+        '200':
+          description: Get users from the database
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/User'
+              example: 
+                  {
+                      "userName": "Gizella",
+                      "role": "user",
+                      "firstName": "Gizella",
+                      "lastName": "Molnár",
+                      "email": "molnargizi@valami.hu",
+                      "password": "kdhjkrkakklakd"
+                  }
+                
+        '400':
+          description: Failed to retrieve data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '400'
+                  message:
+                    type: string
+                    description: Nem sikerült lekérni az adatokat
+                required:
+                  - status
+                  - message
+              example:
+                status: 400
+                message: Nem sikerült lekérni az adatokat                        
+  /api/users/{id}:
+    get:
+      security:
+        - bearerAuth: []
+      summary: Get
+      tags: [EditUser]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: The user id
+      responses:
+        '200':
+          description: Get one user from the database
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/User'
+              example:
+                userName: "Gizella"
+                role: "user"
+                firstName: "Gizella"
+                lastName: "Molnár"
+                email: "molnargizi@valami.hu"
+                password: "kdhjkrkakkla'kd'"
+        '404':
+          description: User is not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '404'
+                  message:
+                    type: string
+                    description: Nem sikerült lekérni az adatokat
+                required:
+                  - status
+                  - message
+              example:
+                status: 404
+                message: Nem sikerült lekérni az adatokat
+
+    put:
+      description: Auto generated using Swagger Inspector
+      security:
+        - bearerAuth: []
+      summary: Put
+      tags: [Admin]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: The user id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                password:
+                  type: string
+                role:
+                  type: string
+                _id:
+                  type: string
+                userName:
+                  type: string
+                email:
+                  type: string
+            examples:
+              '0':
+                value: |2-
+                   {
+                          "userName": "Bélabá",
+                          "role": "user",
+                          "_id": "61098aa98bfa0c092c51fc5a",
+                          "firstName": "Béla",
+                          "lastName": "Tóth",
+                          "email": "tothbela@voltam.hu",
+                          "password": "tothvolt12"
+                      }
+      responses:
+        '200':
+          description: The user successfully was updated
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '200'
+                  message:
+                    type: string
+                    description: Felhasználói adatok frissítve!
+              example:
+                status: 200
+                message: Felhasználói adatok frissítve!
+
+        '400':
+          description: Validation error
+          content:
+            application/json:
+             schema:
+               type: object
+               properties:
+                 status:
+                   type: string
+                   description: '400'
+                 message:
+                   type: string
+                   description: error.details[0].message
+               required:
+                 - status
+                 - message
+             example:
+               status: 400
+               message: error.details[0].message
+
+        '500':
+          description: Something went wrong
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '500'
+                  message:
+                    type: string
+                    description: Valami hiba történt
+                required:
+                  - status
+                  - message
+              example:
+                status: 500
+                message: Valami hiba történt
+
+    delete:
+      security:
+        - bearerAuth: []
+      summary: Delete
+      tags: [Admin]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: The user id
+      responses:
+        '200':
+          description: The user successfully was deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '200'
+                  message:
+                    type: string
+                    description: A felhasználó törölve lett
+
+        '400':
+          description: The user wasn't deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '400'
+                  message:
+                    type: string
+                    description: Bad Request
+                required:
+                  - status
+                  - message
+              example:
+                status: 400
+                message:  Bad Request
+
+  /api/languagecards:
+    get:
+      security:
+        - bearerAuth: []
+      summary: Get
+      tags: [Language Cards]
+      description: Get languagecards of a user
+      responses:
+        '200':
+          description: Get request is successful
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cards'
+              example:
+                _id: 61057d90f89af24810a3f189
+                cardType: Nyelv kártya
+                cardTitle: Angol - Magyar szókártya
+                description: 'Angol szavak, kifejezések'
+                cards:
+                  - _id: 61057d90f89af24810a3f18a
+                    side1: perform
+                    side2: 'végrehajt, teljesít'
+                  - _id: 61057d90f89af24810a3f18b
+                    side1: allow
+                    side2: lehetővé tesz
+                  - _id: 61057d90f89af24810a3f18c
+                    side1: attribute
+                    side2: 'tulajdonság, jellegzetesség'
+                userId: 610578158edfeb438008da0e
+
+        '400':
+           description: General error
+           content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '400'
+                  message:
+                    type: string
+                    description: Nem sikerült lekérni az adatokat
+                required:
+                  - status
+                  - message
+              example:
+                status: 400
+                message: Nem sikerült lekérni az adatokat
