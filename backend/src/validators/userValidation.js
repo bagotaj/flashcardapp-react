@@ -1,6 +1,6 @@
-const Joi = require('@hapi/joi');
+import Joi from '@hapi/joi';
 
-const userValidation = data => {
+export const userValidation = data => {
   const schema = Joi.object({
     userName: Joi.string().min(1).required(),
     firstName: Joi.string().min(1).required(),
@@ -11,5 +11,3 @@ const userValidation = data => {
   });
   return schema.validate(data);
 };
-
-module.exports.userValidation = userValidation;
