@@ -10,7 +10,7 @@ const EditUser = props => {
   const { userId } = useParams();
   const { loggedInUser } = props;
 
-  const server = process.env.REACT_APP_SERVER_URL;
+  const server = process.env.REACT_APP_BACKEND_SERVER_URL;
 
   const [formData, setFormData] = useState({
     userName: '',
@@ -38,12 +38,12 @@ const EditUser = props => {
         return res.json();
       })
       .then(jsonRes => {
-        const { password, ...others } = jsonRes;
-        setFormData(others);
+        const data = { ...jsonRes, password: '' };
+        setFormData(data);
         setAlert(null);
       })
       .catch(err => {
-        setAlert({ alertType: 'danger', message: err.message });
+        setAlert({ alertType: 'warning', message: err.message });
       });
   }, [userId]);
 
@@ -51,7 +51,7 @@ const EditUser = props => {
 
   const messageTypes = {
     success: 'A változtatás sikerült.',
-    fail: 'A változtatás sikeretelen.',
+    fail: 'A változtatás sikertelen: ',
   };
 
   const references = {
@@ -196,7 +196,10 @@ const EditUser = props => {
           }
         })
         .catch(error => {
-          setAlert({ alertType: 'danger', message: messageTypes.fail + error });
+          setAlert({
+            alertType: 'warning',
+            message: messageTypes.fail + error,
+          });
         });
     } else {
       setFormWasValidated(true);
