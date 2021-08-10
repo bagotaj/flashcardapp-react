@@ -6,7 +6,7 @@ import Button from '../../common/Button/Button';
 const LanguageCards = props => {
   const { loggedInUser } = props;
 
-  const server = process.env.REACT_APP_SERVER_URL;
+  const server = process.env.REACT_APP_BACKEND_SERVER_URL;
 
   const [cards, setCards] = useState([]);
   const [alert, setAlert] = useState(null);
@@ -53,7 +53,7 @@ const LanguageCards = props => {
     e.preventDefault();
     const cardId = e.target.dataset.id;
 
-    fetch(`http://localhost:5000/api/languagecards/${cardId}`, {
+    fetch(`${server}/api/languagecards/${cardId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

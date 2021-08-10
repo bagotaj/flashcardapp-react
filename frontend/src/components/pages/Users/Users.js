@@ -6,7 +6,7 @@ import './Users.scss';
 const Users = props => {
   const { loggedInUser } = props;
 
-  const server = process.env.REACT_APP_SERVER_URL;
+  const server = process.env.REACT_APP_BACKEND_SERVER_URL;
 
   const [users, setUsers] = useState([]);
   const [alert, setAlert] = useState(null);
@@ -47,7 +47,7 @@ const Users = props => {
     e.preventDefault();
     const userId = e.target.dataset.id;
 
-    fetch(`http://localhost:5000/api/users/${userId}`, {
+    fetch(`${server}/api/users/${userId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

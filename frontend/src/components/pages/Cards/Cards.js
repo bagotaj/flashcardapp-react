@@ -56,7 +56,7 @@ const Cards = () => {
     setCounter(value);
   };
 
-  const server = process.env.REACT_APP_SERVER_URL;
+  const server = process.env.REACT_APP_BACKEND_SERVER_URL;
 
   const setSentData = () => {
     const sentData = {

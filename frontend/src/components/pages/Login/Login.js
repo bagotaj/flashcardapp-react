@@ -8,7 +8,7 @@ const Login = props => {
   const history = useHistory();
   const location = useLocation();
 
-  const server = process.env.REACT_APP_SERVER_URL;
+  const server = process.env.REACT_APP_BACKEND_SERVER_URL;
 
   const { handleLoggedInUser, handleLocalStorage } = props;
   const [formData, setFormData] = useState({

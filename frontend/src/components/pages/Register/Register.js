@@ -8,7 +8,7 @@ import './Register.scss';
 const Register = () => {
   const history = useHistory();
 
-  const server = process.env.REACT_APP_SERVER_URL;
+  const server = process.env.REACT_APP_BACKEND_SERVER_URL;
 
   const [formData, setFormData] = useState({
     firstName: '',

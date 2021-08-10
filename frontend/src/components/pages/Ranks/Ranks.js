@@ -5,7 +5,7 @@ import './Ranks.scss';
 const Ranks = props => {
   const { loggedInUser } = props;
 
-  const server = process.env.REACT_APP_SERVER_URL;
+  const server = process.env.REACT_APP_BACKEND_SERVER_URL;
 
   const [ranks, setRanks] = useState([]);
   const [alert, setAlert] = useState(null);

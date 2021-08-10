@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Button from '../../common/Button/Button';
 
 const Main = () => {
-  const server = process.env.REACT_APP_SERVER_URL;
+  const server = process.env.REACT_APP_BACKEND_SERVER_URL;
 
   const [ranks, setRanks] = useState([]);
   const [alert, setAlert] = useState(null);

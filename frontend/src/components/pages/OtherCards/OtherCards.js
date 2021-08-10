@@ -6,7 +6,7 @@ import Button from '../../common/Button/Button';
 const OtherCards = props => {
   const { loggedInUser } = props;
 
-  const server = process.env.REACT_APP_SERVER_URL;
+  const server = process.env.REACT_APP_BACKEND_SERVER_URL;
 
   const [cards, setCards] = useState([]);
   const [alert, setAlert] = useState(null);
@@ -46,7 +46,7 @@ const OtherCards = props => {
     e.preventDefault();
     const cardId = e.target.dataset.id;
 
-    fetch(`http://localhost:5000/api/othercards/${cardId}`, {
+    fetch(`${server}/api/othercards/${cardId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
