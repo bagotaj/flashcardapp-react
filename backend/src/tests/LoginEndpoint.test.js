@@ -4,8 +4,8 @@ import app from '../app';
 import testdb from './testdb';
 import { User } from '../models/User';
 
-describe('Login user', () => {
-  const userData1 = {
+describe('Login - /api/login', () => {
+  const userData = {
     userName: 'József',
     firstName: 'József',
     lastName: 'Mezei',
@@ -14,24 +14,13 @@ describe('Login user', () => {
     role: 'user',
   };
 
-  const userData2 = {
-    userName: 'János',
-    firstName: 'János',
-    lastName: 'Varga',
-    email: 'varga@vagyok.hu',
-    password: '$2a$10$fVJYmQ6Srhkeuo1fGxWVC.zENcBSsSAn6hTICbuhcFdn8yeHqzyfi',
-    role: 'user',
-  };
-
   const request = supertest(app);
 
-  const user1 = new User(userData1);
-  const user2 = new User(userData2);
+  const user = new User(userData);
 
   beforeAll(async () => {
     testdb();
-    await user1.save(userData1);
-    await user2.save(userData2);
+    await user.save(userData);
   });
 
   afterAll(async () => {
@@ -43,7 +32,7 @@ describe('Login user', () => {
     await User.deleteMany();
   });
 
-  it('should return 200 status code. /login, POST', async () => {
+  it('should return 200 status code.', async () => {
     const loginData = {
       email: 'mezei@vagyok.hu',
       password: '234567891',
@@ -57,28 +46,17 @@ describe('Login user', () => {
     expect(response.body.firstName).toBe('József');
   });
 
-  // it('should return 401 status code and "Invalid token" if token is invalid', async done => {
-  //   const userFromDatabase = await User.findOne({ email: 'varga@vagyok.hu' });
+  it("should return 400 status code if the email wasn't registered.", async () => {
+    const loginData = {
+      email: 'tamab@vagyok.hu',
+      password: '234567891',
+      location: '/login',
+    };
 
-  //   const badToken =
-  //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MGVlZDU3YTU2NWE1NDM3MDQ1ZWJhMWUiLCJmaXJzdE5hbWUiOiJKb2UiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2MjY4OTAxMDR9.a4umq9bGVvdCz5gRpeUjy7gw2Jpkldktjmksyjlkdi';
+    const response = await request.post('/api/login').send(loginData);
 
-  //   const response = await request
-  //     .delete(`/api/users/${userFromDatabase.id}`)
-  //     .set('Authorization', `Bearer ${badToken}`);
-
-  //   expect(response.status).toBe(401);
-  //   expect(response.text).toBe('Invalid token');
-  //   done();
-  // });
-
-  // it('should return 401 status code and "Unauthorized" if unauthorized user (unexist token)', async done => {
-  //   const userFromDatabase = await User.findOne({ email: 'varga@vagyok.hu' });
-
-  //   const response = await request.delete(`/api/users/${userFromDatabase.id}`);
-
-  //   expect(response.status).toBe(401);
-  //   expect(response.text).toBe('Unauthorized');
-  //   done();
-  // });
+    expect(response.body.token).toBeFalsy();
+    expect(response.body.status).toBe(400);
+    expect(response.body.message).toBe('Az email cím még nincs regisztrálva');
+  });
 });
