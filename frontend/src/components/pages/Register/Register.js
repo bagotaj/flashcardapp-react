@@ -22,7 +22,7 @@ const Register = () => {
 
   const messageTypes = {
     success: `A regisztráció sikeres. A login oldalon lehet bejelentkezni`,
-    fail: `A regisztráció sikeretelen volt az alább hiba miatt: `,
+    fail: `A regisztráció sikertelen: `,
   };
 
   const references = {
@@ -147,8 +147,8 @@ const Register = () => {
         },
         body: JSON.stringify(formData),
       })
-        .then(res => {
-          if (res.status >= 200 || res.status < 300) {
+        .then(async response => {
+          if (response.status === 201) {
             setAlert({ alertType: 'primary', message: messageTypes.success });
             setFormData({
               firstName: '',
@@ -157,6 +157,13 @@ const Register = () => {
               password: '',
             });
             history.push('/login');
+          } else {
+            const data = await response.json();
+
+            setAlert({
+              alertType: 'warning',
+              message: messageTypes.fail + data.message,
+            });
           }
         })
         .catch(error => {
