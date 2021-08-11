@@ -1,4 +1,4 @@
-import { User } from '../models/User';
+import { Admin, User } from '../models/User';
 import { userService } from '../services/userService';
 
 export const usersController = {
@@ -12,7 +12,14 @@ export const usersController = {
 
   async getId(req, res) {
     try {
-      const user = await User.findById(req.params.id);
+      let user;
+
+      user = await User.findById(req.params.id);
+
+      if (!user) {
+        user = await Admin.findById(req.params.id);
+      }
+
       res.status(200).json(user);
     } catch (err) {
       res.status(404).json(err);
