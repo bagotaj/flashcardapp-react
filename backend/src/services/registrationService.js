@@ -34,7 +34,7 @@ export const registrationService = {
     try {
       await user.save();
       return {
-        status: 200,
+        status: 201,
         message: 'A felhasználó mentése sikerült',
       };
     } catch (err) {
