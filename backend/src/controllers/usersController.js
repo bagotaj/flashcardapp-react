@@ -31,7 +31,7 @@ export const usersController = {
     const reqData = req.body;
 
     const data = await userService.updateUser(id, reqData);
-    res.status(data.status).send(data.message);
+    res.status(data.status).send(data);
   },
 
   async delete(req, res) {
