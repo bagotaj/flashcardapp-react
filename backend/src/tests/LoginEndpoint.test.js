@@ -20,7 +20,7 @@ describe('Login - /api/login', () => {
 
   beforeAll(async () => {
     testdb();
-    await user.save(userData);
+    await user.save();
   });
 
   afterAll(async () => {
