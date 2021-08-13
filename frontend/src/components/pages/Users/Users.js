@@ -56,7 +56,7 @@ const Users = props => {
     })
       .then(res => {
         if (res.status !== 200) {
-          throw Error(`Nem sikerült lekérni az adatokat. ${res.status}`);
+          throw Error(`Nem sikerült törölni a felhasználót. ${res.status}`);
         }
         setAlert(null);
       })
@@ -64,7 +64,7 @@ const Users = props => {
         setAlert({ alertType: 'warning', message: err.message });
       });
 
-    const newUserList = users.filter(user => user.userId !== userId);
+    const newUserList = users.filter(user => user._id !== userId);
 
     setUsers(newUserList);
   };
