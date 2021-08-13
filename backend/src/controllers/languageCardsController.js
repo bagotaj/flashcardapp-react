@@ -6,10 +6,11 @@ export const languageCardsController = {
     try {
       await LanguageCard.find()
         .then(foundCards => {
-          if (foundCards.length === 0)
+          if (foundCards.length === 0) {
             return res
               .status(204)
               .json({ message: 'Nincs még kártya mentve!' });
+          }
 
           if (req.user.role === 'admin') {
             return foundCards;
