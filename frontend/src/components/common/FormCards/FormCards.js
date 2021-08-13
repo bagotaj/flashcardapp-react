@@ -11,6 +11,8 @@ const FormCards = props => {
 
   const location = useLocation();
 
+  const backend = process.env.REACT_APP_BACKEND_SERVER_URL;
+
   const [formData, setFormData] = useState(
     type === 'edit'
       ? cardPack
@@ -187,7 +189,6 @@ const FormCards = props => {
     setFormWasValidated(false);
     const isValid = isFormValid();
     if (isValid) {
-      const backend = process.env.REACT_APP_SERVER_URL;
       let url;
 
       if (type === 'new' && formData.cardType === 'Nyelv kártya') {
