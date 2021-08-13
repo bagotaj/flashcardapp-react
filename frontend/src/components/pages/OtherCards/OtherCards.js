@@ -22,6 +22,9 @@ const OtherCards = props => {
       },
     })
       .then(res => {
+        if (res.status === 204) {
+          throw Error(res.body.message);
+        }
         if (res.status !== 200) {
           throw Error(`Nem sikerült lekérni az adatokat. ${res.status}`);
         }
@@ -63,7 +66,7 @@ const OtherCards = props => {
         setAlert({ alertType: 'warning', message: err.message });
       });
 
-    const newCardList = cards.filter(card => card.cardId !== cardId);
+    const newCardList = cards.filter(card => card._id !== cardId);
 
     setCards(newCardList);
   };
