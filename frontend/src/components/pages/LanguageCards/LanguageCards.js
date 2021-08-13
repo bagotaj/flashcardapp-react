@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-
 import Button from '../../common/Button/Button';
 
 const LanguageCards = props => {
@@ -70,7 +69,7 @@ const LanguageCards = props => {
         setAlert({ alertType: 'warning', message: err.message });
       });
 
-    const newCardList = cards.filter(card => card.cardId !== cardId);
+    const newCardList = cards.filter(card => card._id !== cardId);
 
     setCards(newCardList);
   };
