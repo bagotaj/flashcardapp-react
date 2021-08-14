@@ -32,7 +32,7 @@ export const rankService = {
       logger.error(err);
       return {
         status: 500,
-        message: 'Valami nem működik',
+        message: 'Valami hiba történt',
       };
     }
   },
