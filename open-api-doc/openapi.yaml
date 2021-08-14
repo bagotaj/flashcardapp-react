@@ -111,7 +111,7 @@ paths:
             schema:
               $ref: '#/components/schemas/User'
       responses:
-        '200':
+        '201':
           description: The user was successfully created
           content:
             application/json:
@@ -120,7 +120,7 @@ paths:
                 properties:
                   status:
                     type: string
-                    description: '200'
+                    description: '201'
                   message:
                     type: string
                     description: A felhasználó mentése sikerült
@@ -128,7 +128,7 @@ paths:
                   - status
                   - message
               example:
-                status: 200
+                status: 201
                 message: A felhasználó mentése sikerült
 
         '400':
@@ -163,13 +163,13 @@ paths:
                     description: '401'
                   message:
                     type: string
-                    description: error.details[0].message
+                    description: ... is not allowed to be empty
                 required:
                   - status
                   - message
               example:
                 status: 401
-                message: error.details[0].message
+                message: ... is not allowed to be empty
 
         '500':
           description: Something went wrong
@@ -292,13 +292,13 @@ paths:
                     description: '401'
                   message:
                     type: string
-                    description: error.details[0].message
+                    description: ... is not allowed to be empty
                 required:
                   - status
                   - message
               example:
                 status: 401
-                message: error.details[0].message
+                message: ... is not allowed to be empty
 
         '403':
           description: The user email or password is incorrect
@@ -442,13 +442,13 @@ paths:
                    description: '401'
                  message:
                    type: string
-                   description: error.details[0].message
+                   description: ... is not allowed to be empty
                required:
                  - status
                  - message
              example:
                status: 401
-               message: error.details[0].message
+               message: ... is not allowed to be empty
 
         '403':
           description: The admin email or password is incorrect
@@ -534,7 +534,7 @@ paths:
       security:
         - bearerAuth: []
       summary: Get
-      tags: [Admin]
+      tags: [Admin - Users]
       responses:
         '200':
           description: Get users from the database
@@ -578,7 +578,7 @@ paths:
       security:
         - bearerAuth: []
       summary: Get
-      tags: [EditUser]
+      tags: [Edit User]
       parameters:
         - in: path
           name: id
@@ -623,11 +623,11 @@ paths:
                 message: Nem sikerült lekérni az adatokat
 
     put:
-      description: Auto generated using Swagger Inspector
+      description: Update user data
       security:
         - bearerAuth: []
       summary: Put
-      tags: [Admin]
+      tags: [Admin - Users]
       parameters:
         - in: path
           name: id
@@ -697,13 +697,13 @@ paths:
                    description: '400'
                  message:
                    type: string
-                   description: error.details[0].message
+                   description: ... is not allowed to be empty
                required:
                  - status
                  - message
              example:
                status: 400
-               message: error.details[0].message
+               message: ... is not allowed to be empty
 
         '500':
           description: Something went wrong
@@ -729,7 +729,7 @@ paths:
       security:
         - bearerAuth: []
       summary: Delete
-      tags: [Admin]
+      tags: [Admin - Users]
       parameters:
         - in: path
           name: id
@@ -805,6 +805,19 @@ paths:
                     side2: 'tulajdonság, jellegzetesség'
                 userId: 610578158edfeb438008da0e
 
+        '204':
+          description: No saved cards
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cards'
+              example:
+                properties:
+                  status: 204
+                  type: array
+                
         '400':
            description: General error
            content:
@@ -824,3 +837,782 @@ paths:
               example:
                 status: 400
                 message: Nem sikerült lekérni az adatokat
+
+  /api/languagecards/new:
+    post:
+      security:
+        - bearerAuth: []
+      summary: Post
+      tags: [Language Cards]
+      description: Add new languagecard
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/components/schemas/Cards'
+            example:
+                cardType: Nyelv kártya
+                cardTitle: Angol - Magyar szókártya
+                description: 'Angol szavak, kifejezések'
+                cards:
+                  - side1: perform
+                    side2: 'végrehajt, teljesít'
+                  - side1: allow
+                    side2: lehetővé tesz
+                  - side1: attribute
+                    side2: 'tulajdonság, jellegzetesség'
+                userId: 610578158edfeb438008da0e
+      responses:
+        '200':
+          description: New languagecard added successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '200'
+                  message:
+                    type: string
+                    description: A kártyák mentve
+              example:
+                status: 200
+                message: A kártyák mentve
+                
+        '400':
+           description: Validation problems
+           content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '400'
+                  message:
+                    type: string
+                    description: ... is not allowed to be empty
+                required:
+                  - status
+                  - message
+              example:
+                status: 400
+                message: ... is not allowed to be empty
+        
+        '500':
+          description: Something went wrong
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '500'
+                  message:
+                    type: string
+                    description: Valami hiba történt
+                required:
+                  - status
+                  - message
+              example:
+                status: 500
+                message: Valami hiba történt
+    
+  /api/languagecards/{id}:
+    get:
+      security:
+        - bearerAuth: []
+      summary: Get
+      tags: [Language Cards]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: The card id
+      responses:
+        '200':
+          description: Get request is successful
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cards'
+              example:
+                _id: 61057d90f89af24810a3f189
+                cardType: Nyelv kártya
+                cardTitle: Angol - Magyar szókártya
+                description: 'Angol szavak, kifejezések'
+                cards:
+                  - _id: 61057d90f89af24810a3f18a
+                    side1: perform
+                    side2: 'végrehajt, teljesít'
+                  - _id: 61057d90f89af24810a3f18b
+                    side1: allow
+                    side2: lehetővé tesz
+                  - _id: 61057d90f89af24810a3f18c
+                    side1: attribute
+                    side2: 'tulajdonság, jellegzetesség'
+                userId: 610578158edfeb438008da0e
+                
+        '404':
+           description: Not found
+           content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '404'
+                  message:
+                    type: string
+                    description: err
+                required:
+                  - status
+                  - message
+              example:
+                status: 404
+                message: err
+    
+    put:
+      description: Update card data
+      security:
+        - bearerAuth: []
+      summary: Put
+      tags: [Language Cards]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: The card id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/components/schemas/Cards'
+            example:
+              cardType: Nyelv kártya
+              cardTitle: Angol - Magyar szókártya
+              description: Angol szavak, kifejezések
+              cards:
+                - side1: perform
+                  side2: végrehajt, teljesít
+                - side1: allow
+                  side2: lehetővé tesz
+                - side1: attribute
+                  side2: tulajdonság, jellegzetesség
+                - side1: split
+                  side2: hasít, oszt
+              userId: 6106ec1bdd061b303878e43d
+              
+      responses:
+        '200':
+          description: The card successfully was updated
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '200'
+                  message:
+                    type: string
+                    description: A kártyaadatok frissítve!
+              example:
+                status: 200
+                message: A kártyaadatok frissítve!
+
+        '400':
+          description: Validation error
+          content:
+            application/json:
+             schema:
+               type: object
+               properties:
+                 status:
+                   type: string
+                   description: '400'
+                 message:
+                   type: string
+                   description: ... is not allowed to be empty
+               required:
+                 - status
+                 - message
+             example:
+               status: 400
+               message: ... is not allowed to be empty
+
+        '500':
+          description: Something went wrong
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '500'
+                  message:
+                    type: string
+                    description: Valami hiba történt
+                required:
+                  - status
+                  - message
+              example:
+                status: 500
+                message: Valami hiba történt
+    
+    delete:
+      security:
+        - bearerAuth: []
+      summary: Delete
+      tags: [Language Cards]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: The card id
+      responses:
+        '200':
+          description: The card successfully was deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '200'
+                  message:
+                    type: string
+                    description: A kártya törölve lett
+                example:
+                    message:  A kártya törölve lett
+
+        '400':
+          description: The card wasn't deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '400'
+                  message:
+                    type: string
+                    description: Bad Request
+                required:
+                  - status
+                  - message
+              example:
+                status: 400
+                message:  Bad Request
+        
+        '404':
+          description: The card wasn't deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '404'
+                  message:
+                    type: string
+                    description: Not Found
+                required:
+                  - message
+              example:
+                Not Found
+                
+  /api/othercards:
+    get:
+      security:
+        - bearerAuth: []
+      summary: Get
+      tags: [Other Cards]
+      description: Get other cards of a user
+      responses:
+        '200':
+          description: Get request is successful
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cards'
+              example:
+                _id: 61057d90f89af24810a3f189
+                cardType: Egyéb kártya
+                cardTitle: Matematika
+                description: 'Egyszerű matematika'
+                cards:
+                  - _id: 61057d90f89af24810a3f18a
+                    side1: Összeadás
+                    side2: Két szám összege
+                userId: 6106ec1bdd061b303878e43d
+
+        '204':
+          description: No saved cards
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cards'
+              example:
+                properties:
+                  status: 204
+                  type: array
+                
+        '400':
+           description: General error
+           content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '400'
+                  message:
+                    type: string
+                    description: Nem sikerült lekérni az adatokat
+                required:
+                  - status
+                  - message
+              example:
+                status: 400
+                message: Nem sikerült lekérni az adatokat
+
+  /api/othercards/new:
+    post:
+      security:
+        - bearerAuth: []
+      summary: Post
+      tags: [Other Cards]
+      description: Add new card
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/components/schemas/Cards'
+            example:
+                cardType: Egyéb kártya
+                cardTitle: Matematika
+                description: 'Egyszerű matematika'
+                cards:
+                  - side1: Összeadás
+                    side2: Két szám összege
+                userId: 6106ec1bdd061b303878e43d
+      responses:
+        '200':
+          description: New card added successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '200'
+                  message:
+                    type: string
+                    description: A kártyák mentve
+              example:
+                status: 200
+                message: A kártyák mentve
+                
+        '400':
+           description: Validation problems
+           content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '400'
+                  message:
+                    type: string
+                    description: ... is not allowed to be empty
+                required:
+                  - status
+                  - message
+              example:
+                status: 400
+                message: ... is not allowed to be empty
+        
+        '500':
+          description: Something went wrong
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '500'
+                  message:
+                    type: string
+                    description: Valami hiba történt
+                required:
+                  - status
+                  - message
+              example:
+                status: 500
+                message: Valami hiba történt
+    
+  /api/othercards/{id}:
+    get:
+      security:
+        - bearerAuth: []
+      summary: Get
+      tags: [Other Cards]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: The card id
+      responses:
+        '200':
+          description: Get request is successful
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cards'
+              example:
+                _id: 61057d90f89af24810a3f189
+                cardType: Egyéb kártya
+                cardTitle: Matematika
+                description: 'Egyszerű matematika'
+                cards:
+                  - _id: 61057d90f89af24810a3f18a
+                    side1: Összeadás
+                    side2: Két szám összege
+                userId: 6106ec1bdd061b303878e43d
+                
+        '404':
+           description: Not found
+           content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '404'
+                  message:
+                    type: string
+                    description: err
+                required:
+                  - status
+                  - message
+              example:
+                status: 404
+                message: err
+    
+    put:
+      description: Update card data
+      security:
+        - bearerAuth: []
+      summary: Put
+      tags: [Other Cards]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: The card id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/components/schemas/Cards'
+            example:
+                cardType: Egyéb kártya
+                cardTitle: Matematika
+                description: 'Egyszerű matematika'
+                cards:
+                  - side1: Összeadás
+                    side2: Két szám összege
+                userId: 6106ec1bdd061b303878e43d
+              
+      responses:
+        '200':
+          description: The card successfully was updated
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '200'
+                  message:
+                    type: string
+                    description: A kártyaadatok frissítve!
+              example:
+                status: 200
+                message: A kártyaadatok frissítve!
+
+        '400':
+          description: Validation error
+          content:
+            application/json:
+             schema:
+               type: object
+               properties:
+                 status:
+                   type: string
+                   description: '400'
+                 message:
+                   type: string
+                   description: ... is not allowed to be empty
+               required:
+                 - status
+                 - message
+             example:
+               status: 400
+               message: ... is not allowed to be empty
+
+        '500':
+          description: Something went wrong
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '500'
+                  message:
+                    type: string
+                    description: Valami hiba történt
+                required:
+                  - status
+                  - message
+              example:
+                status: 500
+                message: Valami hiba történt
+    
+    delete:
+      security:
+        - bearerAuth: []
+      summary: Delete
+      tags: [Other Cards]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: The card id
+      responses:
+        '200':
+          description: The card successfully was deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '200'
+                  message:
+                    type: string
+                    description: A kártya törölve lett
+                example:
+                    message:  A kártya törölve lett
+
+        '400':
+          description: The card wasn't deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '400'
+                  message:
+                    type: string
+                    description: Bad Request
+                required:
+                  - status
+                  - message
+              example:
+                status: 400
+                message:  Bad Request
+        
+        '404':
+          description: The card wasn't deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '404'
+                  message:
+                    type: string
+                    description: Not Found
+                required:
+                  - message
+              example:
+                Not Found
+  
+  /api/ranks:
+    get:
+      security:
+        - bearerAuth: []
+      summary: Get
+      tags: [Ranks]
+      description: Get rank list of users
+      responses:
+        '200':
+          description: Get request is successful
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Ranks'
+              example:
+                _id: "6106ab87440227149bc089e2"
+                userId: "6106ab46440227149bc089de"
+                userName: "Tibor"
+                points: 15
+                __v: 0
+                
+        '400':
+           description: General error
+           content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '400'
+                  message:
+                    type: string
+                    description: Nem sikerült lekérni az adatokat
+                required:
+                  - status
+                  - message
+              example:
+                status: 400
+                message: Nem sikerült lekérni az adatokat
+                
+  /api/ranks/{id}:
+    put:
+      description: Update rank data
+      security:
+        - bearerAuth: []
+      summary: Put
+      tags: [Ranks]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: The rank id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/components/schemas/Ranks'
+            example:
+              userId: '6106ec1bdd061b303878e43d'
+              userName: 'peldabela'
+              points: 12
+              
+      responses:
+        '200':
+          description: The rank successfully was updated
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '200'
+                  message:
+                    type: string
+                    description: Felhasználói pontszámok frissítve!
+              example:
+                status: 200
+                message: Felhasználói pontszámok frissítve!
+
+        '400':
+          description: Validation error
+          content:
+            application/json:
+             schema:
+               type: object
+               properties:
+                 status:
+                   type: string
+                   description: '400'
+                 message:
+                   type: string
+                   description: ... is not allowed to be empty
+               required:
+                 - status
+                 - message
+             example:
+               status: 400
+               message: ... is not allowed to be empty
+
+        '500':
+          description: Something went wrong
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: '500'
+                  message:
+                    type: string
+                    description: Valami hiba történt
+                required:
+                  - status
+                  - message
+              example:
+                status: 500
+                message: Valami hiba történt
