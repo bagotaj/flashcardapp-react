@@ -2,6 +2,9 @@
   "scripts": {
     "start": "nodemon src/index.js"
   },
+  "name": "flashcards",
+  "version": "1.0.0",
+  "main": "index.js",
   "dependencies": {
     "express": "^4.17.1",
     "swagger-ui-express": "^4.1.6",
