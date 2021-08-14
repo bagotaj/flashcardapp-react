@@ -50,8 +50,8 @@ export const languageCardsController = {
     const deleteId = req.params.id;
 
     try {
-      const userData = await LanguageCard.findByIdAndDelete(deleteId);
-      if (!userData) return res.sendStatus(404);
+      const cardData = await LanguageCard.findByIdAndDelete(deleteId);
+      if (!cardData) return res.sendStatus(404);
       return res.status(200).send({ message: 'A kártya törölve lett' });
     } catch (err) {
       return res.status(400).send(err);
