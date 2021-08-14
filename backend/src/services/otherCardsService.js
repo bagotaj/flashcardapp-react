@@ -52,13 +52,13 @@ export const otherCardsService = {
       });
       return {
         status: 200,
-        message: 'Felhasználói adatok frissítve!',
+        message: 'A kártyaadatok frissítve!',
       };
     } catch (err) {
       logger.error(err);
       return {
         status: 500,
-        message: 'Valami nem működik',
+        message: 'Valami hiba történt',
       };
     }
   },
