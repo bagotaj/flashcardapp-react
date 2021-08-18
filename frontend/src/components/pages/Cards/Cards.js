@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, Prompt } from 'react-router-dom';
+import { useLocation, Prompt, Link } from 'react-router-dom';
 
 import Button from '../../common/Button/Button';
 
@@ -122,13 +122,6 @@ const Cards = () => {
             title="+"
           />
         </div>
-        <button
-          type="button"
-          className="no-button-cards"
-          onClick={handlerOnClickDecreaseCounter}
-        >
-          {'<'}
-        </button>
         {flashcards &&
           (counter >= flashcards.length || counter < 0 ? (
             <div className="box center-content">Nincs több kártya</div>
@@ -149,10 +142,27 @@ const Cards = () => {
         <button
           type="button"
           className="no-button-cards"
+          onClick={handlerOnClickDecreaseCounter}
+        >
+          {'<'}
+        </button>
+        <button
+          type="button"
+          className="no-button-cards ms-3"
           onClick={handlerOnClickIncreaseCounter}
         >
           {'>'}
         </button>
+        <Link
+          to={
+            cardPack.cardType === 'Nyelv kártya'
+              ? '/languagecards'
+              : '/othercards'
+          }
+          className="text-link d-block mt-4"
+        >
+          vissza a kártyákhoz
+        </Link>
       </div>
     </>
   );
