@@ -47,6 +47,5 @@
     "nodemon": "^2.0.2",
     "prettier": "2.0.5",
     "supertest": "^4.0.2"
-  },
-  "type": "module"
+  }
 }
