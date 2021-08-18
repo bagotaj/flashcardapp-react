@@ -86,10 +86,6 @@ li p {
     text-align: center !important;
     display: block;
   }
-  .nav-link:hover:after {
-    width: 20%;
-    left: 40%;
-  }
 }
 
 @media screen and (max-width: 320px) {
@@ -115,9 +111,5 @@ li p {
   .nav-link {
     text-align: center !important;
     display: block;
-  }
-  .nav-link:hover:after {
-    width: 20%;
-    left: 40%;
   }
 }
