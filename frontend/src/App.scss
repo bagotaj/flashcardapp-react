@@ -3,11 +3,10 @@
 
 * {
   box-sizing: border-box;
-  color: variables.$color-darkblue;
 }
 
 .App {
-  padding-top: 80px;
+  padding-top: 90px;
   text-align: center;
   background: variables.$background-color-main;
 }
@@ -113,17 +112,20 @@ h3 {
 }
 
 .box-element-edit {
-  color: variables.$color-lightblue;
+  color: variables.$color-darkblue;
   padding: 0 5px;
 }
 
-.box-element-edit a {
-  text-decoration: inherit;
+.box-element-edit a:hover {
+  color: variables.$color-lightblue;
 }
 
 .box-element-delete {
-  color: variables.$color-yellow;
   padding: 0 5px;
+}
+
+.box-element-delete:hover {
+  color: variables.$color-yellow;
 }
 
 .center-content {
@@ -153,5 +155,10 @@ h3 {
   }
   .app-main {
     max-width: 100vw;
+  }
+
+  .cards-h2 {
+    margin-bottom: 0px;
+    margin-right: 10px;
   }
 }
