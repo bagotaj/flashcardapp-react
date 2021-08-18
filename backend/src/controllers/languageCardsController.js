@@ -9,7 +9,7 @@ export const languageCardsController = {
           if (foundCards.length === 0) {
             return res
               .status(204)
-              .json({ message: 'Nincs még kártya mentve!' });
+              .send({ message: 'Nincs még kártya mentve!' });
           }
 
           if (req.user.role === 'admin') {
