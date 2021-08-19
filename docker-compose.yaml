@@ -3,7 +3,7 @@ services:
   mongo:
     image: mongo
     ports:
-      - '27037:27017'
+      - '27017:27017'
     healthcheck:
       test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet
     volumes:
