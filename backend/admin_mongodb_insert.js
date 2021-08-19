@@ -11,22 +11,21 @@ const admin = {
   password: '$2a$10$7beDMRc1Ix.JJbNl.eIpoe0Ai1bEh6rH1B2farDzXiiDDxgO6B.pe',
 };
 
-const createAdmin = () => {
+const createAdmin = async () => {
   const newAdmin = new Admin(admin);
 
-  newAdmin.save((err, res) => {
-    if (err) return console.error(err);
-    console.log(res);
-    return res;
-  });
+  const response = newAdmin.save();
+  console.log('Admin mentve');
+  return response;
 };
 
 try {
   db().then(() => {
     mongoose.connection.db.dropDatabase().then(() => {
       db().then(() => {
-        createAdmin();
-        // mongoose.connection.close();
+        createAdmin().then(() => {
+          mongoose.connection.close();
+        });
       });
     });
   });
