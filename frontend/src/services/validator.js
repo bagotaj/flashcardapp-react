@@ -26,7 +26,7 @@ export function validateField(
             ...previousErrors,
             [fieldName]: errorText,
           }));
-          references[fieldName].current.setCustomValidity(errorText);
+          references[fieldName]?.current.setCustomValidity(errorText);
         }
       }
     }
