@@ -6,7 +6,7 @@ const app = express();
 const PORT = 4000;
 
 app.use(
-  '/api-docs',
+  '/open-api-doc',
   swaggerUi.serve,
   swaggerUi.setup(YAML.load('./openapi.yaml'))
 );

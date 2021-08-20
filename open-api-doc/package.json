@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "nodemon src/index.js"
+    "start": "node index.js"
   },
   "name": "flashcards",
   "version": "1.0.0",
@@ -10,8 +10,5 @@
     "swagger-ui-express": "^4.1.6",
     "yamljs": "^0.3.0"
   },
-  "type": "module",
-  "devDependencies": {
-    "nodemon": "^2.0.12"
-  }
+  "type": "module"
 }
