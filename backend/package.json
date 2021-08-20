@@ -8,7 +8,7 @@
     "test:ci": "jest --ci --collectCoverage --reporters=default",
     "test:cover": "jest --collectCoverage",
     "start": "nodemon --exec ./node_modules/.bin/babel-node src/index.js",
-    "start:admin": "yarn admin && nodemon --exec ./node_modules/.bin/babel-node src/index.js",
+    "start:admin": "npm run admin && nodemon --exec ./node_modules/.bin/babel-node src/index.js",
     "admin": "babel-node -r ./node_modules/dotenv/config admin_mongodb_insert.js",
     "build": "babel src -d dist",
     "serve": "node -r dotenv/config dist/index.js"
