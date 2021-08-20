@@ -234,7 +234,7 @@ const FormCards = props => {
 
   const handleEditFlashcard = e => {
     e.preventDefault();
-    const { id } = e.target.dataset;
+    const { id } = e.target.closest('button').dataset;
 
     setFormData({
       ...formData,
@@ -251,7 +251,7 @@ const FormCards = props => {
 
   const handleDeleteFlashcard = e => {
     e.preventDefault();
-    const { id } = e.target.dataset;
+    const { id } = e.target.closest('button').dataset;
 
     const cards = flashcards.filter((elem, index) => {
       return index !== Number(id);
@@ -281,8 +281,8 @@ const FormCards = props => {
             options={cardTypeOptions}
             handleInputChange={handleInputChange}
             handleInputBlur={handleInputBlur}
-            reference={references.cardTitle}
-            error={formErrors.cardTitle}
+            reference={references.cardType}
+            error={formErrors.cardType}
             required
           />
         </div>
