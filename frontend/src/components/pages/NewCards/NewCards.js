@@ -6,7 +6,7 @@ const NewCards = props => {
   return (
     <div className="row mt-5">
       <h2>Kártyacsomag létrehozása</h2>
-      <FormCards type="new" loggedInUser={loggedInUser} />;
+      <FormCards type="new" loggedInUser={loggedInUser} />
     </div>
   );
 };
