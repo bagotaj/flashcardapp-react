@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
+import { isFormValid, validateField } from '../../../services/validator';
 
 import InputField from '../InputField/InputField';
 import Button from '../Button/Button';
@@ -85,47 +86,6 @@ const FormCards = props => {
     },
   };
 
-  const validateField = fieldName => {
-    if (fieldName === 'cardId') return true;
-
-    const value = formData[fieldName];
-    let isValid = true;
-    setFormErrors(prev => ({
-      ...prev,
-      [fieldName]: '',
-    }));
-
-    if (validators[fieldName] !== undefined) {
-      for (const [validationType, validatorFn] of Object.entries(
-        validators[fieldName]
-      )) {
-        if (isValid !== false) {
-          isValid = validatorFn(value);
-          if (!isValid) {
-            const errorText = formErrorTypes[validationType];
-            setFormErrors(prev => ({
-              ...prev,
-              [fieldName]: errorText,
-            }));
-            references[fieldName].current.setCustomValidity(errorText);
-          }
-        }
-      }
-    }
-    return isValid;
-  };
-
-  const isFormValid = () => {
-    let isValid = true;
-    for (const fieldName of Object.keys(formData)) {
-      const isFieldValid = validateField(fieldName);
-      if (!isFieldValid) {
-        isValid = false;
-      }
-    }
-    return isValid;
-  };
-
   const handleInputChange = e => {
     const { name, value } = e.target;
     setFormData({
@@ -136,7 +96,14 @@ const FormCards = props => {
 
   const handleInputBlur = e => {
     const { name } = e.target;
-    validateField(name);
+    validateField(
+      formData,
+      name,
+      setFormErrors,
+      references,
+      validators,
+      formErrorTypes
+    );
   };
 
   const setSendingData = () => {
@@ -186,7 +153,15 @@ const FormCards = props => {
     });
 
     setFormWasValidated(false);
-    const isValid = isFormValid();
+
+    const isValid = isFormValid(
+      formData,
+      setFormErrors,
+      references,
+      validators,
+      formErrorTypes
+    );
+
     if (isValid) {
       let url;
 
