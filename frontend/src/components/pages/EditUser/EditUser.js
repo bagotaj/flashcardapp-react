@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import validator from 'validator';
+import { isFormValid, validateField } from '../../../services/validator';
 import InputField from '../../common/InputField/InputField';
 import Button from '../../common/Button/Button';
 
@@ -107,46 +108,6 @@ const EditUser = props => {
     },
   };
 
-  const validateField = fieldName => {
-    const value = formData[fieldName];
-    let isValid = true;
-    setFormErrors(prev => ({
-      ...prev,
-      [fieldName]: '',
-    }));
-    // references[fieldName].current.setCustomValidity('');
-
-    if (validators[fieldName] !== undefined) {
-      for (const [validationType, validatorFn] of Object.entries(
-        validators[fieldName]
-      )) {
-        if (isValid !== false) {
-          isValid = validatorFn(value);
-          if (!isValid) {
-            const errorText = formErrorTypes[validationType];
-            setFormErrors(prev => ({
-              ...prev,
-              [fieldName]: errorText,
-            }));
-            references[fieldName].current.setCustomValidity(errorText);
-          }
-        }
-      }
-    }
-    return isValid;
-  };
-
-  const isFormValid = () => {
-    let isValid = true;
-    for (const fieldName of Object.keys(formData)) {
-      const isFieldValid = validateField(fieldName);
-      if (!isFieldValid) {
-        isValid = false;
-      }
-    }
-    return isValid;
-  };
-
   const handleInputChange = e => {
     const { name, value } = e.target;
     setFormData({
@@ -157,7 +118,14 @@ const EditUser = props => {
 
   const handleInputBlur = e => {
     const { name } = e.target;
-    validateField(name);
+    validateField(
+      formData,
+      name,
+      setFormErrors,
+      references,
+      validators,
+      formErrorTypes
+    );
   };
 
   const handleUpdate = async e => {
@@ -172,7 +140,15 @@ const EditUser = props => {
     });
 
     setFormWasValidated(false);
-    const isValid = isFormValid();
+
+    const isValid = isFormValid(
+      formData,
+      setFormErrors,
+      references,
+      validators,
+      formErrorTypes
+    );
+
     if (isValid) {
       await fetch(`${server}/api/users/${userId}`, {
         method: 'PUT',
