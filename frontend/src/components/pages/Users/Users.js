@@ -45,7 +45,7 @@ const Users = props => {
 
   const handleOnClickDelete = e => {
     e.preventDefault();
-    const userId = e.target.dataset.id;
+    const userId = e.target.closest('button').dataset.id;
 
     fetch(`${server}/api/users/${userId}`, {
       method: 'DELETE',
