@@ -50,7 +50,7 @@ const LanguageCards = props => {
 
   const handleOnClickDelete = e => {
     e.preventDefault();
-    const cardId = e.target.dataset.id;
+    const cardId = e.target.closest('button').dataset.id;
 
     fetch(`${server}/api/languagecards/${cardId}`, {
       method: 'DELETE',
