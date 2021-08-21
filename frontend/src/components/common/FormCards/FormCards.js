@@ -231,19 +231,21 @@ const FormCards = props => {
   const handleAddingOneCard = e => {
     e.preventDefault();
 
-    setFlashcards([
-      ...flashcards,
-      {
-        side1: formData.side1,
-        side2: formData.side2,
-      },
-    ]);
+    if (formErrors.side1 === '' && formErrors.side2 === '') {
+      setFlashcards([
+        ...flashcards,
+        {
+          side1: formData.side1,
+          side2: formData.side2,
+        },
+      ]);
 
-    setFormData({
-      ...formData,
-      side1: '',
-      side2: '',
-    });
+      setFormData({
+        ...formData,
+        side1: '',
+        side2: '',
+      });
+    }
   };
 
   const handleEditFlashcard = e => {
