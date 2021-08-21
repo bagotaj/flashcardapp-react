@@ -63,6 +63,7 @@ const FormCards = props => {
 
   const formErrorTypes = {
     required: `A mező kitöltése kötelező`,
+    isLessThan65Characters: `65 karakternél több nem lehet`,
   };
 
   const [formErrors, setFormErrors] = useState({
@@ -77,12 +78,25 @@ const FormCards = props => {
     return value !== '';
   };
 
+  const isLessThan65Characters = value => {
+    if (value.length <= 65) {
+      return true;
+    }
+    return false;
+  };
+
   const validators = {
     cardType: {
       required: isFieldEmpty,
     },
     cardTitle: {
       required: isFieldEmpty,
+    },
+    side1: {
+      isLessThan65Characters,
+    },
+    side2: {
+      isLessThan65Characters,
     },
   };
 
