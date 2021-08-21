@@ -74,7 +74,7 @@ A kártyák megtekintése után pontokat kap, amelyek alapján a felhasználói 
 
 ### API dokumentáció
 
-- [OpenAPI/Swagger] (open-api-doc)
+- [OpenAPI/Swagger](open-api-doc)
 
 ## Felépítés, szerkezet
 
@@ -100,6 +100,7 @@ email cím és jelszó megadásával beléphetnek az oldalra
      menüpontok láthatóak
 
 2. Bejelentkezés után
+
    Felhasználó esetében:
 
    - Flashcards (Applikáció elnevezése)
@@ -186,11 +187,11 @@ docker-compose up
 
 paranccsal indítható a terminálból.
 
-Utána a `[http://localhost:3000/](http://localhost:3000/)` url-en tekinthető meg.
+Utána a [http://localhost:3000/](http://localhost:3000/) url-en tekinthető meg.
 
 Általános felhasználóként a `Regisztráció` menüre kattintva **regisztráció** és **belépés** után használható az applikáció.
 
-Adminisztrátorként a `[http://localhost:3000/admin/login](http://localhost:3000/admin/login)` url-en
+Adminisztrátorként a [http://localhost:3000/admin/login](http://localhost:3000/admin/login) url-en
 
 ```
 teszt@admin.hu
@@ -200,7 +201,6 @@ teszt1234
 emailcím és jelszó megadásával lehet belépni az oldalra.
 
 További információ:
-Instructions regarding dependencies, installation and execution of frontend, backend and documentation separately:
 
 - [Frontend](frontend/README.md)
 - [Backend](backend/README.md)
