@@ -16,3 +16,31 @@
   justify-content: center;
   align-items: center;
 }
+
+@media screen and (max-width: 1200px) {
+  .app-main {
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .new-card-buttons {
+    flex-direction: row;
+  }
+
+  .new-card-one-button {
+    margin: 15px 15px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .new-card-buttons {
+    flex-direction: row;
+  }
+
+  .new-card-one-button {
+    margin: 15px 15px;
+  }
+}

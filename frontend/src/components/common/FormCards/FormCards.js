@@ -373,13 +373,13 @@ const FormCards = props => {
           {flashcards.length !== 0 &&
             flashcards.map((flashcard, index) => (
               <div className="row mb-3" key={flashcard.side1}>
-                <div className="col-6 col-lg-5">
+                <div className="col-12 col-lg-5">
                   <div className="box center-content">{flashcard.side1}</div>
                 </div>
-                <div className="col-6 col-lg-5">
+                <div className="col-12 col-lg-5">
                   <div className="box center-content">{flashcard.side2}</div>
                 </div>
-                <div className="col-6 col-lg-2 new-card-buttons">
+                <div className="col-12 col-lg-2 new-card-buttons">
                   <Button
                     buttonType="button"
                     onClick={handleEditFlashcard}
