@@ -8,7 +8,7 @@ const PORT = 4000;
 app.use(
   '/open-api-doc',
   swaggerUi.serve,
-  swaggerUi.setup(YAML.load('./openapi.yaml'))
+  swaggerUi.setup(YAML.load('./swagger.yaml'))
 );
 
 app.listen(PORT, () => {
