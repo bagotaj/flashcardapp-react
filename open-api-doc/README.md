@@ -35,4 +35,4 @@ npm start
 Utána
 
 - Megnyitás a böngészőben:
-  `http://localhost:4000/open-api-doc`
+  [http://localhost:4000/open-api-doc](http://localhost:4000/open-api-doc)

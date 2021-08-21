@@ -4,7 +4,7 @@
 
 - Háromrétegű (model/service/controller), Express.js-en alapuló szerver
 - API végpontokat biztosít a frontend számára
-- kommunikál a MongoDB adatbázissal mongoose használatával
+- kommunikál a MongoDB adatbázissal Mongoose használatával
 
 ## Használat
 

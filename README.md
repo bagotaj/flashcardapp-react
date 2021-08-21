@@ -118,7 +118,7 @@ email cím és jelszó megadásával beléphetnek az oldalra
    - Adminisztrátor felirat
    - Kilépés
 
-     menüpontok láthatóak
+   menüpontok láthatóak
 
 ### Flashcards - Home - Szókártyáim
 
