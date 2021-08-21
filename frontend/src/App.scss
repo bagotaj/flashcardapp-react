@@ -52,6 +52,7 @@ h3 {
   min-height: 150px;
   min-width: 200px;
   margin: 15px;
+  padding: 15px;
   background: white;
   border: solid 1px variables.$color-lightgrey-box-border;
   border-radius: 15px;
@@ -91,7 +92,7 @@ h3 {
 }
 
 .box-content-row-up {
-  padding: 15px;
+  padding-bottom: 15px;
   display: flex;
   justify-content: flex-end;
 }
