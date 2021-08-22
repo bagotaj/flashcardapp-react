@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import validator from 'validator';
 import { isFormValid, validateField } from '../../../services/validator';
@@ -12,6 +12,17 @@ const Login = props => {
   const server = process.env.REACT_APP_BACKEND_SERVER_URL;
 
   const { handleLoggedInUser, handleLocalStorage } = props;
+
+  useEffect(() => {
+    let isMounted = true;
+    if (isMounted) {
+      history.push('/dashboard');
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -122,7 +133,6 @@ const Login = props => {
               email: '',
               password: '',
             });
-            history.push('/dashboard');
           } else {
             setAlert({ alertType: 'warning', message: data.message });
           }
