@@ -26,7 +26,7 @@ const LanguageCards = props => {
     )
       .then(res => {
         if (res.status === 204) {
-          return [];
+          return res.json();
         }
         if (res.status !== 200) {
           throw Error(`Nem sikerült lekérni az adatokat. ${res.status}`);

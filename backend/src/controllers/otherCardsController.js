@@ -6,18 +6,18 @@ export const otherCardsController = {
     try {
       await OtherCard.find()
         .then(foundCards => {
-          if (foundCards.length === 0) {
-            return res
-              .status(204)
-              .json({ message: 'Nincs még kártya mentve!' });
-          }
-
           if (req.user.role === 'admin') {
             return foundCards;
           }
           return foundCards.filter(card => card.userId === req.user.userId);
         })
-        .then(foundCards => res.status(200).json(foundCards));
+        .then(cards => {
+          if (cards.length === 0) {
+            return res.status(204).json(cards);
+          }
+
+          return res.status(200).json(cards);
+        });
     } catch (err) {
       next(err);
     }
