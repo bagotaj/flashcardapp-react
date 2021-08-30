@@ -11,6 +11,8 @@ const EditCards = () => {
     cardType: card.cardType,
     cardTitle: card.cardTitle,
     description: card.description,
+    side1: '',
+    side2: '',
   });
   const [flashcards] = useState(card.cards);
 
