@@ -1,9 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import React, { useState, useRef } from 'react';
+import { useLocation, useHistory } from 'react-router-dom';
 import validator from 'validator';
 import { isFormValid, validateField } from '../../../services/validator';
 import InputField from '../../common/InputField/InputField';
 import Button from '../../common/Button/Button';
+import useIsMountedRef from '../../../services/useIsMountedRef';
 
 const Login = props => {
   const history = useHistory();
@@ -13,15 +14,7 @@ const Login = props => {
 
   const { handleLoggedInUser, handleLocalStorage } = props;
 
-  useEffect(() => {
-    let isMounted = true;
-    if (isMounted) {
-      history.push('/dashboard');
-    }
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+  const isMountedRef = useIsMountedRef();
 
   const [formData, setFormData] = useState({
     email: '',
@@ -118,23 +111,26 @@ const Login = props => {
       })
         .then(res => res.json())
         .then(data => {
-          if (data.status >= 200 && data.status < 300) {
-            const user = {
-              email: formData.email,
-              userId: data.userId,
-              firstName: data.firstName,
-              token: data.token,
-              role: data.role,
-            };
-            handleLocalStorage(user);
-            handleLoggedInUser(user);
-            setAlert({ alertType: 'primary', message: messageTypes.success });
-            setFormData({
-              email: '',
-              password: '',
-            });
-          } else {
-            setAlert({ alertType: 'warning', message: data.message });
+          if (isMountedRef.current) {
+            if (data.status >= 200 && data.status < 300) {
+              const user = {
+                email: formData.email,
+                userId: data.userId,
+                firstName: data.firstName,
+                token: data.token,
+                role: data.role,
+              };
+              handleLocalStorage(user);
+              handleLoggedInUser(user);
+              setAlert({ alertType: 'primary', message: messageTypes.success });
+              setFormData({
+                email: '',
+                password: '',
+              });
+              history.push('/dashboard');
+            } else {
+              setAlert({ alertType: 'warning', message: data.message });
+            }
           }
         })
         .catch(error => {

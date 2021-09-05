@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+
 import Button from '../../common/Button/Button';
+import useIsMountedRef from '../../../services/useIsMountedRef';
 
 const LanguageCards = props => {
   const { loggedInUser } = props;
@@ -10,20 +12,16 @@ const LanguageCards = props => {
   const [cards, setCards] = useState([]);
   const [alert, setAlert] = useState(null);
 
-  useEffect(() => {
-    const abortController = new AbortController();
+  const isMountedRef = useIsMountedRef();
 
-    fetch(
-      `${server}/api/languagecards`,
-      {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-          Authorization: `Bearer ${loggedInUser.token}`,
-        },
+  useEffect(() => {
+    fetch(`${server}/api/languagecards`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${loggedInUser.token}`,
       },
-      { signal: abortController.signal }
-    )
+    })
       .then(res => {
         if (res.status === 204) {
           return [];
@@ -34,19 +32,15 @@ const LanguageCards = props => {
         return res.json();
       })
       .then(jsonRes => {
-        setCards(jsonRes);
-        setAlert(null);
+        if (isMountedRef.current) {
+          setCards(jsonRes);
+          setAlert(null);
+        }
       })
       .catch(err => {
-        if (err.name === 'AbortError') {
-          throw Error(`Letöltés megszakítva`);
-        } else {
-          setAlert({ alertType: 'warning', message: err.message });
-        }
+        setAlert({ alertType: 'warning', message: err.message });
       });
-
-    return () => abortController.abort();
-  }, []);
+  }, [isMountedRef]);
 
   const handleOnClickDelete = e => {
     e.preventDefault();

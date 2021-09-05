@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import Button from '../../common/Button/Button';
+import useIsMountedRef from '../../../services/useIsMountedRef';
 
 const OtherCards = props => {
   const { loggedInUser } = props;
@@ -11,9 +12,9 @@ const OtherCards = props => {
   const [cards, setCards] = useState([]);
   const [alert, setAlert] = useState(null);
 
-  useEffect(() => {
-    let didCancel = false;
+  const isMountedRef = useIsMountedRef();
 
+  useEffect(() => {
     fetch(`${server}/api/othercards`, {
       method: 'GET',
       headers: {
@@ -31,7 +32,7 @@ const OtherCards = props => {
         return res.json();
       })
       .then(jsonRes => {
-        if (!didCancel) {
+        if (isMountedRef.current) {
           setCards(jsonRes);
           setAlert(null);
         }
@@ -39,11 +40,7 @@ const OtherCards = props => {
       .catch(err => {
         setAlert({ alertType: 'warning', message: err.message });
       });
-
-    return () => {
-      didCancel = true;
-    };
-  }, []);
+  }, [isMountedRef]);
 
   const handleOnClickDelete = e => {
     e.preventDefault();
