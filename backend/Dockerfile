@@ -8,4 +8,5 @@ RUN yarn
 
 COPY . .
 
-CMD ["yarn","start:admin"]
+# CMD ["yarn","start:admin"]
+CMD ["yarn","start"]
