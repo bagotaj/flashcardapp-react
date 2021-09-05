@@ -13,6 +13,7 @@ export function validateField(
     ...previousErrors,
     [fieldName]: '',
   }));
+  references[fieldName]?.current.setCustomValidity('');
 
   if (validators[fieldName] !== undefined) {
     for (const [validationType, validatorFn] of Object.entries(
