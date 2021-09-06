@@ -15,7 +15,7 @@ const createAdmin = async () => {
   const newAdmin = new Admin(admin);
 
   const response = newAdmin.save();
-  console.log('Admin mentve');
+
   return response;
 };
 
