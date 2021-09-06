@@ -31,7 +31,7 @@ describe('GET / Rank list - /api/ranks', () => {
     await testdb.close();
   });
 
-  afterEach(async () => {
+  beforeEach(async () => {
     await Ranks.deleteMany();
   });
 
