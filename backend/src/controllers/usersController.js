@@ -1,29 +1,16 @@
-import { Admin, User } from '../models/User';
 import { userService } from '../services/userService';
 
 export const usersController = {
-  get(req, res) {
-    try {
-      User.find().then(foundUsers => res.status(200).json(foundUsers));
-    } catch (err) {
-      res.status(400).send(err);
-    }
+  async get(req, res) {
+    const data = await userService.getUsers();
+    res.status(data.status).send(data.body);
   },
 
   async getId(req, res) {
-    try {
-      let user;
+    const { id } = req.params;
 
-      user = await User.findById(req.params.id);
-
-      if (!user) {
-        user = await Admin.findById(req.params.id);
-      }
-
-      res.status(200).json(user);
-    } catch (err) {
-      res.status(404).json(err);
-    }
+    const data = await userService.getUserById(id);
+    res.status(data.status).send(data.body);
   },
 
   async put(req, res) {
@@ -31,18 +18,13 @@ export const usersController = {
     const reqData = req.body;
 
     const data = await userService.updateUser(id, reqData);
-    res.status(data.status).send(data);
+    res.status(data.status).send(data.message);
   },
 
   async delete(req, res) {
     const deleteId = req.params.id;
 
-    try {
-      const userData = await User.findByIdAndDelete(deleteId);
-      if (!userData) return res.sendStatus(404);
-      return res.status(200).send({ message: 'A felhasználó törölve lett' });
-    } catch (err) {
-      return res.status(400).send(err);
-    }
+    const data = await userService.deleteUserById(deleteId);
+    res.status(data.status).send(data.message);
   },
 };
