@@ -1,26 +1,14 @@
 import { rankService } from '../services/rankService';
-import { Ranks } from '../models/Ranks';
 
 export const rankController = {
-  get(req, res) {
-    try {
-      Ranks.find()
-        .sort({ points: -1 })
-        .then(foundRanks => res.status(200).json(foundRanks));
-    } catch (err) {
-      res.status(400).send(err);
-    }
+  async get(req, res) {
+    const data = await rankService.getRanks();
+    res.status(data.status).json(data.body);
   },
 
-  getTopFive(req, res) {
-    try {
-      Ranks.aggregate()
-        .sort({ points: -1 })
-        .limit(5)
-        .then(foundRanks => res.status(200).json(foundRanks));
-    } catch (err) {
-      res.status(400).send(err);
-    }
+  async getTopFive(req, res) {
+    const data = await rankService.getTopFiveRanks();
+    res.status(data.status).json(data.body);
   },
 
   async put(req, res) {
@@ -28,6 +16,6 @@ export const rankController = {
     const reqData = req.body;
 
     const data = await rankService.updateRanks(id, reqData);
-    res.status(data.status).json(data);
+    res.status(data.status).json(data.message);
   },
 };

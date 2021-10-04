@@ -3,6 +3,38 @@ import { Ranks } from '../models/Ranks';
 import { rankValidation } from '../validators/rankValidation';
 
 export const rankService = {
+  async getRanks() {
+    try {
+      const foundRanks = Ranks.find().sort({ points: -1 });
+
+      return {
+        status: 200,
+        body: foundRanks,
+      };
+    } catch (err) {
+      return {
+        status: 400,
+        body: err,
+      };
+    }
+  },
+
+  async getTopFiveRanks() {
+    try {
+      const foundRanks = Ranks.aggregate().sort({ points: -1 }).limit(5);
+
+      return {
+        status: 200,
+        body: foundRanks,
+      };
+    } catch (err) {
+      return {
+        status: 400,
+        body: err,
+      };
+    }
+  },
+
   async updateRanks(id, reqData) {
     const { _id, __v, updatedAt, ...others } = reqData;
     const { error } = rankValidation(others);
