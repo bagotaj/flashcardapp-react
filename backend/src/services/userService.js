@@ -97,7 +97,7 @@ export const userService = {
     } catch (err) {
       return {
         status: 400,
-        body: err,
+        message: err,
       };
     }
   },
