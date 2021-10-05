@@ -5,7 +5,7 @@ import { rankValidation } from '../validators/rankValidation';
 export const rankService = {
   async getRanks() {
     try {
-      const foundRanks = Ranks.find().sort({ points: -1 });
+      const foundRanks = await Ranks.find().sort({ points: -1 });
 
       return {
         status: 200,
@@ -21,7 +21,10 @@ export const rankService = {
 
   async getTopFiveRanks() {
     try {
-      const foundRanks = Ranks.aggregate().sort({ points: -1 }).limit(5);
+      const foundRanks = await Ranks.aggregate()
+        .sort({ points: -1 })
+        .limit(5)
+        .then(ranks => ranks);
 
       return {
         status: 200,

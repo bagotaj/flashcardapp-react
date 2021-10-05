@@ -6,7 +6,7 @@ import { userValidation } from '../validators/userValidation';
 export const userService = {
   async getUsers() {
     try {
-      const foundUsers = User.find();
+      const foundUsers = await User.find();
       return {
         status: 200,
         body: foundUsers,

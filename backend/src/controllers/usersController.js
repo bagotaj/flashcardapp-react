@@ -3,14 +3,14 @@ import { userService } from '../services/userService';
 export const usersController = {
   async get(req, res) {
     const data = await userService.getUsers();
-    res.status(data.status).send(data.body);
+    res.status(data.status).json(data.body);
   },
 
   async getId(req, res) {
     const { id } = req.params;
 
     const data = await userService.getUserById(id);
-    res.status(data.status).send(data.body);
+    res.status(data.status).json(data.body);
   },
 
   async put(req, res) {
