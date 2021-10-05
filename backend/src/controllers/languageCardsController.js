@@ -1,41 +1,23 @@
-import { LanguageCard } from '../models/Cards';
 import { languageCardsService } from '../services/languageCardsService';
 
 export const languageCardsController = {
-  async get(req, res, next) {
-    try {
-      await LanguageCard.find()
-        .then(foundCards => {
-          if (req.user.role === 'admin') {
-            return foundCards;
-          }
+  async get(req, res) {
+    const { userId, role } = req.user;
 
-          return foundCards.filter(card => card.userId === req.user.userId);
-        })
-        .then(cards => {
-          if (cards.length === 0) {
-            return res.status(204).json(cards);
-          }
-
-          return res.status(200).json(cards);
-        });
-    } catch (err) {
-      next(err);
-    }
+    const data = await languageCardsService.getCards(userId, role);
+    res.status(data.status).json(data.body);
   },
 
   async getId(req, res) {
-    try {
-      const card = await LanguageCard.findById(req.params.id);
-      return res.status(200).json(card);
-    } catch (err) {
-      return res.status(404).json(err);
-    }
+    const { id } = req.params;
+
+    const data = await languageCardsService.getCardById(id);
+    res.status(data.status).json(data.body);
   },
 
   async post(req, res) {
     const data = await languageCardsService.saveCards(req.body);
-    return res.status(data.status).json(data);
+    return res.status(data.status).json(data.message);
   },
 
   async put(req, res) {
@@ -43,18 +25,13 @@ export const languageCardsController = {
     const reqData = req.body;
 
     const data = await languageCardsService.updateCards(id, reqData);
-    res.status(data.status).json(data);
+    res.status(data.status).json(data.message);
   },
 
   async delete(req, res) {
     const deleteId = req.params.id;
 
-    try {
-      const cardData = await LanguageCard.findByIdAndDelete(deleteId);
-      if (!cardData) return res.sendStatus(404);
-      return res.status(200).send({ message: 'A kártya törölve lett' });
-    } catch (err) {
-      return res.status(400).send(err);
-    }
+    const data = await languageCardsService.deleteCardById(deleteId);
+    res.status(data.status).json(data.message);
   },
 };

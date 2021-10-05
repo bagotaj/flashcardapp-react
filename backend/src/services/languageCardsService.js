@@ -3,6 +3,50 @@ import { LanguageCard } from '../models/Cards';
 import cardValidation from '../validators/cardValidation';
 
 export const languageCardsService = {
+  async getCards(userId, role) {
+    try {
+      const cards = await LanguageCard.find().then(foundCards => {
+        if (role === 'admin') {
+          return foundCards;
+        }
+        return foundCards.filter(card => card.userId === userId);
+      });
+
+      if (cards.length === 0) {
+        return {
+          status: 204,
+          body: cards,
+        };
+      }
+
+      return {
+        status: 200,
+        body: cards,
+      };
+    } catch (err) {
+      return {
+        status: 400,
+        body: err,
+      };
+    }
+  },
+
+  async getCardById(id) {
+    try {
+      const card = await LanguageCard.findById(id);
+
+      return {
+        status: 200,
+        body: card,
+      };
+    } catch (err) {
+      return {
+        status: 404,
+        body: err,
+      };
+    }
+  },
+
   async saveCards(cardData) {
     const { error } = cardValidation(cardData);
     if (error) {
@@ -59,6 +103,26 @@ export const languageCardsService = {
       return {
         status: 500,
         message: 'Valami hiba történt',
+      };
+    }
+  },
+
+  async deleteCardById(deleteId) {
+    try {
+      const cardData = await LanguageCard.findByIdAndDelete(deleteId);
+      if (!cardData)
+        return {
+          status: 404,
+          message: 'A kártya nem található',
+        };
+      return {
+        status: 200,
+        message: 'A kártya törölve lett',
+      };
+    } catch (err) {
+      return {
+        status: 400,
+        message: err,
       };
     }
   },

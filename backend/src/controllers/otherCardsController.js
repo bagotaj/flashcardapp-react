@@ -1,40 +1,23 @@
-import { OtherCard } from '../models/Cards';
 import { otherCardsService } from '../services/otherCardsService';
 
 export const otherCardsController = {
-  async get(req, res, next) {
-    try {
-      await OtherCard.find()
-        .then(foundCards => {
-          if (req.user.role === 'admin') {
-            return foundCards;
-          }
-          return foundCards.filter(card => card.userId === req.user.userId);
-        })
-        .then(cards => {
-          if (cards.length === 0) {
-            return res.status(204).json(cards);
-          }
+  async get(req, res) {
+    const { userId, role } = req.user;
 
-          return res.status(200).json(cards);
-        });
-    } catch (err) {
-      next(err);
-    }
+    const data = await otherCardsService.getCards(userId, role);
+    res.status(data.status).json(data.body);
   },
 
   async getId(req, res) {
-    try {
-      const card = await OtherCard.findById(req.params.id);
-      return res.status(200).json(card);
-    } catch (err) {
-      return res.status(404).json(err);
-    }
+    const { id } = req.params;
+
+    const data = await otherCardsService.getCardById(id);
+    res.status(data.status).json(data.body);
   },
 
   async post(req, res) {
     const data = await otherCardsService.saveCards(req.body);
-    res.status(data.status).json(data);
+    res.status(data.status).json(data.message);
   },
 
   async put(req, res) {
@@ -42,18 +25,13 @@ export const otherCardsController = {
     const reqData = req.body;
 
     const data = await otherCardsService.updateCards(id, reqData);
-    res.status(data.status).json(data);
+    res.status(data.status).json(data.message);
   },
 
   async delete(req, res) {
     const deleteId = req.params.id;
 
-    try {
-      const userData = await OtherCard.findByIdAndDelete(deleteId);
-      if (!userData) return res.sendStatus(404);
-      return res.status(200).send({ message: 'A kártya törölve lett' });
-    } catch (err) {
-      return res.status(400).send(err);
-    }
+    const data = await otherCardsService.deleteCardById(deleteId);
+    res.status(data.status).json(data.message);
   },
 };

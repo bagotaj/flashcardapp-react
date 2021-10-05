@@ -14,7 +14,7 @@ export const loginService = {
     if (error) {
       return {
         status: 401,
-        message: error.details[0].message,
+        body: { message: error.details[0].message },
       };
     }
 
@@ -29,7 +29,7 @@ export const loginService = {
     if (!user) {
       return {
         status: 400,
-        message: 'Az email cím még nincs regisztrálva',
+        body: { message: 'Az email cím még nincs regisztrálva' },
       };
     }
 
@@ -37,7 +37,7 @@ export const loginService = {
     if (!validPass) {
       return {
         status: 403,
-        message: 'Az email cím vagy a jelszó nem megfelelő',
+        body: { message: 'Az email cím vagy a jelszó nem megfelelő' },
       };
     }
 
@@ -64,18 +64,20 @@ export const loginService = {
         logger.error(err);
         return {
           status: 500,
-          message: 'Valami hiba történt',
+          body: { message: 'Valami hiba történt' },
         };
       }
     }
 
     return {
       status: 200,
-      message: 'Bejelentkezve!',
-      token: accessToken,
-      userId: user.id,
-      firstName: user.firstName,
-      role: user.role,
+      body: {
+        message: 'Bejelentkezve!',
+        token: accessToken,
+        userId: user.id,
+        firstName: user.firstName,
+        role: user.role,
+      },
     };
   },
 };
