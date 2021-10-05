@@ -109,28 +109,30 @@ const Login = props => {
         },
         body: JSON.stringify({ ...formData, location: location.pathname }),
       })
-        .then(res => res.json())
+        .then(res => {
+          if (res.status >= 200 && res.status < 300) {
+            return res.json();
+          }
+          setAlert({ alertType: 'warning', message: res.message });
+          return res.json();
+        })
         .then(data => {
           if (isMountedRef.current) {
-            if (data.status >= 200 && data.status < 300) {
-              const user = {
-                email: formData.email,
-                userId: data.userId,
-                firstName: data.firstName,
-                token: data.token,
-                role: data.role,
-              };
-              handleLocalStorage(user);
-              handleLoggedInUser(user);
-              setAlert({ alertType: 'primary', message: messageTypes.success });
-              setFormData({
-                email: '',
-                password: '',
-              });
-              history.push('/dashboard');
-            } else {
-              setAlert({ alertType: 'warning', message: data.message });
-            }
+            const user = {
+              email: formData.email,
+              userId: data.userId,
+              firstName: data.firstName,
+              token: data.token,
+              role: data.role,
+            };
+            handleLocalStorage(user);
+            handleLoggedInUser(user);
+            setAlert({ alertType: 'primary', message: messageTypes.success });
+            setFormData({
+              email: '',
+              password: '',
+            });
+            history.push('/dashboard');
           }
         })
         .catch(error => {
