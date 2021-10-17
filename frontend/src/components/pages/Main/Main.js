@@ -53,7 +53,7 @@ const Main = () => {
         ))}
         <Button
           linkRouterPath="/login"
-          classes="text-link pt-3"
+          classes="btn btn-primary mt-3"
           title="Tovább >>"
         />
         <div className="my-5">
