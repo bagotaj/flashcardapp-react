@@ -147,7 +147,7 @@ const LanguageCards = props => {
           <p>Nincs még szókártyád?</p>
           <Button
             linkRouterPath="/cards/new"
-            classes="text-link"
+            classes="btn btn-light"
             title="Készíts egyet!"
           />
         </div>
