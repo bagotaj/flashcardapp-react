@@ -14,6 +14,8 @@ const FormCards = props => {
 
   const backend = process.env.REACT_APP_BACKEND_SERVER_URL;
 
+  const topRef = useRef();
+
   const [formData, setFormData] = useState(
     type === 'edit'
       ? cardPack
@@ -29,6 +31,8 @@ const FormCards = props => {
   const [flashcards, setFlashcards] = useState(
     type === 'edit' ? flashcardPack : []
   );
+
+  const [alertLink, setAlertLink] = useState('');
 
   const [cardTypeOptions] = useState([
     { value: '', text: 'Válassz!' },
@@ -49,7 +53,7 @@ const FormCards = props => {
   const [formWasValidated, setFormWasValidated] = useState(false);
 
   const messageTypes = {
-    success: `A kártyacsomag mentése sikeres`,
+    success: `A kártyacsomag mentése sikeres -`,
     fail: `A kártyacsomag mentése sikeretelen volt az alább hiba miatt: `,
   };
 
@@ -119,6 +123,8 @@ const FormCards = props => {
       formErrorTypes
     );
   };
+
+  const scrollToTop = ref => window.scrollTo(0, ref.current.offsetTop);
 
   const setSendingData = () => {
     let collectedData = {
@@ -210,7 +216,16 @@ const FormCards = props => {
               });
 
         if (response.status === 200) {
-          setAlert({ alertType: 'primary', message: messageTypes.success });
+          setAlert({
+            alertType: 'primary',
+            message: messageTypes.success,
+          });
+          scrollToTop(topRef);
+          if (formData.cardType === 'Nyelv kártya') {
+            setAlertLink('/languagecards');
+          } else {
+            setAlertLink('/othercards');
+          }
           setFormData({
             cardType: '',
             cardTitle: '',
@@ -279,8 +294,19 @@ const FormCards = props => {
   return (
     <>
       {alert && (
-        <div>
-          <p className={`alert alert-${alert.alertType}`}>{alert.message}</p>
+        <div ref={topRef}>
+          <p className={`alert alert-${alert.alertType}`}>
+            {alert.message}{' '}
+            {alert.alertType === 'primary' ? (
+              <Button
+                linkRouterPath={alertLink}
+                classes="text-link ms-3"
+                title="Szókártyához"
+              />
+            ) : (
+              ''
+            )}
+          </p>
         </div>
       )}
       <form
