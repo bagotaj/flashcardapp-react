@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, Prompt, Link } from 'react-router-dom';
+import { useLocation, Prompt } from 'react-router-dom';
 
 import Button from '../../common/Button/Button';
 
@@ -122,47 +122,50 @@ const Cards = () => {
             title="+"
           />
         </div>
-        {flashcards &&
-          (counter >= flashcards.length || counter < 0 ? (
-            <div className="box center-content">Nincs több kártya</div>
-          ) : (
-            <div className="box">
-              <div className="flip-card">
-                <div className="flip-card-inner">
-                  <div className="flip-card-front center-content">
-                    {flashcards[counter].side1}
-                  </div>
-                  <div className="flip-card-back center-content">
-                    {flashcards[counter].side2}
+        <div className="center-content flex-column">
+          {flashcards &&
+            (counter >= flashcards.length || counter < 0 ? (
+              <div className="box center-content">Nincs több kártya</div>
+            ) : (
+              <div className="box box-max-width">
+                <div className="flip-card">
+                  <div className="flip-card-inner">
+                    <div className="flip-card-front center-content">
+                      {flashcards[counter].side1}
+                    </div>
+                    <div className="flip-card-back center-content">
+                      {flashcards[counter].side2}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
-        <button
-          type="button"
-          className="no-button-cards"
-          onClick={handlerOnClickDecreaseCounter}
-        >
-          {'<'}
-        </button>
-        <button
-          type="button"
-          className="no-button-cards ms-3"
-          onClick={handlerOnClickIncreaseCounter}
-        >
-          {'>'}
-        </button>
-        <Link
-          to={
-            cardPack.cardType === 'Nyelv kártya'
-              ? '/languagecards'
-              : '/othercards'
-          }
-          className="text-link d-block mt-4"
-        >
-          vissza a kártyákhoz
-        </Link>
+            ))}
+          <div className="flex-row">
+            <button
+              type="button"
+              className="no-button-cards"
+              onClick={handlerOnClickDecreaseCounter}
+            >
+              {'<'}
+            </button>
+            <button
+              type="button"
+              className="no-button-cards ms-3"
+              onClick={handlerOnClickIncreaseCounter}
+            >
+              {'>'}
+            </button>
+          </div>
+          <Button
+            linkRouterPath={
+              cardPack.cardType === 'Nyelv kártya'
+                ? '/languagecards'
+                : '/othercards'
+            }
+            classes="btn btn-primary d-block mt-4"
+            title="Vissza a kártyákhoz"
+          />
+        </div>
       </div>
     </>
   );
