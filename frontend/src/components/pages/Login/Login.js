@@ -21,11 +21,6 @@ const Login = props => {
     password: '',
   });
 
-  const messageTypes = Object.freeze({
-    success: `Be vagy jelentkezve.`,
-    fail: `A bejelentkezés nem sikerült valamilyen hiba miatt.`,
-  });
-
   const [alert, setAlert] = useState(null);
   const [formWasValidated, setFormWasValidated] = useState(false);
 
@@ -109,12 +104,13 @@ const Login = props => {
         },
         body: JSON.stringify({ ...formData, location: location.pathname }),
       })
-        .then(res => {
+        .then(async res => {
           if (res.status >= 200 && res.status < 300) {
             return res.json();
           }
-          setAlert({ alertType: 'warning', message: res.message });
-          return res.json();
+
+          const json = await res.json();
+          throw new Error(json.message);
         })
         .then(data => {
           if (isMountedRef.current) {
@@ -127,7 +123,6 @@ const Login = props => {
             };
             handleLocalStorage(user);
             handleLoggedInUser(user);
-            setAlert({ alertType: 'primary', message: messageTypes.success });
             setFormData({
               email: '',
               password: '',
@@ -136,8 +131,7 @@ const Login = props => {
           }
         })
         .catch(error => {
-          // eslint-disable-next-line
-          console.error(error);
+          setAlert({ alertType: 'warning', message: error.message });
         });
     } else {
       setFormWasValidated(true);
