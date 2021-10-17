@@ -32,7 +32,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 }
 
 h2 {
@@ -65,6 +65,10 @@ h3 {
   font-size: 1.1rem;
   border: solid 1px variables.$color-bluegrey;
   box-shadow: 0 0 1em variables.$color-lightgrey-box-shadow;
+}
+
+.box-max-width {
+  max-width: 250px;
 }
 
 .box-mini {
@@ -147,6 +151,16 @@ h3 {
 
 .delete-text {
   color: variables.$color-yellow;
+}
+
+.btn {
+  border: none;
+  padding: 0.5rem 1rem 0.6rem 1rem;
+  font-size: 14px;
+}
+
+.btn-light {
+  background: variables.$color-grey;
 }
 
 @media screen and (max-width: 1200px) {
