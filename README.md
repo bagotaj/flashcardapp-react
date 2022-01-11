@@ -1,4 +1,4 @@
-# Szókártya Applikáció - Full Stack Vizsgaremek
+# Full Stack Szókártya Applikáció
 
 ## Könyvtárak
 
