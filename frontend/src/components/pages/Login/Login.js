@@ -12,7 +12,7 @@ const Login = props => {
 
   const server = process.env.REACT_APP_BACKEND_SERVER_URL;
 
-  const { handleLoggedInUser, handleLocalStorage } = props;
+  const { handleLoggedInUser } = props;
 
   const isMountedRef = useIsMountedRef();
 
@@ -76,6 +76,10 @@ const Login = props => {
       formErrorTypes
     );
   };
+
+  function handleLocalStorage(user) {
+    localStorage.setItem('loggedInUser', JSON.stringify(user));
+  }
 
   const handleLogin = async e => {
     e.preventDefault();

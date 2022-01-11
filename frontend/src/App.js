@@ -33,10 +33,6 @@ const App = () => {
     setLoggedInUser(userFromLocalStorage);
   }, []);
 
-  function handleLocalStorage(user) {
-    return localStorage.setItem('loggedInUser', JSON.stringify(user));
-  }
-
   const handleLogout = async e => {
     e.preventDefault();
 
@@ -59,7 +55,6 @@ const App = () => {
               component={() => (
                 <Login
                   handleLoggedInUser={setLoggedInUser}
-                  handleLocalStorage={handleLocalStorage}
                 />
               )}
             />
@@ -69,7 +64,6 @@ const App = () => {
               component={() => (
                 <Login
                   handleLoggedInUser={setLoggedInUser}
-                  handleLocalStorage={handleLocalStorage}
                 />
               )}
             />
